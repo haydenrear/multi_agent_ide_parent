@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/buildSrc" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/commit-diff-context" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/commit-diff-context-mcp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/commit-diff-model" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/jpa-persistence" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/mcp-tool-gateway" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/multi_agent_ide" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/multi_agent_ide_lib" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/multi_agent_ide_python_parent" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/multi_agent_ide_python_parent/packages/app_template" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/multi_agent_ide_python_parent/packages/drools_py" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/multi_agent_ide_python_parent/packages/python_di" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/multi_agent_ide_python_parent/packages/python_util" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/persistence" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/proto" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/runner_code" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/test_graph" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/test_graph/sdk" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tracing" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tracing_agent" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/utilitymodule" vcs="Git" />
+  </component>
+</project>

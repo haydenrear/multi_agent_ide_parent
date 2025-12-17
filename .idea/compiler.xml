@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.42/8365263844ebb62398e0dc33057ba10ba472d3b8/lombok-1.18.42.jar" />
+          <entry name="$MAVEN_REPOSITORY$/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.querydsl/querydsl-apt/5.0.0/d48657412f2b96d787bbe5ae393e33815c94b4d0/querydsl-apt-5.0.0-jakarta.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.querydsl/querydsl-codegen/5.1.0/a8504ea51fbc2258543cedab6a37fe6039b2d20a/querydsl-codegen-5.1.0.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.querydsl/querydsl-core/5.1.0/be322c3fe98de8e7c204afb8860bfabd81a3bafd/querydsl-core-5.1.0.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.querydsl/codegen-utils/5.1.0/ba401554d613760617992eafb6cdba175c811e6f/codegen-utils-5.1.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/javax/inject/javax.inject/1/javax.inject-1.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.classgraph/classgraph/4.8.146/360448a09bfa5689d89cfa97fea53b3fdefa9c23/classgraph-4.8.146.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mysema.commons/mysema-commons-lang/0.2.4/d09c8489d54251a6c22fbce804bdd4a070557317/mysema-commons-lang-0.2.4.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jdt/ecj/3.26.0/4837be609a3368a0f7e7cf0dc1bdbc7fe94993de/ecj-3.26.0.jar" />
+        </processorPath>
+        <module name="multi_agent_ide.commit-diff-context.main" />
+        <module name="multi_agent_ide.test_graph.main" />
+        <module name="multi_agent_ide.mcp-tool-gateway.main" />
+        <module name="multi_agent_ide.commit-diff-context-mcp.main" />
+      </profile>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.42/8365263844ebb62398e0dc33057ba10ba472d3b8/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="multi_agent_ide.mcp-tool-gateway.test" />
+        <module name="multi_agent_ide.persistence.test" />
+        <module name="multi_agent_ide.utilitymodule.main" />
+        <module name="multi_agent_ide.commit-diff-context-mcp.test" />
+        <module name="multi_agent_ide.commit-diff-model.test" />
+        <module name="multi_agent_ide.multi_agent_ide.main" />
+        <module name="multi_agent_ide.test_graph.test" />
+        <module name="multi_agent_ide.proto.test" />
+        <module name="multi_agent_ide.tracing_agent.test" />
+        <module name="multi_agent_ide.runner_code.test" />
+        <module name="multi_agent_ide.runner_code.main" />
+        <module name="multi_agent_ide.commit-diff-context.test" />
+        <module name="multi_agent_ide.libs-resolver.test" />
+        <module name="multi_agent_ide.tracing_agent.main" />
+        <module name="multi_agent_ide.utilitymodule.test" />
+        <module name="multi_agent_ide.commit-diff-model.main" />
+        <module name="multi_agent_ide.multi_agent_ide.test" />
+        <module name="multi_agent_ide.multi_agent_ide_lib.test" />
+        <module name="multi_agent_ide.proto.main" />
+        <module name="multi_agent_ide.tracing.test" />
+        <module name="multi_agent_ide.graphql.test" />
+        <module name="multi_agent_ide.tracing.main" />
+        <module name="multi_agent_ide.graphql.main" />
+        <module name="multi_agent_ide.jpa-persistence.test" />
+      </profile>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.querydsl/querydsl-apt/5.0.0/d48657412f2b96d787bbe5ae393e33815c94b4d0/querydsl-apt-5.0.0-jakarta.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.42/8365263844ebb62398e0dc33057ba10ba472d3b8/lombok-1.18.42.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.querydsl/querydsl-codegen/5.1.0/a8504ea51fbc2258543cedab6a37fe6039b2d20a/querydsl-codegen-5.1.0.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.querydsl/querydsl-core/5.1.0/be322c3fe98de8e7c204afb8860bfabd81a3bafd/querydsl-core-5.1.0.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.querydsl/codegen-utils/5.1.0/ba401554d613760617992eafb6cdba175c811e6f/codegen-utils-5.1.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/javax/inject/javax.inject/1/javax.inject-1.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.classgraph/classgraph/4.8.146/360448a09bfa5689d89cfa97fea53b3fdefa9c23/classgraph-4.8.146.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mysema.commons/mysema-commons-lang/0.2.4/d09c8489d54251a6c22fbce804bdd4a070557317/mysema-commons-lang-0.2.4.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jdt/ecj/3.26.0/4837be609a3368a0f7e7cf0dc1bdbc7fe94993de/ecj-3.26.0.jar" />
+        </processorPath>
+        <module name="multi_agent_ide.multi_agent_ide_lib.main" />
+        <module name="multi_agent_ide.jpa-persistence.main" />
+      </profile>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.42/8365263844ebb62398e0dc33057ba10ba472d3b8/lombok-1.18.42.jar" />
+          <entry name="$MAVEN_REPOSITORY$/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar" />
+        </processorPath>
+        <module name="multi_agent_ide.libs-resolver.main" />
+      </profile>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.42/8365263844ebb62398e0dc33057ba10ba472d3b8/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="multi_agent_ide.persistence.main" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="21" />
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="multi_agent_ide.commit-diff-context" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.commit-diff-context-mcp" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.commit-diff-context-mcp.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.commit-diff-context-mcp.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.commit-diff-context.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.commit-diff-context.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.commit-diff-model" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.commit-diff-model.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.commit-diff-model.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.graphql" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.graphql.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.graphql.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.jpa-persistence" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.jpa-persistence.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.jpa-persistence.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.libs-resolver" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.libs-resolver.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.libs-resolver.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.mcp-tool-gateway" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.mcp-tool-gateway.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.mcp-tool-gateway.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.multi_agent_ide" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.multi_agent_ide.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.multi_agent_ide.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.multi_agent_ide_lib" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.multi_agent_ide_lib.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.multi_agent_ide_lib.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.persistence" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.persistence.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.persistence.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.proto" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.proto.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.proto.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.runner_code" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.runner_code.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.runner_code.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.test_graph" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.test_graph.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.test_graph.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.tracing" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.tracing.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.tracing.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.tracing_agent" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.tracing_agent.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.tracing_agent.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.utilitymodule" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.utilitymodule.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide.utilitymodule.test" options="--enable-preview -parameters" />
+    </option>
+  </component>
+</project>

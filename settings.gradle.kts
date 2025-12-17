@@ -1,4 +1,4 @@
-rootProject.name = "multi_agent_ide"
+rootProject.name = "multi_agent_ide_parent"
 
 include(":multi_agent_ide")
 include(":multi_agent_ide_lib")

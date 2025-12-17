@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/buildSrc" name="buildSrc">
+                <projects>
+                  <project path="$PROJECT_DIR$/buildSrc" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/commit-diff-context" />
+            <option value="$PROJECT_DIR$/commit-diff-context-mcp" />
+            <option value="$PROJECT_DIR$/commit-diff-model" />
+            <option value="$PROJECT_DIR$/graphql" />
+            <option value="$PROJECT_DIR$/jpa-persistence" />
+            <option value="$PROJECT_DIR$/libs-resolver" />
+            <option value="$PROJECT_DIR$/mcp-tool-gateway" />
+            <option value="$PROJECT_DIR$/multi_agent_ide" />
+            <option value="$PROJECT_DIR$/multi_agent_ide_lib" />
+            <option value="$PROJECT_DIR$/persistence" />
+            <option value="$PROJECT_DIR$/proto" />
+            <option value="$PROJECT_DIR$/runner_code" />
+            <option value="$PROJECT_DIR$/test_graph" />
+            <option value="$PROJECT_DIR$/tracing" />
+            <option value="$PROJECT_DIR$/tracing_agent" />
+            <option value="$PROJECT_DIR$/utilitymodule" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
