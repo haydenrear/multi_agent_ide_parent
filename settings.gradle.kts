@@ -3,6 +3,7 @@ rootProject.name = "multi_agent_ide_parent"
 include(":multi_agent_ide")
 include(":multi_agent_ide_lib")
 include(":tracing_agent")
+include(":tracing_aspect")
 include(":runner_code")
 include(":graphql")
 include(":test_graph")

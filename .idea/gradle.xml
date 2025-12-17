@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
@@ -35,6 +36,7 @@
             <option value="$PROJECT_DIR$/test_graph" />
             <option value="$PROJECT_DIR$/tracing" />
             <option value="$PROJECT_DIR$/tracing_agent" />
+            <option value="$PROJECT_DIR$/tracing_aspect" />
             <option value="$PROJECT_DIR$/utilitymodule" />
           </set>
         </option>

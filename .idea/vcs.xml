@@ -6,7 +6,9 @@
     <mapping directory="$PROJECT_DIR$/commit-diff-context" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/commit-diff-context-mcp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/commit-diff-model" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/graphql" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/jpa-persistence" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs-resolver" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/mcp-tool-gateway" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide_lib" vcs="Git" />

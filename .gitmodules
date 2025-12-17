@@ -49,3 +49,6 @@
 [submodule "multi_agent_ide"]
 	path = multi_agent_ide
 	url = ../commit-diff-context-parent/multi-agent-ide/.git
+[submodule "tracing_aspect"]
+	path = tracing_aspect
+	url = git@github.com:haydenrear/tracing-aspect.git
