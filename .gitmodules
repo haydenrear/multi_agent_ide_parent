@@ -1,0 +1,3 @@
+[submodule "multi_agent_ide"]
+	path = multi_agent_ide
+	url = ./multi_agent_ide/.git
