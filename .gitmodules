@@ -16,3 +16,6 @@
 [submodule "tracing"]
 	path = tracing
 	url = ./tracing/.git
+[submodule "tracing_agent"]
+	path = tracing_agent
+	url = ./tracing_agent/.git
