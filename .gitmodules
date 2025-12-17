@@ -22,3 +22,6 @@
 [submodule "test_graph"]
 	path = test_graph
 	url = ./test_graph/.git
+[submodule "utilitymodule"]
+	path = utilitymodule
+	url = ./utilitymodule/.git
