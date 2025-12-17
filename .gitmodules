@@ -10,3 +10,6 @@
 [submodule "persistence"]
 	path = persistence
 	url = ./persistence/.git
+[submodule "jpa-persistence"]
+	path = jpa-persistence
+	url = ./jpa-persistence/.git
