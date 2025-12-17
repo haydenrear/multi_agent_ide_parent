@@ -37,8 +37,8 @@
 [submodule "proto"]
 	path = proto
 	url = ./proto/.git
-[submodule "multi-agent-ide"]
-	path = multi-agent-ide
+[submodule "multi_agent_ide"]
+	path = multi_agent_ide
 	url = ../commit-diff-context-parent/multi-agent-ide/.git
 [submodule "graphql"]
 	path = graphql
