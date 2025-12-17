@@ -13,3 +13,6 @@
 [submodule "jpa-persistence"]
 	path = jpa-persistence
 	url = ./jpa-persistence/.git
+[submodule "tracing"]
+	path = tracing
+	url = ./tracing/.git
