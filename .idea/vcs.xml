@@ -24,6 +24,7 @@
     <mapping directory="$PROJECT_DIR$/test_graph/sdk" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/tracing" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/tracing_agent" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tracing_aspect" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/utilitymodule" vcs="Git" />
   </component>
 </project>
