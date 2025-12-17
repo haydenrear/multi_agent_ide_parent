@@ -25,3 +25,6 @@
 [submodule "utilitymodule"]
 	path = utilitymodule
 	url = ./utilitymodule/.git
+[submodule "commit-diff-context"]
+	path = commit-diff-context
+	url = ./commit-diff-context/.git
