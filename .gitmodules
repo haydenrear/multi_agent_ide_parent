@@ -37,3 +37,6 @@
 [submodule "mcp-tool-gateway"]
 	path = mcp-tool-gateway
 	url = ./mcp-tool-gateway/.git
+[submodule "proto"]
+	path = proto
+	url = ./proto/.git
