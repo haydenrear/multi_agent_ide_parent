@@ -4,3 +4,6 @@
 [submodule "multi_agent_ide_lib"]
 	path = multi_agent_ide_lib
 	url = ./multi_agent_ide_lib/.git
+[submodule "buildSrc"]
+	path = buildSrc
+	url = ./buildSrc/.git
