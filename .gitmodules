@@ -7,3 +7,6 @@
 [submodule "buildSrc"]
 	path = buildSrc
 	url = ./buildSrc/.git
+[submodule "persistence"]
+	path = persistence
+	url = ./persistence/.git
