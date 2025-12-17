@@ -28,3 +28,6 @@
 [submodule "commit-diff-context"]
 	path = commit-diff-context
 	url = ./commit-diff-context/.git
+[submodule "commit-diff-model"]
+	path = commit-diff-model
+	url = ./commit-diff-model/.git
