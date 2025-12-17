@@ -46,3 +46,6 @@
 [submodule "multi_agent_ide_python_parent"]
 	path = multi_agent_ide_python_parent
 	url = ./multi_agent_ide_python_parent
+[submodule "multi_agent_ide"]
+	path = multi_agent_ide
+	url = ../commit-diff-context-parent/multi-agent-ide/.git
