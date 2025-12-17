@@ -34,3 +34,6 @@
 [submodule "commit-diff-context-mcp"]
 	path = commit-diff-context-mcp
 	url = ./commit-diff-context-mcp/.git
+[submodule "mcp-tool-gateway"]
+	path = mcp-tool-gateway
+	url = ./mcp-tool-gateway/.git
