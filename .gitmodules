@@ -37,9 +37,6 @@
 [submodule "proto"]
 	path = proto
 	url = ./proto/.git
-[submodule "multi_agent_ide"]
-	path = multi_agent_ide
-	url = ../commit-diff-context-parent/multi-agent-ide/.git
 [submodule "graphql"]
 	path = graphql
 	url = git@github.com:haydenrear/federated-graphql-common.git
