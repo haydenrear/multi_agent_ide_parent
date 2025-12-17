@@ -46,3 +46,6 @@
 [submodule "libs-resolver"]
 	path = libs-resolver
 	url = ../commit-diff-context-parent/libs-resolver/.git
+[submodule "multi_agent_ide_python_parent"]
+	path = multi_agent_ide_python_parent
+	url = ./multi_agent_ide_python_parent
