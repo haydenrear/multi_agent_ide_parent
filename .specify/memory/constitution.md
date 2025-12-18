@@ -146,6 +146,7 @@ While an agent is RUNNING, users can send text messages via the UI. Messages are
 9. **Collector Agent Execution**: CollectorNode (READY) → NodeAddedEvent → AgentEventListener → AgentRunner creates collector agent
 10. **Collector Output**: Collector consolidates non-pruned child artifacts, emits upward to parent via NodeStatusChangedEvent
 11. **Phase Transition**: Parent orchestrator of next phase receives collected context, repeats cycle
+12. **Ticket Queue Advancement**: TicketOrchestrator tracks a ticket queue in metadata; each approved review spawns a MergeNode, merges the ticket worktree into the orchestrator worktree, then advances the queue or triggers a final review/merge back to the parent worktree. Merge conflicts move MergeNode to WAITING_INPUT and emit status changes.
 
 ### Human Review Gate Workflow
 1. **Code Review Execution**: ReviewAgentNode (READY) → executes ReviewAgent with ticket implementation

@@ -176,3 +176,11 @@ Specs provide context for review and merge operations. Reviewers see only releva
 - Review criteria are defined in spec acceptance scenarios
 - Human feedback mechanisms will be implemented separately if auto-review cannot make a decision
 - Network latency between services is reasonable (< 100ms) for event delivery
+
+## Implementation Notes (current)
+
+- Ticket orchestration now branches a dedicated worktree (and submodule worktrees when present), queues tickets from planning output, and advances via per-ticket review/merge before a final review and merge back to the parent worktree.
+- Review nodes persist approval/feedback decisions, request human input when needed, and hand off approved tickets to merge nodes that record conflict status and update worktree metadata.
+- Merge nodes drive worktree merges via `WorktreeService`, mark conflicts as `WAITING_INPUT`, and mark child worktrees as `MERGED` when clean.
+- Context propagation pulls discovery/planning outputs from the parent chain; spec acceptance/requirements sections are injected into review requests to keep context minimal.
+- Revision cycles spawn new ticket nodes with embedded feedback so rejected work re-enters the queue automatically.
