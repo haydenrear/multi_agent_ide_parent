@@ -107,7 +107,7 @@ While an agent is RUNNING, users can send text messages via the UI. Messages are
 - **Agent Framework**: LangChain4j-Agentic with @Agent annotation support
 - **Computation Graph**: Custom ComputationGraphOrchestrator with event-driven state machine
 - **Version Control**: Git (worktree management, branching, merging)
-- **Spec/Plan Management**: Markdown-based artifacts with Git version control
+- **Spec/Plan Management**: Markdown-based artifacts with Git version control, handled implicitly by the agents, including various collector agents merging and validating them, and associated agents creating them
 - **Frontend**: React app (multi_agent_ide/fe, built via Node Gradle plugin, served from Spring Boot static resources)
 - **Real-time Communication**: WebSocket for UI event propagation, parallel task visualization, user message ingestion, node pruning commands
 - **Serialization**: JSON for event data, structured artifact formats
@@ -128,7 +128,6 @@ While an agent is RUNNING, users can send text messages via the UI. Messages are
 - **AgentRunner**: Executes agents with proper parent/child context, handles AGENT_MESSAGE_RECEIVED events
 - **AgentLifecycleHandler**: Enforces pre/post-agent invocation contracts, artifact management, user message queueing
 - **WorktreeService/WorktreeRepository**: Manages Git worktrees and feature branch lifecycle, supports rollback on pruning
-- **SpecService/SpecRepository**: Manages spec.md, plan.md, tickets.md versioning
 - **LangChain4jConfiguration**: Configures all agent beans (@Agent interfaces) and tool bindings
 - **WebSocketController**: Publishes node status changes, accepts user messages and prune commands, broadcasts to connected UI clients
 
@@ -144,7 +143,7 @@ While an agent is RUNNING, users can send text messages via the UI. Messages are
 7. **Work Agent Completion**: Work nodes emit NodeStatusChangedEvent → AgentLifecycleHandler captures output, updates artifacts, transitions to COMPLETED
 8. **Collector Execution**: Once ALL non-pruned child work nodes reach COMPLETED status, collector node transitions to READY
 9. **Collector Agent Execution**: CollectorNode (READY) → NodeAddedEvent → AgentEventListener → AgentRunner creates collector agent
-10. **Collector Output**: Collector consolidates non-pruned child artifacts, emits upward to parent via NodeStatusChangedEvent
+10. **Collector Output**: Collector consolidates non-pruned child artifacts, such as various spec, planning, and memory documents, emits upward to parent via NodeStatusChangedEvent
 11. **Phase Transition**: Parent orchestrator of next phase receives collected context, repeats cycle
 12. **Ticket Queue Advancement**: TicketOrchestrator tracks a ticket queue in metadata; each approved review spawns a MergeNode, merges the ticket worktree into the orchestrator worktree, then advances the queue or triggers a final review/merge back to the parent worktree. Merge conflicts move MergeNode to WAITING_INPUT and emit status changes.
 
@@ -235,7 +234,7 @@ Constitution amendments follow this process:
 - **State Machine Enforcement**: ComputationGraphOrchestrator validates node transitions match expected phase patterns; invalid transitions raise exceptions
 - **Event Dispatch Auditing**: AgentEventListener is instrumented with comprehensive logging of all node creation, agent dispatch, event handling, and user interactions
 - **Lifecycle Enforcement**: AgentLifecycleHandler enforces pre-conditions (artifact existence, parent node state) and post-conditions (artifact updates, graph state updates)
-- **Artifact Validation**: SpecService validates all spec.md, plan.md, tickets.md updates conform to expected formats
+- **Artifact Validation**: Collector agents of various types manage and validate all spec.md, plan.md, tickets.md updates conform to expected formats
 - **Code Review Gate**: ReviewAgent verifies generated code compliance with constitution standards before merge approval; human review is a strict gate
 - **Pruning Audit Trail**: All node pruning operations logged with user ID, timestamp, reason (if provided), and rollback verification
 - **User Message Audit**: All user messages to agents logged, timestamped, and included in agent context audit trail
