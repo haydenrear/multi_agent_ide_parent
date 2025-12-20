@@ -4,27 +4,26 @@ Auto-generated from all feature plans. Last updated: 2025-12-20
 
 ## Active Technologies
 
-- (001-orchestrator-workflow)
+- Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Mockito, AssertJ (001-multi-agent-ide-specs)
 
 ## Project Structure
 
 ```text
-backend/
-frontend/
+src/
 tests/
 ```
 
 ## Commands
 
-# Add commands for 
+# Add commands for Java 21
 
 ## Code Style
 
-: Follow standard conventions
+Java 21: Follow standard conventions
 
 ## Recent Changes
 
-- 001-orchestrator-workflow: Added
+- 001-multi-agent-ide-specs: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Mockito, AssertJ
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->
