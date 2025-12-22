@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/libs-resolver/multi_agent_ide_parent.libs-resolver.main.iml" filepath="$PROJECT_DIR$/.idea/modules/libs-resolver/multi_agent_ide_parent.libs-resolver.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mcp-tool-gateway/multi_agent_ide_parent.mcp-tool-gateway.main.iml" filepath="$PROJECT_DIR$/.idea/modules/mcp-tool-gateway/multi_agent_ide_parent.mcp-tool-gateway.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/multi_agent_ide/multi_agent_ide_parent.multi_agent_ide.main.iml" filepath="$PROJECT_DIR$/.idea/modules/multi_agent_ide/multi_agent_ide_parent.multi_agent_ide.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/multi_agent_ide/multi_agent_ide_parent.multi_agent_ide.test.iml" filepath="$PROJECT_DIR$/.idea/modules/multi_agent_ide/multi_agent_ide_parent.multi_agent_ide.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/persistence/multi_agent_ide_parent.persistence.main.iml" filepath="$PROJECT_DIR$/.idea/modules/persistence/multi_agent_ide_parent.persistence.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/proto/multi_agent_ide_parent.proto.main.iml" filepath="$PROJECT_DIR$/.idea/modules/proto/multi_agent_ide_parent.proto.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/test_graph/multi_agent_ide_parent.test_graph.main.iml" filepath="$PROJECT_DIR$/.idea/modules/test_graph/multi_agent_ide_parent.test_graph.main.iml" />

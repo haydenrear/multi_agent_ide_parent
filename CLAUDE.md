@@ -3,6 +3,8 @@
 Auto-generated from all feature plans. Last updated: 2025-12-20
 
 ## Active Technologies
+- Java 21 + Spring Boot 3.x, LangChain4j agentic services, agentclientprotocol Kotlin SDK (JVM) (001-acp-chatmodel)
+- Filesystem/Git artifacts (no new persistent storage) (001-acp-chatmodel)
 
 - Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Mockito, AssertJ (001-multi-agent-ide-specs)
 
@@ -22,6 +24,7 @@ tests/
 Java 21: Follow standard conventions
 
 ## Recent Changes
+- 001-acp-chatmodel: Added Java 21 + Spring Boot 3.x, LangChain4j agentic services, agentclientprotocol Kotlin SDK (JVM)
 
 - 001-multi-agent-ide-specs: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Mockito, AssertJ
 
