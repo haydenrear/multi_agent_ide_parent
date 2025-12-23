@@ -43,4 +43,5 @@ out/
 .env*
 
 libs/**
-
+node_modules/
+dist/

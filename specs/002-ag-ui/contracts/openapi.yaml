@@ -1,0 +1,141 @@
+openapi: 3.1.0
+info:
+  title: Agent Graph UI Control API
+  version: 0.1.0
+servers:
+  - url: https://localhost
+paths:
+  /api/events/stream:
+    get:
+      summary: Open event stream for graph updates
+      description: |
+        Establishes a real-time stream of ag-ui event envelopes mapped from backend graph events using text/event-stream; the client should reconnect with the last-seen event id if supported.
+      responses:
+        "200":
+          description: Event stream opened
+  /api/agents/{nodeId}/pause:
+    post:
+      summary: Request pause for an agent node
+      parameters:
+        - name: nodeId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ControlActionRequest"
+      responses:
+        "202":
+          description: Pause requested
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ControlActionResponse"
+  /api/agents/{nodeId}/interrupt:
+    post:
+      summary: Request interrupt for an agent node
+      parameters:
+        - name: nodeId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ControlActionRequest"
+      responses:
+        "202":
+          description: Interrupt requested
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ControlActionResponse"
+  /api/agents/{nodeId}/review-request:
+    post:
+      summary: Request human review for an agent node
+      parameters:
+        - name: nodeId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ControlActionRequest"
+      responses:
+        "202":
+          description: Review request submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ControlActionResponse"
+components:
+  schemas:
+    ControlActionRequest:
+      type: object
+      properties:
+        message:
+          type: string
+    ControlActionResponse:
+      type: object
+      required:
+        - actionId
+        - status
+      properties:
+        actionId:
+          type: string
+        status:
+          type: string
+          description: queued | accepted | rejected
+    GraphEventEnvelope:
+      type: object
+      required:
+        - id
+        - type
+        - timestamp
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        nodeId:
+          type: string
+        payload:
+          type: object
+          additionalProperties: true
+    AgUiEventEnvelope:
+      type: object
+      required:
+        - id
+        - type
+        - timestamp
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        nodeId:
+          type: string
+        payload:
+          type: object
+          additionalProperties: true
+        mapping:
+          type: object
+          additionalProperties: true
+          description: Metadata about the backend-to-ag-ui mapping used.

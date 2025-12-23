@@ -6,6 +6,7 @@
     </content>
     <content url="file://$MODULE_DIR$/../../../multi_agent_ide/src/main" dumb="true">
       <sourceFolder url="file://$MODULE_DIR$/../../../multi_agent_ide/src/main/kotlin" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../multi_agent_ide/src/main/resources/static" />
     </content>
   </component>
 </module>

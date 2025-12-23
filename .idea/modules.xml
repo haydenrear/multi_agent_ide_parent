@@ -18,6 +18,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tracing_agent/multi_agent_ide_parent.tracing_agent.main.iml" filepath="$PROJECT_DIR$/.idea/modules/tracing_agent/multi_agent_ide_parent.tracing_agent.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tracing_aspect/multi_agent_ide_parent.tracing_aspect.main.iml" filepath="$PROJECT_DIR$/.idea/modules/tracing_aspect/multi_agent_ide_parent.tracing_aspect.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/utilitymodule/multi_agent_ide_parent.utilitymodule.main.iml" filepath="$PROJECT_DIR$/.idea/modules/utilitymodule/multi_agent_ide_parent.utilitymodule.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/utilitymodule/multi_agent_ide_parent.utilitymodule.test.iml" filepath="$PROJECT_DIR$/.idea/modules/utilitymodule/multi_agent_ide_parent.utilitymodule.test.iml" />
     </modules>
   </component>
 </project>
