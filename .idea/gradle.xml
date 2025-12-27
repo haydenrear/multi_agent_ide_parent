@@ -33,6 +33,7 @@
             <option value="$PROJECT_DIR$/persistence" />
             <option value="$PROJECT_DIR$/proto" />
             <option value="$PROJECT_DIR$/runner_code" />
+            <option value="$PROJECT_DIR$/test-mcp-server" />
             <option value="$PROJECT_DIR$/test_graph" />
             <option value="$PROJECT_DIR$/tracing" />
             <option value="$PROJECT_DIR$/tracing_agent" />

@@ -27,6 +27,7 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.42/8365263844ebb62398e0dc33057ba10ba472d3b8/lombok-1.18.42.jar" />
         </processorPath>
         <module name="multi_agent_ide_parent.tracing.test" />
+        <module name="multi_agent_ide_parent.test-mcp-server.main" />
         <module name="multi_agent_ide_parent.tracing_aspect.main" />
         <module name="multi_agent_ide_parent.runner_code.test" />
         <module name="multi_agent_ide_parent.persistence.test" />
@@ -37,6 +38,7 @@
         <module name="multi_agent_ide_parent.jpa-persistence.test" />
         <module name="multi_agent_ide_parent.commit-diff-context.test" />
         <module name="multi_agent_ide_parent.tracing_aspect.test" />
+        <module name="multi_agent_ide_parent.test-mcp-server.test" />
         <module name="multi_agent_ide_parent.utilitymodule.test" />
         <module name="multi_agent_ide_parent.graphql.test" />
         <module name="multi_agent_ide_parent.multi_agent_ide.main" />
@@ -175,6 +177,9 @@
       <module name="multi_agent_ide_parent.runner_code" options="--enable-preview -parameters" />
       <module name="multi_agent_ide_parent.runner_code.main" options="--enable-preview -parameters" />
       <module name="multi_agent_ide_parent.runner_code.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide_parent.test-mcp-server" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide_parent.test-mcp-server.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide_parent.test-mcp-server.test" options="--enable-preview -parameters" />
       <module name="multi_agent_ide_parent.test_graph" options="--enable-preview -parameters" />
       <module name="multi_agent_ide_parent.test_graph.main" options="--enable-preview -parameters" />
       <module name="multi_agent_ide_parent.test_graph.test" options="--enable-preview -parameters" />

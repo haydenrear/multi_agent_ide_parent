@@ -9,6 +9,9 @@
     <mapping directory="$PROJECT_DIR$/graphql" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/jpa-persistence" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs-resolver" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/CopilotKit" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/acp-kotlin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/ag-ui" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/mcp-tool-gateway" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide_lib" vcs="Git" />
@@ -20,6 +23,7 @@
     <mapping directory="$PROJECT_DIR$/persistence" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/proto" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/runner_code" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/test-mcp-server" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/test_graph" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/test_graph/sdk" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/tracing" vcs="Git" />
