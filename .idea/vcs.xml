@@ -23,6 +23,7 @@
     <mapping directory="$PROJECT_DIR$/persistence" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/proto" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/runner_code" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/runner_code/src/main/docker/mcp-mcp-tool-gateway/multispy" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/test-mcp-server" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/test_graph" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/test_graph/sdk" vcs="Git" />
