@@ -1,0 +1,100 @@
+openapi: 3.0.3
+info:
+  title: Interrupt Handling API
+  version: 1.0.0
+  description: API surface for requesting and resolving interrupts on workflow nodes.
+paths:
+  /interrupts:
+    post:
+      summary: Request an interrupt for a workflow stage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterruptRequest'
+      responses:
+        '202':
+          description: Interrupt request accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterruptStatus'
+  /interrupts/{interruptId}/resolve:
+    post:
+      summary: Resolve an interrupt and resume or terminate the workflow
+      parameters:
+        - in: path
+          name: interruptId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterruptResolution'
+      responses:
+        '200':
+          description: Interrupt resolved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterruptStatus'
+  /interrupts/{interruptId}:
+    get:
+      summary: Get interrupt status
+      parameters:
+        - in: path
+          name: interruptId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Current interrupt status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterruptStatus'
+components:
+  schemas:
+    InterruptRequest:
+      type: object
+      required: [type, originNodeId]
+      properties:
+        type:
+          type: string
+          enum: [HUMAN_REVIEW, AGENT_REVIEW, PAUSE, STOP, BRANCH, PRUNE]
+        originNodeId:
+          type: string
+        reason:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+    InterruptResolution:
+      type: object
+      required: [resolutionType]
+      properties:
+        resolutionType:
+          type: string
+          enum: [RESUME, APPROVE, REVISE, STOP, PRUNE, BRANCH]
+        resolutionNotes:
+          type: string
+    InterruptStatus:
+      type: object
+      properties:
+        interruptId:
+          type: string
+        status:
+          type: string
+          enum: [REQUESTED, IN_PROGRESS, RESOLVED, APPLIED]
+        originNodeId:
+          type: string
+        resumeNodeId:
+          type: string
+        lastUpdatedAt:
+          type: string
+          format: date-time

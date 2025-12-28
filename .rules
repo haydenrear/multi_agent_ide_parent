@@ -1,0 +1,5 @@
+When running gradle as codex, you must do the following:
+
+```
+export JAVA_HOME=/Users/hayde/.sdkman/candidates/java/current
+```
