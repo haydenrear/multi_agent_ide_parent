@@ -45,3 +45,5 @@ out/
 libs/**
 node_modules/
 dist/
+
+build
