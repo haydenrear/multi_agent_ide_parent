@@ -12,6 +12,7 @@
     <mapping directory="$PROJECT_DIR$/libs/CopilotKit" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/acp-kotlin" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/ag-ui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/langchain4j" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/mcp-tool-gateway" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide_lib" vcs="Git" />
