@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/prompt-contributor.json",
+  "title": "PromptContributor",
+  "description": "Schema for prompt contributor configuration and output",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique name for this contributor"
+    },
+    "applicableAgents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "ALL",
+          "ORCHESTRATOR",
+          "ORCHESTRATOR_COLLECTOR",
+          "DISCOVERY_ORCHESTRATOR",
+          "DISCOVERY_AGENT",
+          "DISCOVERY_COLLECTOR",
+          "PLANNING_ORCHESTRATOR",
+          "PLANNING_AGENT",
+          "PLANNING_COLLECTOR",
+          "TICKET_ORCHESTRATOR",
+          "TICKET_AGENT",
+          "TICKET_COLLECTOR",
+          "REVIEW_AGENT",
+          "MERGER_AGENT"
+        ]
+      },
+      "description": "Agent types this contributor applies to"
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000,
+      "description": "Ordering priority (lower = earlier in prompt)"
+    },
+    "contributionTemplate": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Template for the contribution with {{placeholders}}"
+    }
+  },
+  "required": ["name", "applicableAgents", "priority", "contributionTemplate"],
+  "$defs": {
+    "PromptContext": {
+      "type": "object",
+      "properties": {
+        "agentType": {
+          "type": "string"
+        },
+        "currentContextId": {
+          "$ref": "context-id.json"
+        },
+        "upstreamContext": {
+          "type": ["object", "null"],
+          "description": "Typed upstream context (structure varies by agent type)"
+        },
+        "previousContext": {
+          "$ref": "#/$defs/PreviousContext"
+        },
+        "blackboardHistory": {
+          "type": ["object", "null"],
+          "description": "Blackboard history context for prior runs"
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "required": ["agentType", "currentContextId"]
+    },
+    "PreviousContext": {
+      "type": ["object", "null"],
+      "description": "Per-agent previous context with discrete prior fields (no polymorphic curation list)",
+      "properties": {
+        "previousContextId": {
+          "$ref": "context-id.json"
+        },
+        "serializedOutput": {
+          "type": "string",
+          "minLength": 1
+        },
+        "errorMessage": {
+          "type": ["string", "null"]
+        },
+        "errorStackTrace": {
+          "type": ["string", "null"]
+        },
+        "attemptNumber": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "previousAttemptAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "previousDiscoveryCuration": {
+          "type": ["object", "null"],
+          "description": "Prior discovery curation context (if applicable)"
+        },
+        "previousPlanningCuration": {
+          "type": ["object", "null"],
+          "description": "Prior planning curation context (if applicable)"
+        },
+        "previousTicketCuration": {
+          "type": ["object", "null"],
+          "description": "Prior ticket curation context (if applicable)"
+        },
+        "previousDiscoveryResult": {
+          "type": ["object", "null"],
+          "description": "Prior discovery result (if applicable)"
+        },
+        "previousPlanningResult": {
+          "type": ["object", "null"],
+          "description": "Prior planning result (if applicable)"
+        },
+        "previousTicketResult": {
+          "type": ["object", "null"],
+          "description": "Prior ticket result (if applicable)"
+        },
+        "previousReviewEvaluation": {
+          "type": ["object", "null"],
+          "description": "Prior review evaluation (if applicable)"
+        },
+        "previousMergerValidation": {
+          "type": ["object", "null"],
+          "description": "Prior merger validation (if applicable)"
+        }
+      },
+      "required": [
+        "previousContextId",
+        "serializedOutput",
+        "attemptNumber",
+        "previousAttemptAt"
+      ]
+    },
+    "EpisodicMemoryContribution": {
+      "type": "object",
+      "description": "Example: Episodic Memory Tool prompt contribution",
+      "properties": {
+        "retainGuidance": {
+          "type": "string",
+          "description": "When and how to use RETAIN operation"
+        },
+        "reflectGuidance": {
+          "type": "string",
+          "description": "When and how to use REFLECT operation (critical for building connections)"
+        },
+        "recallGuidance": {
+          "type": "string",
+          "description": "When and how to use RECALL operation"
+        },
+        "recommendedFlow": {
+          "type": "string",
+          "description": "Recommended workflow: RECALL → Work → RETAIN → REFLECT"
+        }
+      },
+      "required": [
+        "retainGuidance",
+        "reflectGuidance",
+        "recallGuidance",
+        "recommendedFlow"
+      ]
+    }
+  }
+}

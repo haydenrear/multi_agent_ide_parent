@@ -1,0 +1,243 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/discovery-report.json",
+  "title": "DiscoveryReport",
+  "description": "Enhanced structured output from discovery agents",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "resultId": {
+      "$ref": "context-id.json"
+    },
+    "upstreamContextId": {
+      "$ref": "context-id.json"
+    },
+    "fileReferences": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/FileReference"
+      }
+    },
+    "crossLinks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CrossLink"
+      }
+    },
+    "semanticTags": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "$ref": "#/$defs/SemanticTag"
+      }
+    },
+    "generatedQueries": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "$ref": "#/$defs/GeneratedQuery"
+      }
+    },
+    "diagrams": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/DiagramRepresentation"
+      }
+    },
+    "architectureOverview": {
+      "type": "string",
+      "minLength": 1
+    },
+    "keyPatterns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "integrationPoints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relevanceScores": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "resultId",
+    "upstreamContextId",
+    "fileReferences",
+    "semanticTags",
+    "generatedQueries",
+    "architectureOverview",
+    "relevanceScores"
+  ],
+  "$defs": {
+    "FileReference": {
+      "type": "object",
+      "properties": {
+        "filePath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "startLine": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "endLine": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "relevanceScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "snippet": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["filePath", "startLine", "endLine", "relevanceScore", "snippet"]
+    },
+    "CrossLink": {
+      "type": "object",
+      "properties": {
+        "linkId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceReferenceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "targetReferenceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "linkType": {
+          "type": "string",
+          "enum": ["CALLS", "DEPENDS_ON", "IMPLEMENTS", "EXTENDS", "RELATED_TO", "DATA_FLOW"]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": ["linkId", "sourceReferenceId", "targetReferenceId", "linkType", "description"]
+    },
+    "SemanticTag": {
+      "type": "object",
+      "properties": {
+        "tagId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tagName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tagCategory": {
+          "type": "string",
+          "enum": ["ARCHITECTURE", "PATTERN", "DATA_FLOW", "ENTRY_POINT", "TEST", "INTEGRATION", "SECURITY", "PERFORMANCE"]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "appliedTo": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["tagId", "tagName", "tagCategory", "confidence", "appliedTo"]
+    },
+    "GeneratedQuery": {
+      "type": "object",
+      "properties": {
+        "queryId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "queryText": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expectedResultPaths": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "queryType": {
+          "type": "string",
+          "enum": ["CODE_SEARCH", "PATTERN_FIND", "DEPENDENCY_TRACE", "API_LOOKUP", "TEST_FIND"]
+        },
+        "groundTruthRelevance": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      },
+      "required": ["queryId", "queryText", "expectedResultPaths", "queryType", "groundTruthRelevance"]
+    },
+    "DiagramRepresentation": {
+      "type": "object",
+      "properties": {
+        "diagramId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "diagramType": {
+          "type": "string",
+          "enum": ["CLASS", "SEQUENCE", "COMPONENT", "DATA_FLOW", "DEPENDENCY"]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nodes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object"
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "mermaidSource": {
+          "type": ["string", "null"]
+        }
+      },
+      "required": ["diagramId", "diagramType", "title", "nodes"]
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/context-id.json",
+  "title": "ContextId",
+  "description": "Unique identifier for any context/result in the workflow",
+  "type": "object",
+  "properties": {
+    "workflowRunId": {
+      "type": "string",
+      "pattern": "^wf-[a-f0-9-]+$",
+      "description": "ID of the workflow execution"
+    },
+    "agentType": {
+      "type": "string",
+      "enum": [
+        "ORCHESTRATOR",
+        "ORCHESTRATOR_COLLECTOR",
+        "DISCOVERY_ORCHESTRATOR",
+        "DISCOVERY_AGENT",
+        "DISCOVERY_COLLECTOR",
+        "PLANNING_ORCHESTRATOR",
+        "PLANNING_AGENT",
+        "PLANNING_COLLECTOR",
+        "TICKET_ORCHESTRATOR",
+        "TICKET_AGENT",
+        "TICKET_COLLECTOR",
+        "REVIEW_AGENT",
+        "MERGER_AGENT"
+      ],
+      "description": "Type of agent that produced this context"
+    },
+    "sequenceNumber": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Sequence within workflow for this agent type"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this context was created (ISO-8601)"
+    }
+  },
+  "required": ["workflowRunId", "agentType", "sequenceNumber", "timestamp"],
+  "additionalProperties": false
+}
