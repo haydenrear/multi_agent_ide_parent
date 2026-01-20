@@ -58,3 +58,6 @@
 [submodule "test-mcp-server"]
 	path = test-mcp-server
 	url = git@github.com:haydenrear/test-mcp-server.git
+[submodule "skills"]
+	path = skills
+	url = git@github.com:haydenrear/skills.git
