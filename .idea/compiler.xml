@@ -17,8 +17,8 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jdt/ecj/3.26.0/4837be609a3368a0f7e7cf0dc1bdbc7fe94993de/ecj-3.26.0.jar" />
         </processorPath>
         <module name="multi_agent_ide_parent.mcp-tool-gateway.main" />
-        <module name="multi_agent_ide_parent.commit-diff-context.main" />
         <module name="multi_agent_ide_parent.test_graph.main" />
+        <module name="multi_agent_ide_parent.commit-diff-context.main" />
       </profile>
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />

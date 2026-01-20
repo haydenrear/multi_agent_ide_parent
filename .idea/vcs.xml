@@ -4,7 +4,6 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/buildSrc" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/commit-diff-context" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/commit-diff-context-mcp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/commit-diff-model" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/graphql" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/jpa-persistence" vcs="Git" />
