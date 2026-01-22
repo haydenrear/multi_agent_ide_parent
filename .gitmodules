@@ -61,3 +61,6 @@
 [submodule "skills"]
 	path = skills
 	url = git@github.com:haydenrear/skills.git
+[submodule "test-acp-client"]
+	path = test-acp-client
+	url = ./test-acp-client/.git

@@ -1,9 +1,10 @@
-# Feature Specification: Agent Prompts, Structured Outputs, and Tool Prompt Contributors
+# Feature Specification: Agent Prompts, Structured Outputs, Tool Prompt Contributors, and Structured Interrupt Requests
 
 **Feature Branch**: `004-agent-prompts-outputs`  
 **Created**: 2026-01-19  
+**Updated**: 2026-01-21  
 **Status**: Draft  
-**Input**: Building structured outputs and prompts for all agents in AgentInterfaces.java, adding a prompt contributor framework for tools, and implementing episodic memory tool prompts as the first contributor
+**Input**: Building structured outputs and prompts for all agents in AgentInterfaces.java, adding a prompt contributor framework for tools, implementing episodic memory tool prompts as the first contributor, and designing structured interrupt requests with agent-specific typing to facilitate controller model extraction
 
 ## Design Philosophy: Standardization for Model Tuning
 
@@ -61,6 +62,123 @@ Each context/result has a unique ID that includes:
 - Timestamp
 
 Example: `wf-abc123/discovery-collector/001/2026-01-19T10:30:00Z`
+
+## Design Philosophy: Structured Interrupt Requests for Controller Extraction
+
+The interrupt system is a critical innovation point for extracting controller behavior. Currently, the entire human-in-the-loop conversation occurs through interrupts - this is the primary channel where implementation details are validated, clarified, and confirmed. By **structuring and typing interrupt requests per agent type**, we create:
+
+1. **Controller extraction dataset** - Structured back-and-forth conversations become training data for automated controllers
+2. **Emergent uncertainty routing** - Prompts guide agents to self-identify when they are uncertain about implementation decisions and route for confirmation
+3. **Progressive disclosure** - Interrupts propose multiple-choice options (A, B, C) or "fill-in" templates rather than open-ended questions
+4. **Cerebral inhibition** - Structured interactions reduce cognitive load on the controller model by breaking decisions into smaller, typed chunks
+
+### Interrupt Flow Design
+
+```
+Agent works on task with prompt guidance:
+    "When you make implicit implementation decisions and feel uncertain,
+     route to interrupt for human review with structured options."
+    ↓
+Agent recognizes uncertainty → produces typed InterruptRequest
+    ↓
+InterruptRequest (typed per agent - see full list below):
+    - type: HUMAN_REVIEW, AGENT_REVIEW, PAUSE, etc.
+    - reason: why the interrupt is needed (agent's explanation of uncertainty)
+    - choices: List<StructuredChoice> (multiple choice with write-in)
+    - confirmations: List<ConfirmationItem> (yes/no decisions)
+    - contextForDecision: agent-specific upstream context summary
+    ↓
+Controller (human or model) responds with:
+    - InterruptResolution (selected options, custom write-ins, confirmations)
+    ↓
+Resolution translated via LLM into routing decision
+    ↓
+Agent receives structured continuation context
+```
+
+### Typed Interrupt Requests Per Agent
+
+Every agent type has its own typed interrupt request with agent-specific context fields:
+
+| Agent | Interrupt Request Type | Agent-Specific Context |
+|-------|----------------------|------------------------|
+| Orchestrator | OrchestratorInterruptRequest | phase, goal, workflow context |
+| Orchestrator Collector | OrchestratorCollectorInterruptRequest | phase decision, collector results |
+| Discovery Orchestrator | DiscoveryOrchestratorInterruptRequest | subdomain partitioning, scope |
+| Discovery Agent | DiscoveryAgentInterruptRequest | code findings, boundary decisions |
+| Discovery Collector | DiscoveryCollectorInterruptRequest | consolidation decisions, recommendations |
+| Discovery Agent Dispatch | DiscoveryAgentDispatchInterruptRequest | dispatch routing decisions |
+| Planning Orchestrator | PlanningOrchestratorInterruptRequest | ticket decomposition, discovery context |
+| Planning Agent | PlanningAgentInterruptRequest | ticket design, architecture decisions |
+| Planning Collector | PlanningCollectorInterruptRequest | ticket consolidation, dependency resolution |
+| Planning Agent Dispatch | PlanningAgentDispatchInterruptRequest | dispatch routing decisions |
+| Ticket Orchestrator | TicketOrchestratorInterruptRequest | implementation scope, planning context |
+| Ticket Agent | TicketAgentInterruptRequest | implementation approach, file changes |
+| Ticket Collector | TicketCollectorInterruptRequest | completion status, follow-ups |
+| Ticket Agent Dispatch | TicketAgentDispatchInterruptRequest | dispatch routing decisions |
+| Review Agent | ReviewInterruptRequest | review criteria, assessment |
+| Merger Agent | MergerInterruptRequest | conflict resolution, merge strategy |
+| Context Orchestrator | ContextOrchestratorInterruptRequest | context gathering scope |
+| Context Agent | ContextAgentInterruptRequest | context findings |
+| Context Collector | ContextCollectorInterruptRequest | context consolidation |
+| Context Agent Dispatch | ContextAgentDispatchInterruptRequest | dispatch routing decisions |
+
+### Prompt-Based Uncertainty Recognition
+
+Rather than computing explicit uncertainty scores, agents are prompted to recognize their own uncertainty during task execution. The prompting technique instructs agents:
+
+1. **During task execution**: As you work, notice when you make implicit implementation decisions
+2. **Self-assessment**: If you are uncertain about a decision's correctness or appropriateness, route for review
+3. **Structured output**: When routing, provide structured options so the controller can respond efficiently
+
+This approach allows uncertainty to **emerge naturally** from the LLM's reasoning rather than being artificially quantified. The agent's explanation of why it is uncertain becomes part of the training data for controller models.
+
+### The Missing Middle Ground
+
+Currently there are two extremes:
+- **Approve every file write**: Too granular, interrupts flow constantly
+- **Let it run forever**: No steering, wastes tokens on wrong directions
+
+Structured interrupts provide the **middle ground**: back-and-forth on implementation details before code is written. This:
+- Reduces wasted tokens from wrong implementation directions
+- Gathers steering information for controller model extraction
+- Allows human input at decision points, not just approval points
+
+### Structured Choice Format
+
+All structured choices follow a consistent multiple-choice pattern with write-in option:
+
+```
+StructuredChoice:
+  - choiceId: unique identifier for this decision point
+  - question: what decision needs to be made
+  - context: relevant background for the decision
+  - options:
+    - A: first option with description
+    - B: second option with description  
+    - C: third option with description (optional)
+    - CUSTOM: "Or provide your own approach"
+  - recommended: which option the agent prefers (if any)
+```
+
+This format is used for:
+- **Implementation approach choices**: How to structure the code
+- **Architecture decisions**: Which pattern or design to use
+- **Ambiguous requirements**: How to interpret unclear specifications
+- **Trade-off decisions**: Performance vs. simplicity, etc.
+
+### Confirmation Item Format
+
+Confirmation items are simple yes/no decisions for specific implementation details:
+
+```
+ConfirmationItem:
+  - confirmationId: unique identifier
+  - statement: what is being confirmed (specific implementation detail)
+  - context: why this needs confirmation
+  - defaultValue: suggested yes/no
+  - impactIfNo: what alternative would be pursued
+```
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -386,18 +504,508 @@ As a developer, I want the merger agent to receive typed, curated context and pr
 
 ---
 
+### User Story 19 - Agent-Specific Typed Interrupt Requests (Priority: P1)
+
+As a developer, I want every agent type to have its own typed interrupt request with agent-specific context fields so that interrupt handling can be tailored to the agent's role and create structured training data for controller extraction.
+
+**Why this priority**: This is the foundation for extracting controller behavior. Without typed interrupts, we cannot build structured datasets for training automated controllers. Every agent (orchestrators, agents, collectors, dispatchers) needs its own type.
+
+**Independent Test**: Can be tested by triggering interrupts from different agent types and validating each produces the correct typed interrupt request with agent-specific fields.
+
+**Cucumber Test Tag**: `@typed-interrupt-requests`
+
+**Acceptance Scenarios**:
+
+1. **Given** any agent needs human review, **When** it produces an interrupt, **Then** the interrupt is typed according to the agent (e.g., `PlanningAgentInterruptRequest`, `TicketCollectorInterruptRequest`, `DiscoveryOrchestratorInterruptRequest`)
+2. **Given** an interrupt is produced, **When** examined, **Then** it contains base fields (type, reason, choices, confirmations) plus agent-specific context fields
+3. **Given** all 20 agent types exist, **When** the system is complete, **Then** each has a corresponding typed interrupt request with prompts
+4. **Given** interrupt requests are collected over time, **When** used for training, **Then** the typed structure enables direct extraction of controller training examples per agent role
+
+---
+
+### User Story 20 - Prompt-Based Uncertainty Recognition (Priority: P1)
+
+As a developer, I want agent prompts to guide agents to recognize their own uncertainty during task execution so that they self-route for confirmation when making implicit implementation decisions they are unsure about.
+
+**Why this priority**: This prompting technique is the core mechanism for intelligent interrupt routing - it allows uncertainty to emerge naturally from the LLM's reasoning rather than being artificially computed.
+
+**Independent Test**: Can be tested by providing prompts with uncertainty guidance and validating agents produce interrupts with explanations when facing ambiguous decisions.
+
+**Cucumber Test Tag**: `@prompt-based-uncertainty`
+
+**Acceptance Scenarios**:
+
+1. **Given** an agent prompt includes uncertainty recognition guidance, **When** the agent faces an ambiguous implementation decision, **Then** it produces an interrupt with an explanation of why it is uncertain
+2. **Given** an agent is working on a task, **When** it makes an implicit decision it is confident about, **Then** it proceeds without interrupting
+3. **Given** an agent produces an interrupt due to uncertainty, **When** the interrupt is examined, **Then** the reason field contains the agent's explanation of the uncertainty
+4. **Given** interrupt reasons are collected over time, **When** used for training, **Then** the natural language uncertainty explanations become controller training data
+
+---
+
+### User Story 21 - Structured Choices with Multiple-Choice and Write-In (Priority: P1)
+
+As a developer, I want interrupt requests to include structured choices with LLM-provided options (A, B, C) plus a write-in option so that the controller can select from well-defined alternatives or provide their own approach.
+
+**Why this priority**: Structured choices reduce cognitive load on the controller, create cleaner training data, and make automated controller responses more tractable while still allowing flexibility.
+
+**Independent Test**: Can be tested by triggering an interrupt and validating it contains structured choices with options and write-in capability.
+
+**Cucumber Test Tag**: `@structured-choices-interrupts`
+
+**Acceptance Scenarios**:
+
+1. **Given** an agent faces an implementation decision, **When** it produces an interrupt, **Then** the interrupt includes structured choices with 2-4 options plus CUSTOM write-in
+2. **Given** each structured choice, **When** examined, **Then** it includes choiceId, question, context, options (A/B/C/CUSTOM), and optional recommended flag
+3. **Given** the controller selects option "B", **When** the resolution is processed, **Then** the agent receives the selected approach for continuation
+4. **Given** the controller selects "CUSTOM" and provides their approach, **When** the resolution is processed, **Then** the agent receives the custom input for continuation
+
+---
+
+### User Story 22 - Confirmation Items in Interrupts (Priority: P1)
+
+As a developer, I want interrupt requests to include confirmation items for simple yes/no decisions so that the controller can quickly approve or reject specific implementation details.
+
+**Why this priority**: Confirmation items break complex decisions into atomic yes/no choices, making controller training more tractable and reducing decision fatigue.
+
+**Independent Test**: Can be tested by triggering an interrupt with confirmation items and validating each includes statement, context, and impact information.
+
+**Cucumber Test Tag**: `@confirmation-items-interrupts`
+
+**Acceptance Scenarios**:
+
+1. **Given** an agent has specific implementation details to confirm, **When** it produces an interrupt, **Then** the interrupt includes confirmation items for each detail
+2. **Given** each confirmation item, **When** examined, **Then** it includes confirmationId, statement, context, defaultValue, and impactIfNo
+3. **Given** the controller rejects a confirmation, **When** the resolution is processed, **Then** the alternative approach (impactIfNo) is pursued
+4. **Given** multiple confirmations, **When** the controller responds, **Then** they can approve/reject each independently
+
+---
+
+### User Story 23 - Interrupt Resolution Translation via LLM (Priority: P1)
+
+As a developer, I want interrupt resolutions to be translated via LLM into routing decisions so that the selected actions, filled values, and confirmations are properly integrated into the agent continuation.
+
+**Why this priority**: The LLM translation step bridges human input to structured agent context, creating a clean interface between controller decisions and agent execution.
+
+**Independent Test**: Can be tested by providing an interrupt resolution and validating the LLM produces appropriate routing/continuation context.
+
+**Cucumber Test Tag**: `@interrupt-resolution-translation`
+
+**Acceptance Scenarios**:
+
+1. **Given** a controller selects proposed action "B", **When** the resolution is processed, **Then** an LLM translates the selection into agent-specific continuation context
+2. **Given** a controller provides fill-in values, **When** the resolution is processed, **Then** the LLM incorporates the values into the appropriate request fields
+3. **Given** a controller rejects confirmations, **When** the resolution is processed, **Then** the LLM generates appropriate modification or rollback instructions
+4. **Given** the translation completes, **When** the agent receives continuation, **Then** the context includes all resolution decisions in typed form
+
+---
+
+### User Story 24 - Orchestrator Interrupt with Workflow Context (Priority: P2)
+
+As a developer, I want `OrchestratorInterruptRequest` to include workflow-level fields (current phase, goal, workflow state) so that orchestrator interrupts provide high-level steering context for confirmation.
+
+**Why this priority**: The orchestrator makes top-level workflow decisions. Structured orchestrator interrupts enable confirmation of phase transitions and goal interpretation.
+
+**Independent Test**: Can be tested by triggering an orchestrator interrupt and validating it contains phase, goal, and workflow context.
+
+**Cucumber Test Tag**: `@orchestrator-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** the orchestrator is uncertain about phase transition, **When** it produces an interrupt, **Then** the interrupt includes current phase, proposed next phase, and rationale
+2. **Given** the orchestrator interprets the goal, **When** it needs confirmation, **Then** the interrupt includes goal interpretation with structured choices for refinement
+3. **Given** workflow state affects the decision, **When** producing an interrupt, **Then** context includes relevant workflow history summary
+
+---
+
+### User Story 25 - Orchestrator Collector Interrupt with Phase Decision Context (Priority: P2)
+
+As a developer, I want `OrchestratorCollectorInterruptRequest` to include phase decision fields (collector results summary, advancement rationale, phase options) so that orchestrator collector interrupts enable phase steering.
+
+**Why this priority**: The orchestrator collector decides whether to advance, route back, or stop. Structured interrupts enable confirmation of these critical workflow decisions.
+
+**Independent Test**: Can be tested by triggering an orchestrator collector interrupt and validating it contains phase decision context.
+
+**Cucumber Test Tag**: `@orchestrator-collector-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** the orchestrator collector consolidates results, **When** it needs confirmation on phase decision, **Then** the interrupt includes ADVANCE_PHASE, ROUTE_BACK, or STOP as structured choices
+2. **Given** collector results inform the decision, **When** producing an interrupt, **Then** context includes summary of upstream collector outputs
+3. **Given** the decision has downstream implications, **When** producing an interrupt, **Then** each choice option describes its workflow implications
+
+---
+
+### User Story 26 - Discovery Orchestrator Interrupt with Scope Context (Priority: P2)
+
+As a developer, I want `DiscoveryOrchestratorInterruptRequest` to include scope fields (subdomain partitioning, coverage goals, discovery strategy) so that discovery orchestrator interrupts enable scope steering.
+
+**Why this priority**: The discovery orchestrator partitions the codebase for analysis. Structured interrupts enable confirmation of scope and partitioning decisions.
+
+**Independent Test**: Can be tested by triggering a discovery orchestrator interrupt and validating it contains scope and partitioning context.
+
+**Cucumber Test Tag**: `@discovery-orchestrator-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** the discovery orchestrator partitions subdomains, **When** it needs confirmation, **Then** the interrupt includes proposed subdomain list with rationale
+2. **Given** coverage goals are ambiguous, **When** producing an interrupt, **Then** structured choices offer coverage alternatives (broad vs. deep)
+3. **Given** discovery strategy affects agent count, **When** producing an interrupt, **Then** context includes agent dispatch plan with resource implications
+
+---
+
+### User Story 27 - Discovery Agent Interrupt with Code Findings Context (Priority: P2)
+
+As a developer, I want `DiscoveryAgentInterruptRequest` to include code findings fields (file references, boundary decisions, pattern observations) so that discovery agent interrupts provide code-specific context for confirmation.
+
+**Why this priority**: Discovery agents analyze code and identify patterns. Structured interrupts enable confirmation of code boundary decisions and finding interpretations.
+
+**Independent Test**: Can be tested by triggering a discovery agent interrupt and validating it contains code references and boundary proposals.
+
+**Cucumber Test Tag**: `@discovery-agent-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** a discovery agent identifies code boundaries, **When** it needs confirmation, **Then** the interrupt includes file paths with proposed boundary markers
+2. **Given** the agent observes patterns, **When** uncertain about interpretation, **Then** structured choices offer pattern classification alternatives
+3. **Given** findings have relevance scores, **When** producing an interrupt, **Then** confirmation items include high-relevance findings for validation
+
+---
+
+### User Story 28 - Discovery Collector Interrupt with Consolidation Context (Priority: P2)
+
+As a developer, I want `DiscoveryCollectorInterruptRequest` to include consolidation fields (code references, subdomain boundaries, recommendations, merge decisions) so that discovery collector interrupts enable consolidation steering.
+
+**Why this priority**: Discovery collectors consolidate code understanding from multiple agents. Structured interrupts enable confirmation of consolidation and recommendation decisions.
+
+**Independent Test**: Can be tested by triggering a discovery collector interrupt and validating it contains code references and boundary proposals.
+
+**Cucumber Test Tag**: `@discovery-collector-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** a discovery collector consolidates findings, **When** it needs confirmation, **Then** the interrupt includes code references with file paths, line numbers, and relevance
+2. **Given** the collector proposes subdomain boundaries, **When** producing an interrupt, **Then** structured choices describe boundary alternatives with coverage implications
+3. **Given** the collector has recommendations, **When** producing an interrupt, **Then** confirmation items include each recommendation for approval/rejection
+
+---
+
+### User Story 29 - Discovery Dispatch Interrupt with Routing Context (Priority: P2)
+
+As a developer, I want `DiscoveryAgentDispatchInterruptRequest` to include dispatch routing fields (agent assignments, workload distribution, routing rationale) so that discovery dispatch interrupts enable routing steering.
+
+**Why this priority**: Discovery dispatch routes work to discovery agents. Structured interrupts enable confirmation of agent assignments and workload balance.
+
+**Independent Test**: Can be tested by triggering a discovery dispatch interrupt and validating it contains routing decisions and agent assignments.
+
+**Cucumber Test Tag**: `@discovery-dispatch-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** the dispatch routes to multiple agents, **When** it needs confirmation, **Then** the interrupt includes agent assignments with subdomain focus
+2. **Given** workload distribution is uneven, **When** producing an interrupt, **Then** structured choices offer rebalancing alternatives
+3. **Given** routing affects coverage, **When** producing an interrupt, **Then** confirmation items include coverage trade-offs for each routing decision
+
+---
+
+### User Story 30 - Planning Orchestrator Interrupt with Decomposition Context (Priority: P2)
+
+As a developer, I want `PlanningOrchestratorInterruptRequest` to include decomposition fields (ticket breakdown strategy, discovery context usage, planning scope) so that planning orchestrator interrupts enable decomposition steering.
+
+**Why this priority**: The planning orchestrator decomposes work into tickets based on discovery. Structured interrupts enable confirmation of decomposition strategy.
+
+**Independent Test**: Can be tested by triggering a planning orchestrator interrupt and validating it contains decomposition and discovery context.
+
+**Cucumber Test Tag**: `@planning-orchestrator-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** the planning orchestrator decomposes work, **When** it needs confirmation, **Then** the interrupt includes proposed ticket breakdown with granularity rationale
+2. **Given** discovery context informs decomposition, **When** producing an interrupt, **Then** context includes relevant discovery findings being considered
+3. **Given** scope is ambiguous, **When** producing an interrupt, **Then** structured choices offer scope alternatives (minimal vs. comprehensive)
+
+---
+
+### User Story 31 - Planning Agent Interrupt with Ticket Design Context (Priority: P2)
+
+As a developer, I want `PlanningAgentInterruptRequest` to include ticket design fields (proposed tickets, architecture decisions, discovery references) so that planning agent interrupts provide actionable context for confirmation.
+
+**Why this priority**: Planning agents make architectural decisions that significantly impact the implementation. Structured planning interrupts enable effective human review.
+
+**Independent Test**: Can be tested by triggering a planning agent interrupt and validating it contains ticket proposals with discovery links.
+
+**Cucumber Test Tag**: `@planning-agent-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** a planning agent proposes tickets, **When** it needs confirmation, **Then** the interrupt includes proposed tickets with IDs, descriptions, and dependencies
+2. **Given** tickets reference discovery findings, **When** the interrupt is produced, **Then** each ticket proposal links to relevant discovery context
+3. **Given** the planning agent faces an architecture decision, **When** it produces an interrupt, **Then** structured choices describe architectural alternatives with implications
+
+---
+
+### User Story 32 - Planning Collector Interrupt with Consolidation Context (Priority: P2)
+
+As a developer, I want `PlanningCollectorInterruptRequest` to include consolidation fields (consolidated tickets, dependency conflicts, merge decisions) so that planning collector interrupts enable ticket consolidation steering.
+
+**Why this priority**: Planning collectors consolidate tickets from multiple planning agents. Structured interrupts enable confirmation of dependency resolution and ticket merging.
+
+**Independent Test**: Can be tested by triggering a planning collector interrupt and validating it contains consolidated tickets and conflict information.
+
+**Cucumber Test Tag**: `@planning-collector-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** a planning collector consolidates tickets, **When** it needs confirmation, **Then** the interrupt includes consolidated ticket list with merge decisions
+2. **Given** dependency conflicts exist, **When** producing an interrupt, **Then** structured choices offer conflict resolution alternatives
+3. **Given** tickets may be duplicates, **When** producing an interrupt, **Then** confirmation items include deduplication decisions for approval
+
+---
+
+### User Story 33 - Planning Dispatch Interrupt with Routing Context (Priority: P2)
+
+As a developer, I want `PlanningAgentDispatchInterruptRequest` to include dispatch routing fields (agent assignments, ticket distribution, discovery context routing) so that planning dispatch interrupts enable routing steering.
+
+**Why this priority**: Planning dispatch routes work to planning agents. Structured interrupts enable confirmation of ticket assignments and context distribution.
+
+**Independent Test**: Can be tested by triggering a planning dispatch interrupt and validating it contains routing decisions.
+
+**Cucumber Test Tag**: `@planning-dispatch-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** the dispatch routes to multiple agents, **When** it needs confirmation, **Then** the interrupt includes agent assignments with ticket focus
+2. **Given** discovery context distribution varies, **When** producing an interrupt, **Then** structured choices offer context filtering alternatives
+3. **Given** routing affects ticket quality, **When** producing an interrupt, **Then** confirmation items include context sufficiency checks
+
+---
+
+### User Story 34 - Ticket Orchestrator Interrupt with Implementation Scope Context (Priority: P2)
+
+As a developer, I want `TicketOrchestratorInterruptRequest` to include scope fields (implementation scope, planning context usage, execution strategy) so that ticket orchestrator interrupts enable implementation steering.
+
+**Why this priority**: The ticket orchestrator scopes implementation based on planning. Structured interrupts enable confirmation of implementation scope and strategy.
+
+**Independent Test**: Can be tested by triggering a ticket orchestrator interrupt and validating it contains scope and planning context.
+
+**Cucumber Test Tag**: `@ticket-orchestrator-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** the ticket orchestrator scopes implementation, **When** it needs confirmation, **Then** the interrupt includes proposed scope with ticket priorities
+2. **Given** planning context informs scope, **When** producing an interrupt, **Then** context includes relevant planning decisions being considered
+3. **Given** execution strategy is ambiguous, **When** producing an interrupt, **Then** structured choices offer strategy alternatives (sequential vs. parallel)
+
+---
+
+### User Story 35 - Ticket Agent Interrupt with Implementation Context (Priority: P2)
+
+As a developer, I want `TicketAgentInterruptRequest` to include implementation fields (files to modify, test strategies, implementation approaches) so that ticket agent interrupts provide actionable context for confirmation.
+
+**Why this priority**: Ticket agents make implementation decisions that affect code directly. Structured implementation interrupts enable confirmation before code changes.
+
+**Independent Test**: Can be tested by triggering a ticket agent interrupt and validating it contains file modification plans and test strategies.
+
+**Cucumber Test Tag**: `@ticket-agent-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** a ticket agent plans file modifications, **When** it needs confirmation, **Then** the interrupt includes proposed file changes with descriptions
+2. **Given** the agent has multiple implementation approaches, **When** producing an interrupt, **Then** structured choices describe implementation alternatives with trade-offs
+3. **Given** the agent plans tests, **When** producing an interrupt, **Then** confirmation items include test coverage plans for approval
+
+---
+
+### User Story 36 - Ticket Collector Interrupt with Completion Context (Priority: P2)
+
+As a developer, I want `TicketCollectorInterruptRequest` to include completion fields (completion status, follow-up items, verification results) so that ticket collector interrupts enable completion steering.
+
+**Why this priority**: Ticket collectors consolidate implementation results. Structured interrupts enable confirmation of completion status and follow-up decisions.
+
+**Independent Test**: Can be tested by triggering a ticket collector interrupt and validating it contains completion status and follow-ups.
+
+**Cucumber Test Tag**: `@ticket-collector-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** a ticket collector consolidates results, **When** it needs confirmation, **Then** the interrupt includes completion status per ticket
+2. **Given** follow-up items are identified, **When** producing an interrupt, **Then** confirmation items include each follow-up for approval/rejection
+3. **Given** verification results vary, **When** producing an interrupt, **Then** structured choices offer verification strategy alternatives
+
+---
+
+### User Story 37 - Ticket Dispatch Interrupt with Routing Context (Priority: P2)
+
+As a developer, I want `TicketAgentDispatchInterruptRequest` to include dispatch routing fields (agent assignments, ticket distribution, context routing) so that ticket dispatch interrupts enable routing steering.
+
+**Why this priority**: Ticket dispatch routes work to ticket agents. Structured interrupts enable confirmation of ticket assignments and context distribution.
+
+**Independent Test**: Can be tested by triggering a ticket dispatch interrupt and validating it contains routing decisions.
+
+**Cucumber Test Tag**: `@ticket-dispatch-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** the dispatch routes to multiple agents, **When** it needs confirmation, **Then** the interrupt includes agent assignments with ticket focus
+2. **Given** context distribution varies, **When** producing an interrupt, **Then** structured choices offer context filtering alternatives
+3. **Given** routing affects implementation quality, **When** producing an interrupt, **Then** confirmation items include context sufficiency checks
+
+---
+
+### User Story 38 - Review Agent Interrupt with Assessment Context (Priority: P2)
+
+As a developer, I want `ReviewInterruptRequest` to include assessment fields (review criteria, assessment findings, approval recommendations) so that review agent interrupts enable review steering.
+
+**Why this priority**: Review agents evaluate content quality. Structured interrupts enable confirmation of review criteria and assessment decisions.
+
+**Independent Test**: Can be tested by triggering a review agent interrupt and validating it contains review criteria and findings.
+
+**Cucumber Test Tag**: `@review-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** a review agent evaluates content, **When** it needs confirmation, **Then** the interrupt includes assessment findings with severity ratings
+2. **Given** review criteria are ambiguous, **When** producing an interrupt, **Then** structured choices offer criteria interpretation alternatives
+3. **Given** approval is conditional, **When** producing an interrupt, **Then** confirmation items include conditions for approval
+
+---
+
+### User Story 39 - Merger Agent Interrupt with Conflict Context (Priority: P2)
+
+As a developer, I want `MergerInterruptRequest` to include conflict fields (conflict files, resolution strategies, merge approach) so that merger agent interrupts enable merge steering.
+
+**Why this priority**: Merger agents resolve conflicts. Structured interrupts enable confirmation of conflict resolution strategies.
+
+**Independent Test**: Can be tested by triggering a merger agent interrupt and validating it contains conflict details and resolution options.
+
+**Cucumber Test Tag**: `@merger-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** a merger agent encounters conflicts, **When** it needs confirmation, **Then** the interrupt includes conflict files with diff summaries
+2. **Given** multiple resolution strategies exist, **When** producing an interrupt, **Then** structured choices describe resolution alternatives (ours/theirs/manual)
+3. **Given** merge affects functionality, **When** producing an interrupt, **Then** confirmation items include impact assessments for each conflict
+
+---
+
+### User Story 40 - Context Orchestrator Interrupt with Gathering Scope Context (Priority: P2)
+
+As a developer, I want `ContextOrchestratorInterruptRequest` to include scope fields (context gathering scope, source priorities, relevance criteria) so that context orchestrator interrupts enable gathering steering.
+
+**Why this priority**: The context orchestrator determines what context to gather. Structured interrupts enable confirmation of gathering scope and priorities.
+
+**Independent Test**: Can be tested by triggering a context orchestrator interrupt and validating it contains scope and priority information.
+
+**Cucumber Test Tag**: `@context-orchestrator-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** the context orchestrator scopes gathering, **When** it needs confirmation, **Then** the interrupt includes proposed sources with relevance rationale
+2. **Given** source priorities are ambiguous, **When** producing an interrupt, **Then** structured choices offer priority alternatives
+3. **Given** gathering affects downstream agents, **When** producing an interrupt, **Then** confirmation items include coverage sufficiency checks
+
+---
+
+### User Story 41 - Context Agent Interrupt with Findings Context (Priority: P2)
+
+As a developer, I want `ContextAgentInterruptRequest` to include findings fields (context findings, relevance assessments, source references) so that context agent interrupts enable findings steering.
+
+**Why this priority**: Context agents gather and assess context relevance. Structured interrupts enable confirmation of relevance assessments.
+
+**Independent Test**: Can be tested by triggering a context agent interrupt and validating it contains findings and relevance information.
+
+**Cucumber Test Tag**: `@context-agent-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** a context agent gathers findings, **When** it needs confirmation, **Then** the interrupt includes findings with relevance scores
+2. **Given** relevance is uncertain, **When** producing an interrupt, **Then** structured choices offer relevance interpretation alternatives
+3. **Given** findings may be redundant, **When** producing an interrupt, **Then** confirmation items include deduplication decisions
+
+---
+
+### User Story 42 - Context Collector Interrupt with Consolidation Context (Priority: P2)
+
+As a developer, I want `ContextCollectorInterruptRequest` to include consolidation fields (consolidated context, relevance rankings, pruning decisions) so that context collector interrupts enable consolidation steering.
+
+**Why this priority**: Context collectors consolidate gathered context. Structured interrupts enable confirmation of consolidation and pruning decisions.
+
+**Independent Test**: Can be tested by triggering a context collector interrupt and validating it contains consolidated context and rankings.
+
+**Cucumber Test Tag**: `@context-collector-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** a context collector consolidates findings, **When** it needs confirmation, **Then** the interrupt includes consolidated context with rankings
+2. **Given** pruning is needed, **When** producing an interrupt, **Then** structured choices offer pruning strategy alternatives
+3. **Given** context affects downstream quality, **When** producing an interrupt, **Then** confirmation items include sufficiency assessments
+
+---
+
+### User Story 43 - Context Dispatch Interrupt with Routing Context (Priority: P2)
+
+As a developer, I want `ContextAgentDispatchInterruptRequest` to include dispatch routing fields (agent assignments, source distribution, gathering strategy) so that context dispatch interrupts enable routing steering.
+
+**Why this priority**: Context dispatch routes work to context agents. Structured interrupts enable confirmation of source assignments and gathering strategy.
+
+**Independent Test**: Can be tested by triggering a context dispatch interrupt and validating it contains routing decisions.
+
+**Cucumber Test Tag**: `@context-dispatch-interrupt-context`
+
+**Acceptance Scenarios**:
+
+1. **Given** the dispatch routes to multiple agents, **When** it needs confirmation, **Then** the interrupt includes agent assignments with source focus
+2. **Given** gathering strategy varies, **When** producing an interrupt, **Then** structured choices offer strategy alternatives
+3. **Given** routing affects context completeness, **When** producing an interrupt, **Then** confirmation items include coverage checks
+
+---
+
+### User Story 44 - Prompt Guidance for Structured Interrupt Generation (Priority: P1)
+
+As a developer, I want workflow prompts to include guidance for generating structured interrupts with uncertainty scores, proposed actions, fill-in templates, and confirmation items so that agents produce well-formed interrupt requests.
+
+**Why this priority**: Without prompt guidance, agents will not consistently produce structured interrupt requests. Prompts must teach agents the interrupt format.
+
+**Independent Test**: Can be tested by examining agent prompts and validating they include interrupt structure guidance with examples.
+
+**Cucumber Test Tag**: `@interrupt-prompt-guidance`
+
+**Acceptance Scenarios**:
+
+1. **Given** a planning agent prompt, **When** assembled, **Then** it includes guidance for producing `PlanningAgentInterruptRequest` with ticket context
+2. **Given** any agent prompt, **When** assembled, **Then** it includes guidance for calculating uncertainty scores based on decision entropy
+3. **Given** any agent prompt, **When** assembled, **Then** it includes examples of well-formed proposed actions, fill-in templates, and confirmation items
+4. **Given** an agent follows prompt guidance, **When** producing an interrupt, **Then** the interrupt conforms to the structured schema
+
+---
+
 ### Edge Cases
 
+#### Prompt Contributor Edge Cases
 - What happens when no prompt contributors are registered for an agent?
 - How does the system handle prompt contributor failures during assembly?
 - What happens when a tool's prompt contribution exceeds context limits?
 - How does the system handle conflicting guidance from multiple prompt contributors?
 - What happens when structured output validation fails against the versioned schema?
 - How does the system handle episodic memory operations when the knowledge graph is unavailable?
+
+#### Context Flow Edge Cases
 - What happens when links reference context IDs that no longer exist or are invalid?
 - What happens when upstream context is too large to fit in the prompt?
 - How does the system handle rerun when previous context had errors?
 - What happens when curated context omits necessary detail from the full result?
+
+#### Structured Interrupt Edge Cases
+- What happens when an agent produces an interrupt with empty proposed actions?
+- What happens when a controller selects an invalid option ID?
+- What happens when a controller provides partial responses (some confirmations, some fill-ins)?
+- How does the LLM translation handle ambiguous or contradictory controller responses?
+- What happens when an interrupt resolution references a stale or expired interrupt?
+- How does the system handle concurrent interrupts from multiple agents?
+- What happens when the controller times out without providing a resolution?
+- How does the system handle interrupts with very large context payloads (many proposed actions, many confirmation items)?
+- What happens when an agent produces an interrupt during a rerun attempt?
+- How does the system handle custom option selection without providing custom input?
+- What happens when an agent's uncertainty explanation is vague or unhelpful?
 
 ## Requirements *(mandatory)*
 
@@ -519,6 +1127,52 @@ As a developer, I want the merger agent to receive typed, curated context and pr
 - **FR-079**: Merger outputs MUST include versioned schema, result ID, acceptability, and conflict details
 - **FR-080**: Merger outputs MUST include resolution guidance with links when conflicts exist
 
+#### Structured Interrupt Requests - Base Requirements
+- **FR-081**: Each agent type MUST have its own typed interrupt request record (20 total - see Typed Interrupt Requests Per Agent table)
+- **FR-082**: All interrupt requests MUST include base fields: type (InterruptType), reason (String explaining the uncertainty)
+- **FR-083**: All interrupt requests MUST include choices (List<StructuredChoice>) for multiple-choice with write-in options
+- **FR-084**: All interrupt requests MUST include confirmationItems (List<ConfirmationItem>) for yes/no decisions
+- **FR-085**: All interrupt requests MUST include contextForDecision containing typed upstream context summary
+
+#### Structured Choices (Multiple-Choice with Write-In)
+- **FR-086**: StructuredChoice MUST include choiceId (unique identifier) and question (what decision needs to be made)
+- **FR-087**: StructuredChoice MUST include context (relevant background for the decision)
+- **FR-088**: StructuredChoice MUST include options map with keys A, B, C (optional), and CUSTOM
+- **FR-089**: Option A, B, C MUST each include a description of that approach
+- **FR-090**: CUSTOM option MUST always be present with value "Or provide your own approach"
+- **FR-091**: StructuredChoice MAY include recommended (which option the agent prefers, if any)
+
+#### Confirmation Items
+- **FR-092**: ConfirmationItem MUST include confirmationId (unique identifier) and statement (what is being confirmed)
+- **FR-093**: ConfirmationItem MUST include context (why confirmation needed), defaultValue (suggested yes/no), and impactIfNo
+- **FR-094**: Multiple confirmations MUST be processable independently
+
+#### Prompt-Based Uncertainty Recognition
+- **FR-095**: Agent prompts MUST include guidance to recognize uncertainty during task execution
+- **FR-096**: Prompts MUST instruct agents to notice when they make implicit implementation decisions
+- **FR-097**: Prompts MUST instruct agents to route for review when uncertain about a decision's correctness
+- **FR-098**: The reason field in interrupts MUST contain the agent's natural language explanation of uncertainty
+
+#### Interrupt Resolution
+- **FR-099**: InterruptResolution MUST include selectedChoices (Map<String, String> mapping choiceId to selected option A/B/C/CUSTOM)
+- **FR-100**: InterruptResolution MUST include customInputs (Map<String, String> mapping choiceId to custom input when CUSTOM selected)
+- **FR-101**: InterruptResolution MUST include confirmations (Map<String, Boolean> mapping confirmationId to approval)
+- **FR-102**: Resolution MUST be translated via LLM into agent-specific continuation context
+
+#### Agent-Specific Interrupt Fields
+- **FR-103**: All 20 agent types MUST have a corresponding typed interrupt request (see Typed Interrupt Requests Per Agent table)
+- **FR-104**: PlanningAgentInterruptRequest MUST include proposedTickets, architectureDecisions, and discoveryReferences
+- **FR-105**: DiscoveryCollectorInterruptRequest MUST include codeReferences, subdomainBoundaries, and recommendations
+- **FR-106**: TicketAgentInterruptRequest MUST include filesToModify, testStrategies, and implementationApproaches
+- **FR-107**: OrchestratorInterruptRequest MUST include phase, goal, and workflow context
+- **FR-108**: DispatchInterruptRequest types MUST include dispatch routing decisions and target agent context
+
+#### Interrupt Prompt Guidance
+- **FR-109**: Workflow prompts MUST include guidance for generating structured interrupt requests
+- **FR-110**: Prompts MUST include examples of well-formed structured choices and confirmation items
+- **FR-111**: Prompts MUST instruct agents to self-assess uncertainty during task execution
+- **FR-112**: Prompts MUST specify when to use each interrupt component (structured choices vs. confirmations)
+
 ### Key Entities
 
 - **ContextId**: Unique identifier with workflow run ID, agent type, sequence number, and timestamp
@@ -543,6 +1197,34 @@ As a developer, I want the merger agent to receive typed, curated context and pr
 - **ReviewEvaluation**: Versioned output with ID, assessment status, feedback, suggestions, and content links
 - **MergerValidation**: Versioned output with ID, acceptability, conflicts, and resolution guidance
 
+#### Structured Interrupt Entities
+- **InterruptRequest (Base Interface)**: Common fields for all 20 interrupt types - type, reason (natural language uncertainty explanation), choices (List<StructuredChoice>), confirmationItems, contextForDecision
+- **StructuredChoice**: Multiple-choice decision point with choiceId, question, context, options (A/B/C/CUSTOM map), recommended (optional)
+- **ConfirmationItem**: Yes/no decision with confirmationId, statement, context, defaultValue, impactIfNo
+- **InterruptResolution**: Controller response with selectedChoices (Map<choiceId, option>), customInputs (Map<choiceId, input>), confirmations
+
+#### Typed Interrupt Requests (20 total - one per agent type)
+- **OrchestratorInterruptRequest**: phase, goal, workflow context
+- **OrchestratorCollectorInterruptRequest**: phase decision, collector results
+- **DiscoveryOrchestratorInterruptRequest**: subdomain partitioning, scope
+- **DiscoveryAgentInterruptRequest**: code findings, boundary decisions
+- **DiscoveryCollectorInterruptRequest**: consolidation decisions, recommendations, codeReferences, subdomainBoundaries
+- **DiscoveryAgentDispatchInterruptRequest**: dispatch routing decisions
+- **PlanningOrchestratorInterruptRequest**: ticket decomposition, discovery context
+- **PlanningAgentInterruptRequest**: ticket design, architecture decisions, proposedTickets, discoveryReferences
+- **PlanningCollectorInterruptRequest**: ticket consolidation, dependency resolution, consolidatedTickets, dependencyConflicts
+- **PlanningAgentDispatchInterruptRequest**: dispatch routing decisions
+- **TicketOrchestratorInterruptRequest**: implementation scope, planning context
+- **TicketAgentInterruptRequest**: implementation approach, file changes, filesToModify, testStrategies
+- **TicketCollectorInterruptRequest**: completion status, follow-ups
+- **TicketAgentDispatchInterruptRequest**: dispatch routing decisions
+- **ReviewInterruptRequest**: review criteria, assessment
+- **MergerInterruptRequest**: conflict resolution, merge strategy
+- **ContextOrchestratorInterruptRequest**: context gathering scope
+- **ContextAgentInterruptRequest**: context findings
+- **ContextCollectorInterruptRequest**: context consolidation
+- **ContextAgentDispatchInterruptRequest**: dispatch routing decisions
+
 ## Success Criteria *(mandatory)*
 
 ### Measurable Outcomes
@@ -564,6 +1246,18 @@ As a developer, I want the merger agent to receive typed, curated context and pr
 - **SC-015**: Generated queries from discovery reports achieve 70% relevance for retrieval (measured against ground truth)
 - **SC-016**: Orchestrator delegation outputs can be directly extracted as controller training examples with full context chain
 - **SC-017**: Collector consolidation outputs can be directly extracted as consolidation training examples with input traceability
+
+#### Structured Interrupt Success Criteria
+- **SC-018**: 100% of agent interrupts are typed per agent (all 20 types implemented - see Typed Interrupt Requests table)
+- **SC-019**: 100% of interrupts include a reason field with natural language uncertainty explanation
+- **SC-020**: 100% of agent prompts include uncertainty recognition guidance
+- **SC-021**: 80% of interrupts include at least one structured choice when alternatives exist
+- **SC-022**: Interrupt resolution translation via LLM completes within 2 seconds per resolution
+- **SC-023**: 100% of agent prompts include structured interrupt generation guidance
+- **SC-024**: Structured interrupt data (including uncertainty explanations) can be directly extracted as controller training examples
+- **SC-025**: 95% of interrupts with structured choices include a recommended option when agent has a preference
+- **SC-026**: Controller response rate (resolutions provided / interrupts generated) exceeds 95% for human controllers
+- **SC-027**: 100% of structured choices include CUSTOM write-in option
 
 ## Notes on Gherkin Feature Files For Test Graph
 
