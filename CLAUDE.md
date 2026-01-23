@@ -11,6 +11,8 @@ Auto-generated from all feature plans. Last updated: 2025-12-20
 - GraphRepository persistence (existing), artifact markdown files (001-interrupt)
 - Java 21 (existing project) + Spring Boot 3.x, Embabel Agent Framework (@Agent), LangChain4j (004-agent-prompts-outputs)
 - GraphRepository (existing), artifact markdown files (004-agent-prompts-outputs)
+- Java 21 + `embabel-agent` (for Agent API), `multi_agent_ide_lib` (for shared models), `utilitymodule` (for EventBus) (007-context-manager-agent)
+- In-memory `BlackboardHistory` (per session) (007-context-manager-agent)
 
 - Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Mockito, AssertJ (001-multi-agent-ide-specs)
 
@@ -30,9 +32,9 @@ tests/
 Java 21: Follow standard conventions
 
 ## Recent Changes
+- 007-context-manager-agent: Added Java 21 + `embabel-agent` (for Agent API), `multi_agent_ide_lib` (for shared models), `utilitymodule` (for EventBus)
+- 007-context-manager-agent: Added Java 21 + `embabel-agent` (for Agent API), `multi_agent_ide_lib` (for shared models), `utilitymodule` (for EventBus)
 - 004-agent-prompts-outputs: Added Java 21 (existing project) + Spring Boot 3.x, Embabel Agent Framework (@Agent), LangChain4j
-- 001-interrupt: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Lombok
-- 002-ag-ui: Added Java 21 (backend), TypeScript/JavaScript (frontend) + Spring Boot 3.x, CopilotKit, Reac
 
 
 <!-- MANUAL ADDITIONS START -->
