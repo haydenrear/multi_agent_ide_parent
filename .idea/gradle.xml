@@ -22,7 +22,6 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/commit-diff-context" />
-            <option value="$PROJECT_DIR$/commit-diff-context-mcp" />
             <option value="$PROJECT_DIR$/commit-diff-model" />
             <option value="$PROJECT_DIR$/graphql" />
             <option value="$PROJECT_DIR$/jpa-persistence" />
