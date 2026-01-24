@@ -51,7 +51,7 @@ All checklist items pass. The specification is ready for `/speckit.plan`.
 
 **Content Quality**: The spec focuses on what agents need (context reconstruction capability) and why (workflows lose context across transitions). References to specific classes (AgentModels, EventBus, etc.) are for context only, not implementation prescription.
 
-**Requirement Completeness**: All 26 functional requirements are testable and organized by category (Loop/Hung Detection, BlackboardHistory Tools, Event Subscription, Routing Semantics, Context Snapshots/Notes). 14 success criteria are measurable and technology-agnostic. All 12 user scenarios have acceptance criteria. Edge cases identified. Scope clearly bounded with explicit In Scope and Out of Scope sections.
+**Requirement Completeness**: All functional requirements are testable and organized by category (Loop/Hung Detection, BlackboardHistory Tools, Event Subscription, Routing Semantics, Notes). Success criteria are measurable and technology-agnostic. User scenarios have acceptance criteria. Edge cases identified. Scope clearly bounded with explicit In Scope and Out of Scope sections.
 
 **Ticket Alignment**: All requirements from the context-manager-agent.md ticket are covered:
 - 6 BlackboardHistory tools as separate user stories

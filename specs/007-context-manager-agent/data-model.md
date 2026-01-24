@@ -4,8 +4,22 @@
 
 ### 1. AgentModels Extensions
 
+#### `ContextManagerRoutingRequest`
+Lightweight routing request returned by agents to ask for context reconstruction. The routing action builds the full ContextManagerRequest.
+
+```java
+@Builder(toBuilder=true)
+@JsonClassDescription("Lightweight request to route to the context manager.")
+record ContextManagerRoutingRequest(
+    @JsonPropertyDescription("Reason for requesting context reconstruction.")
+    String reason,
+    @JsonPropertyDescription("Type of context reconstruction to request.")
+    ContextManagerRequestType type
+) implements AgentRequest {}
+```
+
 #### `ContextManagerRequest`
-A new sealed interface permit for `AgentRequest` in `AgentModels.java`.
+A new sealed interface permit for `AgentRequest` in `AgentModels.java`. Exactly one `returnTo*` field must be non-null.
 
 ```java
 @Builder(toBuilder=true)
@@ -26,18 +40,30 @@ record ContextManagerRequest(
     @JsonPropertyDescription("Additional context to guide reconstruction.")
     String additionalContext,
     
-    // Explicit return routes (destinations)
+    // Explicit return routes (destinations) - exactly one should be non-null
     @JsonPropertyDescription("Route back to orchestrator.")
     OrchestratorRequest returnToOrchestrator,
+
+    @JsonPropertyDescription("Route back to orchestrator collector.")
+    OrchestratorCollectorRequest returnToOrchestratorCollector,
     
     @JsonPropertyDescription("Route back to discovery orchestrator.")
     DiscoveryOrchestratorRequest returnToDiscoveryOrchestrator,
+
+    @JsonPropertyDescription("Route back to discovery collector.")
+    DiscoveryCollectorRequest returnToDiscoveryCollector,
     
     @JsonPropertyDescription("Route back to planning orchestrator.")
     PlanningOrchestratorRequest returnToPlanningOrchestrator,
+
+    @JsonPropertyDescription("Route back to planning collector.")
+    PlanningCollectorRequest returnToPlanningCollector,
     
     @JsonPropertyDescription("Route back to ticket orchestrator.")
     TicketOrchestratorRequest returnToTicketOrchestrator,
+
+    @JsonPropertyDescription("Route back to ticket collector.")
+    TicketCollectorRequest returnToTicketCollector,
     
     @JsonPropertyDescription("Route back to review agent.")
     ReviewRequest returnToReview,
@@ -48,14 +74,35 @@ record ContextManagerRequest(
     @JsonPropertyDescription("Route back to planning agent.")
     PlanningAgentRequest returnToPlanningAgent,
 
+    @JsonPropertyDescription("Route back to planning agent requests.")
+    PlanningAgentRequests returnToPlanningAgentRequests,
+
+    @JsonPropertyDescription("Route back to planning agent results.")
+    PlanningAgentResults returnToPlanningAgentResults,
+
     @JsonPropertyDescription("Route back to ticket agent.")
     TicketAgentRequest returnToTicketAgent,
 
+    @JsonPropertyDescription("Route back to ticket agent requests.")
+    TicketAgentRequests returnToTicketAgentRequests,
+
+    @JsonPropertyDescription("Route back to ticket agent results.")
+    TicketAgentResults returnToTicketAgentResults,
+
     @JsonPropertyDescription("Route back to discovery agent.")
     DiscoveryAgentRequest returnToDiscoveryAgent,
+
+    @JsonPropertyDescription("Route back to discovery agent requests.")
+    DiscoveryAgentRequests returnToDiscoveryAgentRequests,
+
+    @JsonPropertyDescription("Route back to discovery agent results.")
+    DiscoveryAgentResults returnToDiscoveryAgentResults,
+
+    @JsonPropertyDescription("Route back to context orchestrator.")
+    ContextOrchestratorRequest returnToContextOrchestrator,
     
     @JsonPropertyDescription("Previous context for reruns.")
-    PreviousContext.ContextManagerPreviousContext previousContext
+    PreviousContext previousContext
 ) implements AgentRequest {
     // prettyPrint implementation
 }
@@ -73,14 +120,28 @@ The result of the Context Manager agent execution.
 @Builder(toBuilder=true)
 record ContextManagerResultRouting(
     ContextManagerInterruptRequest interruptRequest,
-    
+
     // One of these will be populated with the reconstructed context
     OrchestratorRequest orchestratorRequest,
+    OrchestratorCollectorRequest orchestratorCollectorRequest,
     DiscoveryOrchestratorRequest discoveryOrchestratorRequest,
+    DiscoveryCollectorRequest discoveryCollectorRequest,
     PlanningOrchestratorRequest planningOrchestratorRequest,
+    PlanningCollectorRequest planningCollectorRequest,
     TicketOrchestratorRequest ticketOrchestratorRequest,
+    TicketCollectorRequest ticketCollectorRequest,
     ReviewRequest reviewRequest,
-    MergerRequest mergerRequest
+    MergerRequest mergerRequest,
+    PlanningAgentRequest planningAgentRequest,
+    PlanningAgentRequests planningAgentRequests,
+    PlanningAgentResults planningAgentResults,
+    TicketAgentRequest ticketAgentRequest,
+    TicketAgentRequests ticketAgentRequests,
+    TicketAgentResults ticketAgentResults,
+    DiscoveryAgentRequest discoveryAgentRequest,
+    DiscoveryAgentRequests discoveryAgentRequests,
+    DiscoveryAgentResults discoveryAgentResults,
+    ContextOrchestratorRequest contextOrchestratorRequest
 ) implements SomeOf {}
 ```
 
@@ -96,20 +157,6 @@ public record HistoryNote(
     String content,
     List<String> tags, // e.g., "exclusion", "diagnostic", "routing"
     String authorAgent
-) {}
-```
-
-#### `ContextSnapshot`
-Curated context bundle.
-
-```java
-public record ContextSnapshot(
-    String snapshotId,
-    Instant timestamp,
-    String summary,
-    String reasoning,
-    List<Integer> entryIndices, // References to history entries
-    List<HistoryNote> notes
 ) {}
 ```
 
@@ -137,12 +184,6 @@ public record HistorySearchResponse(List<BlackboardHistory.Entry> entries) {}
 ```java
 public record HistoryItemRequest(int index, String entryId) {}
 public record HistoryItemResponse(BlackboardHistory.Entry entry) {}
-```
-
-#### `ContextSnapshotRequest` & `Response`
-```java
-public record CreateSnapshotRequest(List<Integer> entryIndices, String summary, String reasoning) {}
-public record CreateSnapshotResponse(ContextSnapshot snapshot) {}
 ```
 
 #### `NoteRequest` & `Response`

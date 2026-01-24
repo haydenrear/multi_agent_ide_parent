@@ -83,27 +83,7 @@ Manager to inspect and curate workflow history.
 
 ---
 
-## 5. Context Snapshot Creation Tool
-
-**Goal**: Create a curated bundle of history for recovery.
-
-### Request: `CreateSnapshotRequest`
-
-| Field          | Type            | Description                                 |
-|----------------|-----------------|---------------------------------------------|
-| `entryIndices` | `List<Integer>` | Indices of history entries to include.      |
-| `summary`      | String          | Human-readable summary of the context.      |
-| `reasoning`    | String          | Explanation of why this context was chosen. |
-
-### Response: `CreateSnapshotResponse`
-
-| Field      | Type              | Description                                                     |
-|------------|-------------------|-----------------------------------------------------------------|
-| `snapshot` | `ContextSnapshot` | The created snapshot object containing references and metadata. |
-
----
-
-## 6. Blackboard Note Tool
+## 5. Blackboard Note Tool
 
 **Goal**: Annotate history entries with reasoning.
 

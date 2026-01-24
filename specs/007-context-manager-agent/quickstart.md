@@ -65,6 +65,4 @@ var trace = tools.trace("kickOffDiscoveryAgents");
 // Search
 var results = tools.search("error");
 
-// Create Snapshot
-var snapshot = tools.createSnapshot(List.of(1, 2, 5), "Recovery context");
 ```

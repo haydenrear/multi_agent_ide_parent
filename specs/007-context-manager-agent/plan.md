@@ -8,7 +8,7 @@
 
 ## Summary
 
-The Context Manager Agent acts as a central recovery mechanism for multi-agent workflows that lose context or get stuck. It leverages `BlackboardHistory` to reconstruct context by tracing, searching, and snapshotting historical execution data. The feature includes implementing `BlackboardHistory` tools (trace, list, search, snapshot, notes), integrating `StuckHandler` in `WorkflowAgent` to catch degenerate loops and hung states, and defining `ContextManagerRequest` in `AgentModels` for explicit routing.
+The Context Manager Agent acts as a central recovery mechanism for multi-agent workflows that lose context or get stuck. It leverages `BlackboardHistory` to reconstruct context by tracing, listing, searching, and annotating historical execution data. The feature includes implementing `BlackboardHistory` tools (trace, list, search, note), integrating `StuckHandler` in `WorkflowAgent` to catch degenerate loops and hung states, and defining `ContextManagerRequest` in `AgentModels` for explicit routing.
 
 ## Technical Context
 

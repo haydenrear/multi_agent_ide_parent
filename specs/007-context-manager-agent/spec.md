@@ -3,7 +3,7 @@
 **Feature Branch**: `007-context-manager-agent`  
 **Created**: 2026-01-22  
 **Status**: Draft  
-**Input**: User description: "Add Context Manager Agent with BlackboardHistory tooling for multi-agent workflow context reconstruction. The system needs to handle situations where agents lose context across long-running workflows spanning multiple agents, actions, and sessions. When workflows get stuck in degenerate loops or hung states, a Context Manager Agent should reconstruct context by querying BlackboardHistory, creating curated context snapshots, and routing back to the appropriate agent with sufficient context to continue."
+**Input**: User description: "Add Context Manager Agent with BlackboardHistory tooling for multi-agent workflow context reconstruction. The system needs to handle situations where agents lose context across long-running workflows spanning multiple agents, actions, and sessions. When workflows get stuck in degenerate loops or hung states, a Context Manager Agent should reconstruct context by querying BlackboardHistory and routing back to the appropriate agent with sufficient context to continue."
 
 ## Vision
 
@@ -106,7 +106,7 @@ Search across BlackboardHistory contents to locate relevant prior decisions, err
 
 Fetch a specific history entry by identifier or index when context creation references earlier events explicitly.
 
-**Why this priority**: Enables precise retrieval of known entries - required when snapshots reference specific historical items.
+**Why this priority**: Enables precise retrieval of known entries when agents reference specific historical items.
 
 **Independent Test**: Execute a workflow with 10 actions, then retrieve specific entries by index to verify exact matches.
 
@@ -117,25 +117,6 @@ Fetch a specific history entry by identifier or index when context creation refe
 1. **Given** a workflow has 10 historical entries, **When** the History Item Retrieval Tool is invoked with index=5, **Then** the entry at position 5 is returned with all details
 2. **Given** a workflow has 10 historical entries, **When** the History Item Retrieval Tool is invoked with index=15, **Then** an error is returned with message "Index out of bounds"
 3. **Given** BlackboardHistory is empty, **When** the History Item Retrieval Tool is invoked with any index, **Then** an error is returned with message "No history available"
-
----
-
-### User Story 5 - Context Snapshot Creation Tool (Priority: P1)
-
-Persist a curated context bundle derived from multiple history entries, representing newly constructed working context with links to source history items.
-
-**Why this priority**: Core reconstruction mechanism - creates the actual context bundles that enable recovery.
-
-**Independent Test**: Execute a workflow, identify relevant entry indices, create a snapshot, and verify it contains references and reasoning.
-
-**Cucumber Test Tag**: `@context-snapshot-tool`
-
-**Acceptance Scenarios**:
-
-1. **Given** a workflow has 20 historical entries, **When** the Context Snapshot Creation Tool is invoked with indices [2, 5, 7, 9] and summary "Recovery context", **Then** a snapshot is created with unique ID, timestamp, and 4 entry references
-2. **Given** the Context Snapshot Creation Tool is invoked with entry indices [100] for a history of 10 entries, **When** validation occurs, **Then** an error is returned with message "Index out of bounds"
-3. **Given** the Context Snapshot Creation Tool is invoked with empty entry indices, **When** validation occurs, **Then** an error is returned with message "No entry indices provided"
-4. **Given** a snapshot is created successfully, **When** it is stored, **Then** it includes the summary, reasoning, and references to source entries
 
 ---
 
@@ -193,7 +174,7 @@ A workflow enters a degenerate loop where the same action repeats without progre
 1. **Given** a workflow action executes repeatedly with the same input type, **When** BlackboardHistory detects the repetition count exceeds the configured threshold, **Then** BlackboardHistory throws a DegenerateLoopException with information about where the loop occurred
 2. **Given** a DegenerateLoopException is thrown, **When** the WorkflowAgent's StuckHandler catches the exception, **Then** the StuckHandler escalates to the Context Manager Agent
 3. **Given** the Context Manager receives a loop escalation via StuckHandler, **When** it uses BlackboardHistory tools to analyze the loop pattern, **Then** it identifies the repeating actions and their inputs
-4. **Given** the Context Manager has analyzed the loop, **When** it creates a recovery context snapshot, **Then** the snapshot includes information about the loop pattern and suggests alternative routing
+4. **Given** the Context Manager has analyzed the loop, **When** it assembles a recovery context response, **Then** the response includes information about the loop pattern and suggests alternative routing
 5. **Given** a recovery context is created, **When** the Context Manager returns a continuation request, **Then** exactly one agent is selected for continuation with the recovery context
 
 ---
@@ -212,8 +193,8 @@ A workflow agent encounters insufficient context to continue its work after mult
 
 1. **Given** a workflow has executed across 5 different agents, **When** an agent determines it lacks sufficient context, **Then** the agent returns a SomeOf routing request targeting the Context Manager (following AgentModels patterns)
 2. **Given** the Context Manager receives a context reconstruction request via SomeOf routing, **When** it uses BlackboardHistory tools to query relevant entries, **Then** it retrieves all historical entries needed for the workflow
-3. **Given** the Context Manager has retrieved historical entries, **When** it creates a context snapshot using the snapshot tool, **Then** the snapshot includes curated information with links to source history items
-4. **Given** a context snapshot has been created, **When** the Context Manager returns a SomeOf routing response with exactly one populated branch, **Then** the agent receives sufficient context to continue the workflow
+3. **Given** the Context Manager has retrieved historical entries, **When** it assembles a context response, **Then** the response includes curated information with links to source history items
+4. **Given** a context response has been assembled, **When** the Context Manager returns a SomeOf routing response with exactly one populated branch, **Then** the agent receives sufficient context to continue the workflow
 
 ---
 
@@ -259,14 +240,14 @@ A workflow becomes hung or stalled without making progress. The WorkflowAgent's 
 
 1. **Given** a workflow has not progressed for a configured timeout period, **When** the WorkflowAgent's StuckHandler implementation detects the hung state, **Then** it escalates to the Context Manager with diagnostic information
 2. **Given** the Context Manager receives a hung state escalation from StuckHandler, **When** it examines recent BlackboardHistory entries using query tools, **Then** it identifies the point where progress stopped
-3. **Given** the Context Manager has identified the hung point, **When** it creates a diagnostic context snapshot, **Then** the snapshot includes the last successful action and relevant state information
+3. **Given** the Context Manager has identified the hung point, **When** it creates a diagnostic context response, **Then** the response includes the last successful action and relevant state information
 4. **Given** a diagnostic context is created, **When** the Context Manager determines the appropriate recovery agent, **Then** it returns a single continuation request to resume the workflow
 
 ---
 
 ### User Story 12 - Reasoning Documentation via Note Tool (Priority: P3)
 
-The Context Manager uses the Blackboard Note Tool (User Story 6) to document its reasoning when creating context snapshots. Notes are attached to historical entries for followup, explaining why information was included, excluded, or how it influenced routing decisions.
+The Context Manager uses the Blackboard Note Tool (User Story 6) to document its reasoning when assembling context responses. Notes are attached to historical entries for followup, explaining why information was included, excluded, or how it influenced routing decisions.
 
 **Why this priority**: Valuable for auditability and understanding context reconstruction decisions, but this is already provided by the Blackboard Note Tool - this story documents the usage pattern.
 
@@ -276,7 +257,7 @@ The Context Manager uses the Blackboard Note Tool (User Story 6) to document its
 
 **Acceptance Scenarios**:
 
-1. **Given** the Context Manager creates a context snapshot, **When** it selects historical entries to include, **Then** it uses the Blackboard Note Tool to attach notes explaining the selection criteria
+1. **Given** the Context Manager assembles a context response, **When** it selects historical entries to include, **Then** it uses the Blackboard Note Tool to attach notes explaining the selection criteria
 2. **Given** the Context Manager attaches notes via the tool, **When** another agent queries those history entries, **Then** the notes are included in the entry views for followup analysis
 3. **Given** the Context Manager makes a routing decision, **When** it documents the decision, **Then** it uses the note tool with tags like "routing" and "diagnostic" to explain the rationale
 4. **Given** multiple context reconstructions have occurred, **When** a user searches notes by classification tag using the note tool, **Then** matching notes are retrieved showing the Context Manager's reasoning over time
@@ -295,7 +276,9 @@ The Context Manager serves two primary purposes for any agent routing:
 
 ### Context Manager Request Structure
 
-The ContextManagerRequest in the SomeOf routing field includes:
+Agents request context reconstruction by returning a **ContextManagerRoutingRequest** in their routing response. The routing action then assembles the full ContextManagerRequest using the most recent agent request in BlackboardHistory.
+
+The ContextManagerRequest includes:
 
 - **type**: `INTROSPECT_AGENT_CONTEXT` | `PROCEED`
   - `INTROSPECT_AGENT_CONTEXT`: Search through all contexts across previous agents for the requesting agent's benefit. The `returnToRequests` field specifies routing back to the agent that requested the introspection (i.e., the requesting agent receives the enriched context to continue its work).
@@ -303,13 +286,13 @@ The ContextManagerRequest in the SomeOf routing field includes:
 - **reason**: Why context reconstruction is needed
 - **goal**: What the context reconstruction should achieve
 - **additionalContext**: Any supplementary information to guide reconstruction
-- **returnToRequest**: SomeOf-style fields for all request types that could be routed to after context reconstruction (matching existing AgentModels patterns). For `INTROSPECT_AGENT_CONTEXT`, this routes back to the requesting agent. For `PROCEED`, this routes to the downstream agent that needs context. However this record, that which contains this returnToRequest field is not SomeOf, it's one of those same requests. Although the request will be contained in the blackboard history, we'll add this to the context manager request for a bit of additional request context.
+- **returnToRequest**: SomeOf-style fields for all request types that could be routed to after context reconstruction (matching existing AgentModels patterns). For `INTROSPECT_AGENT_CONTEXT`, this routes back to the requesting agent. For `PROCEED`, this routes to the downstream agent that needs context. Exactly one `returnTo*` field must be non-null.
 
 ### Entry Points to Context Manager
 
 The Context Manager Agent is invoked **only** through explicit mechanisms (no implicit or automatic routing):
 
-1. **Explicit Agent Request** (User Story 9): Any agent returns a SomeOf routing request with ContextManagerRequest populated. Uses `INTROSPECT_AGENT_CONTEXT` type to search across previous agent contexts.
+1. **Explicit Agent Request** (User Story 9): Any agent returns a routing request with ContextManagerRoutingRequest populated. Uses `INTROSPECT_AGENT_CONTEXT` type to search across previous agent contexts; the routing action builds the ContextManagerRequest.
 
 2. **StuckHandler Routing** (User Stories 8, 11): WorkflowAgent's StuckHandler catches DegenerateLoopException or hung state and routes to Context Manager with diagnostic information.
 
@@ -319,7 +302,7 @@ The Context Manager Agent is invoked **only** through explicit mechanisms (no im
 
 ### Exit Semantics
 
-- Context Manager returns a **SomeOf-style outcome** consistent with existing AgentModels patterns
+- Context Manager returns a **SomeOf-style outcome** consistent with existing AgentModels patterns, including any request type listed in ContextManagerRequest return routes
 - **Exactly one branch is populated** in the response
 - That branch is a **request for another agent** which resumes the workflow
 - For `PROCEED` type: The populated branch targets the downstream agent (not the original requester of Review/Merge)
@@ -354,7 +337,7 @@ The Context Manager Agent is invoked **only** through explicit mechanisms (no im
 - **FR-008**: Context Manager MUST provide History Search Tool to search entries by content, action name, or input type
 - **FR-009**: Context Manager MUST provide History Listing Tool with pagination support (offset, limit, hasMore)
 - **FR-010**: Context Manager MUST provide History Item Retrieval Tool to fetch specific entries by identifier or index
-- **FR-011**: Context Manager MUST provide Context Snapshot Creation Tool to create bundles referencing multiple historical entries
+- **FR-011**: Context Manager MUST provide Message Paging Tool to retrieve message events by entry id
 - **FR-012**: Context Manager MUST provide Blackboard Note Tool to attach notes to historical entries with classification tags
 - **FR-013**: All Context Manager tools MUST retrieve BlackboardHistory using session identifier mapped to agent process
 
@@ -369,11 +352,10 @@ The Context Manager Agent is invoked **only** through explicit mechanisms (no im
 - **FR-019**: System MUST prevent recursive context reconstruction (Context Manager never calls itself)
 - **FR-020**: Review and Merge agents MUST be able to explicitly request context reconstruction via SomeOf routing
 
-**Context Snapshots and Notes**
-- **FR-021**: Context snapshots MUST include links to source historical entries used in reconstruction
+**Notes**
 - **FR-022**: Notes MUST support classification tags for categorizing reasoning (diagnostic, routing, exclusion, etc.)
 - **FR-023**: Notes MUST be additive and non-destructive (cannot modify original history entries)
-- **FR-024**: Context Manager MUST store snapshots and notes in a queryable format alongside history
+- **FR-024**: Context Manager MUST store notes in a queryable format alongside history
 - **FR-025**: Historical queries MUST support filtering by time range, action name, and input type
 - **FR-026**: System MUST maintain session identifier mapping to agent process identifier for history retrieval
 
@@ -381,7 +363,6 @@ The Context Manager Agent is invoked **only** through explicit mechanisms (no im
 
 - **BlackboardHistory Entry**: Represents a single historical action execution with timestamp, action name, input object, and input type
 - **Event Entry**: Represents a captured event from EventBus (NodeStreamDeltaEvent, NodeThoughtDeltaEvent, ToolCallEvent, etc.) with timestamp and event data
-- **Context Snapshot**: A curated bundle of historical entry references with summary and reasoning, created by the Context Manager
 - **History Note**: An annotation attached to one or more historical entries, with content, classification tags, and timestamp; additive and non-destructive
 - **Degenerate Loop Exception**: Exception thrown when action repetition threshold is exceeded, containing loop pattern information (action name, input type, repetition count)
 - **Hung Exception**: Exception thrown when workflow progress stalls beyond timeout, containing diagnostic information (last action, stall duration)
@@ -397,7 +378,7 @@ The Context Manager Agent is invoked **only** through explicit mechanisms (no im
 - **SC-003**: Hung workflows are detected within 2 minutes of stalling
 - **SC-004**: Context reconstruction completes and returns continuation request within 30 seconds
 - **SC-005**: Historical queries return results within 5 seconds for workflows with up to 1000 historical entries
-- **SC-006**: Context snapshots accurately reference all relevant historical entries needed for recovery
+- **SC-006**: Context responses reference all relevant historical entries needed for recovery
 - **SC-007**: Zero recursive context reconstruction attempts occur (Context Manager never calls itself)
 - **SC-008**: Notes attached to historical entries are retrievable alongside the entries in all query operations
 - **SC-009**: Pagination of historical entries supports workflows with unlimited history growth
@@ -415,18 +396,17 @@ The Context Manager Agent is invoked **only** through explicit mechanisms (no im
 - The Embabel framework provides stuck handler extension points
 - Historical entries remain available for the duration of the workflow execution
 - Agent routing decisions can be made based solely on reconstructed context without external input
-- The system has sufficient storage for maintaining historical entries, snapshots, and notes
-- Notes and snapshots do not need to persist beyond workflow completion
+- The system has sufficient storage for maintaining historical entries and notes
+- Notes do not need to persist beyond workflow completion
 
 ## Testing Strategy
 
 This feature will be tested using **unit tests** rather than integration tests, as the functionality involves internal tool mechanisms and BlackboardHistory manipulation that don't cross application boundaries.
 
 Key unit test areas:
-- BlackboardHistory tool implementations (trace, list, search, retrieve, snapshot, note)
+- BlackboardHistory tool implementations (trace, list, search, retrieve, note)
 - Degenerate loop detection logic and threshold checking
 - Hung state detection and timeout mechanisms
-- Context snapshot creation with historical entry references
 - Note attachment and retrieval from BlackboardHistory
 - Session identifier to agent process mapping for history retrieval
 - Exception throwing for hung and degenerate loop conditions
@@ -436,6 +416,6 @@ Unit tests will verify:
 1. Each tool correctly queries and manipulates BlackboardHistory
 2. Loop detection accurately counts repetitions and triggers at threshold
 3. Hung detection monitors progress and escalates appropriately
-4. Context snapshots reference correct historical entries
+4. Context responses reference correct historical entries
 5. Notes are properly attached and queryable
 6. Session IDs correctly map to agent processes for history access

@@ -9,7 +9,7 @@
 
 - [ ] T001 Define `ContextManagerRequest` and `ContextManagerResultRouting` in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/AgentModels.java`
 - [ ] T002 Define `DegenerateLoopException` in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/events/DegenerateLoopException.java`
-- [ ] T003 [P] Add `HistoryNote` and `ContextSnapshot` records to `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/BlackboardHistory.java`
+- [ ] T003 [P] Add `HistoryNote` record to `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/BlackboardHistory.java`
 - [ ] T004 Define Blackboard Tool request/response records in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/AgentModels.java`
 
 ## Phase 2: Foundational
@@ -31,14 +31,13 @@
 - [ ] T012 [US4] Implement `getItem` method in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/ContextManagerTools.java`
 - [ ] T013 [US1] Create unit tests for inspection tools in `multi_agent_ide_lib/src/test/java/com/hayden/multiagentidelib/agent/ContextManagerToolsTest.java`
 
-## Phase 4: User Stories 5-6 (Context Creation Tools)
-**Goal**: Enable creating snapshots and notes.
-**Independent Test**: Verify snapshot creation and note attachment.
+## Phase 4: User Story 6 (Notes)
+**Goal**: Enable creating notes.
+**Independent Test**: Verify note attachment.
 
 - [ ] T014 [US6] Implement `addNote` method in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/ContextManagerTools.java`
-- [ ] T015 [US5] Implement `createSnapshot` method in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/ContextManagerTools.java`
-- [ ] T016 [US5] Update `BlackboardHistory` to store and retrieve snapshots/notes in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/BlackboardHistory.java`
-- [ ] T017 [US5] Add unit tests for creation tools in `multi_agent_ide_lib/src/test/java/com/hayden/multiagentidelib/agent/ContextManagerToolsTest.java`
+- [ ] T015 [US6] Update `BlackboardHistory` to store and retrieve notes in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/BlackboardHistory.java`
+- [ ] T016 [US6] Add unit tests for note tools in `multi_agent_ide_lib/src/test/java/com/hayden/multiagentidelib/agent/ContextManagerToolsTest.java`
 
 ## Phase 5: User Stories 7-8 (Events & Loop Recovery)
 **Goal**: Capture events and handle stuck states.
