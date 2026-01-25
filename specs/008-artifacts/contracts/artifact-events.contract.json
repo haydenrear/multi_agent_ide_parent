@@ -1,0 +1,291 @@
+{
+  "contract": "artifact-events",
+  "version": "0.2.0",
+  "description": "Internal JSON contracts for artifact events and persisted artifact records.",
+  "formats": {
+    "ArtifactKey": {
+      "description": "Hierarchical, time-sortable artifact identifier using ULIDs",
+      "pattern": "^ak:[0-9A-HJKMNP-TV-Z]{26}(/[0-9A-HJKMNP-TV-Z]{26})*$",
+      "examples": [
+        "ak:01HQXK5V8RPZM4J3NHWGC7SDFG",
+        "ak:01HQXK5V8RPZM4J3NHWGC7SDFG/01HQXK5V9KPZM4J3NHWGC7SDXY"
+      ]
+    },
+    "TemplateStaticId": {
+      "description": "Hierarchical, dot-separated template family identifier",
+      "pattern": "^tpl\\.([a-z][a-z0-9_]{0,63}\\.){1,7}[a-z][a-z0-9_]{0,63}$",
+      "examples": [
+        "tpl.agent.discovery.system_prompt",
+        "tpl.workflow.planning.initial"
+      ]
+    },
+    "ContentHash": {
+      "description": "SHA-256 hash of canonical content bytes, lowercase hex",
+      "pattern": "^[a-f0-9]{64}$",
+      "algorithm": "SHA-256",
+      "encoding": "lowercase-hex"
+    },
+    "CanonicalJson": {
+      "description": "JSON serialization rules for deterministic hashing",
+      "rules": [
+        "Object keys sorted lexicographically (Unicode code point order)",
+        "No insignificant whitespace (compact form)",
+        "Numbers: no trailing zeros, no leading zeros except 0.x, no positive sign",
+        "Strings: UTF-8 encoded, escape only required characters",
+        "Explicit null values included, missing keys omitted",
+        "Array ordering preserved"
+      ]
+    }
+  },
+  "messages": {
+    "ArtifactEvent": {
+      "type": "object",
+      "required": ["eventId", "timestamp", "artifact"],
+      "fields": {
+        "eventId": "string",
+        "nodeId": "string (optional)",
+        "timestamp": "rfc3339",
+        "artifact": "Artifact"
+      }
+    },
+    "Artifact": {
+      "type": "object",
+      "required": ["artifactKey", "artifactType"],
+      "fields": {
+        "artifactKey": "string",
+        "artifactType": "string",
+        "contentHash": "string (optional)",
+        "content": "string (optional)",
+        "metadata": "object (optional)"
+      }
+    },
+    "RefArtifact": {
+      "type": "object",
+      "required": ["artifactKey", "artifactType", "targetArtifactKey"],
+      "fields": {
+        "artifactKey": "string",
+        "artifactType": "string",
+        "targetArtifactKey": "string",
+        "relationType": "string (optional)"
+      }
+    },
+    "EventArtifact": {
+      "type": "object",
+      "required": [
+        "artifactKey",
+        "artifactType",
+        "eventId",
+        "nodeId",
+        "eventTimestamp",
+        "eventType",
+        "payloadJson"
+      ],
+      "fields": {
+        "artifactKey": "string",
+        "artifactType": "EventArtifact",
+        "eventId": "string",
+        "nodeId": "string",
+        "eventTimestamp": "rfc3339",
+        "eventType": "string",
+        "payloadJson": "object",
+        "contentHash": "string (optional)"
+      }
+    },
+    "GraphEventTypes": {
+      "type": "enum",
+      "values": [
+        "NodeAddedEvent",
+        "ActionStartedEvent",
+        "ActionCompletedEvent",
+        "StopAgentEvent",
+        "PauseEvent",
+        "ResumeEvent",
+        "ResolveInterruptEvent",
+        "AddMessageEvent",
+        "NodeStatusChangedEvent",
+        "NodeErrorEvent",
+        "NodeBranchedEvent",
+        "NodePrunedEvent",
+        "NodeReviewRequestedEvent",
+        "InterruptStatusEvent",
+        "GoalCompletedEvent",
+        "WorktreeCreatedEvent",
+        "WorktreeBranchedEvent",
+        "WorktreeMergedEvent",
+        "WorktreeDiscardedEvent",
+        "NodeUpdatedEvent",
+        "NodeDeletedEvent",
+        "NodeStreamDeltaEvent",
+        "NodeThoughtDeltaEvent",
+        "ToolCallEvent",
+        "GuiRenderEvent",
+        "UiDiffAppliedEvent",
+        "UiDiffRejectedEvent",
+        "UiDiffRevertedEvent",
+        "UiFeedbackEvent",
+        "NodeBranchRequestedEvent",
+        "PlanUpdateEvent",
+        "UserMessageChunkEvent",
+        "CurrentModeUpdateEvent",
+        "AvailableCommandsUpdateEvent",
+        "PermissionRequestedEvent",
+        "PermissionResolvedEvent",
+        "UiStateSnapshot"
+      ]
+    },
+    "MessageStreamArtifact": {
+      "type": "object",
+      "required": [
+        "artifactKey",
+        "artifactType",
+        "streamType",
+        "nodeId",
+        "eventTimestamp",
+        "payloadJson"
+      ],
+      "fields": {
+        "artifactKey": "string",
+        "artifactType": "MessageStreamArtifact",
+        "streamType": "string (NodeStreamDeltaEvent | NodeThoughtDeltaEvent | UserMessageChunkEvent | AddMessageEvent)",
+        "nodeId": "string",
+        "eventTimestamp": "rfc3339",
+        "payloadJson": "object",
+        "contentHash": "string (optional)"
+      }
+    },
+    "AgentRequestArtifact": {
+      "type": "object",
+      "required": [
+        "artifactKey",
+        "artifactType",
+        "agentType",
+        "nodeId",
+        "interactionType",
+        "payloadJson"
+      ],
+      "fields": {
+        "artifactKey": "string",
+        "artifactType": "AgentRequestArtifact",
+        "agentType": "string",
+        "nodeId": "string",
+        "interactionType": "string",
+        "payloadJson": "object",
+        "contentHash": "string (optional)"
+      }
+    },
+    "AgentResultArtifact": {
+      "type": "object",
+      "required": [
+        "artifactKey",
+        "artifactType",
+        "agentType",
+        "nodeId",
+        "interactionType",
+        "payloadJson"
+      ],
+      "fields": {
+        "artifactKey": "string",
+        "artifactType": "AgentResultArtifact",
+        "agentType": "string",
+        "nodeId": "string",
+        "interactionType": "string",
+        "payloadJson": "object",
+        "contentHash": "string (optional)"
+      }
+    },
+    "InterruptRequestArtifact": {
+      "type": "object",
+      "required": [
+        "artifactKey",
+        "artifactType",
+        "agentType",
+        "nodeId",
+        "payloadJson"
+      ],
+      "fields": {
+        "artifactKey": "string",
+        "artifactType": "InterruptRequestArtifact",
+        "agentType": "string",
+        "nodeId": "string",
+        "payloadJson": "object",
+        "contentHash": "string (optional)"
+      }
+    },
+    "InterruptResolutionArtifact": {
+      "type": "object",
+      "required": [
+        "artifactKey",
+        "artifactType",
+        "agentType",
+        "nodeId",
+        "payloadJson"
+      ],
+      "fields": {
+        "artifactKey": "string",
+        "artifactType": "InterruptResolutionArtifact",
+        "agentType": "string",
+        "nodeId": "string",
+        "payloadJson": "object",
+        "contentHash": "string (optional)"
+      }
+    },
+    "CollectorDecisionArtifact": {
+      "type": "object",
+      "required": [
+        "artifactKey",
+        "artifactType",
+        "agentType",
+        "nodeId",
+        "payloadJson"
+      ],
+      "fields": {
+        "artifactKey": "string",
+        "artifactType": "CollectorDecisionArtifact",
+        "agentType": "string",
+        "nodeId": "string",
+        "payloadJson": "object",
+        "contentHash": "string (optional)"
+      }
+    },
+    "PromptTemplateVersion": {
+      "type": "object",
+      "required": [
+        "templateStaticId",
+        "contentHash",
+        "templateArtifactKey",
+        "lastUpdatedAt",
+        "templateText"
+      ],
+      "fields": {
+        "templateStaticId": "string",
+        "contentHash": "string",
+        "templateArtifactKey": "string",
+        "lastUpdatedAt": "rfc3339",
+        "templateText": "string",
+        "sourceLocation": "string (optional)"
+      }
+    },
+    "SemanticRepresentation": {
+      "type": "object",
+      "required": [
+        "targetArtifactKey",
+        "derivationRecipeId",
+        "derivationRecipeVersion",
+        "modelRef",
+        "createdAt",
+        "payloadType",
+        "payload"
+      ],
+      "fields": {
+        "targetArtifactKey": "string",
+        "derivationRecipeId": "string",
+        "derivationRecipeVersion": "string",
+        "modelRef": "string",
+        "createdAt": "rfc3339",
+        "qualityMetadata": "object (optional)",
+        "payloadType": "string (Embedding | Summary | SemanticIndexRef)",
+        "payload": "object"
+      }
+    }
+  }
+}
