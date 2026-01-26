@@ -32,3 +32,20 @@ Java 21: Follow standard conventions
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->
+
+
+## Profiles
+
+Run tests with gradle profile "integration" i.e.
+
+```shell
+./gradlew :multi_agent_ide:test -Pprofile=integration
+```
+
+to run the integration tests. You should do this as the final step when implementing a ticket.
+
+```shell
+./gradlew :multi_agent_ide:test
+```
+
+In practice you'll want to run both of these because integration profile does not include non-integration tests.
