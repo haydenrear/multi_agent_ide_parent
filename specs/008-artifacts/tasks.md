@@ -10,8 +10,8 @@
 
 **Purpose**: Project initialization and baseline configuration for artifact persistence.
 
-- [ ] T001 Add docker-compose test DB config in `multi_agent_ide/src/test/resources/application-test.yml`
-- [ ] T002 [P] Add artifact storage config placeholders in `multi_agent_ide/src/main/resources/application.yml`
+- [x] T001 Add docker-compose test DB config in `multi_agent_ide/src/test/resources/application-test.yml`
+- [x] T002 [P] Add artifact storage config placeholders in `multi_agent_ide/src/main/resources/application.yml`
 
 ---
 
@@ -19,16 +19,16 @@
 
 **Purpose**: Core artifact/key/serialization infrastructure and persistence wiring.
 
-- [ ] T003 Create ArtifactKey and generator utility in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/ArtifactKey.java`
-- [ ] T004 [P] Create base artifact models in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/Artifact.java`
-- [ ] T005 [P] Create RefArtifact model in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/RefArtifact.java`
-- [ ] T006 [P] Add content hashing + canonical JSON helpers in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/ArtifactHashing.java`
-- [ ] T007 Add ArtifactEvent to `utilitymodule/src/main/java/com/hayden/utilitymodule/acp/events/Events.java`
-- [ ] T008 [P] Add artifact persistence entity in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/entity/ArtifactEntity.java`
-- [ ] T009 [P] Add artifact repository interface in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/repository/ArtifactRepository.java`
-- [ ] T010 [P] Add artifact tree builder in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactTreeBuilder.java`
-- [ ] T011 Add ArtifactEvent listener wired to EventBus in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactEventListener.java`
-- [ ] T012 Add GraphEvent -> EventArtifact mapper in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/EventArtifactMapper.java`
+- [x] T003 Create ArtifactKey and generator utility in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/ArtifactKey.java`
+- [x] T004 [P] Create base artifact models in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/Artifact.java`
+- [x] T005 [P] Create RefArtifact model in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/RefArtifact.java`
+- [x] T006 [P] Add content hashing + canonical JSON helpers in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/ArtifactHashing.java`
+- [x] T007 Add ArtifactEvent to `utilitymodule/src/main/java/com/hayden/utilitymodule/acp/events/Events.java`
+- [x] T008 [P] Add artifact persistence entity in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/entity/ArtifactEntity.java`
+- [x] T009 [P] Add artifact repository interface in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/repository/ArtifactRepository.java`
+- [x] T010 [P] Add artifact tree builder in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactTreeBuilder.java`
+- [x] T011 Add ArtifactEvent listener wired to EventBus in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactEventListener.java`
+- [x] T012 Add GraphEvent -> EventArtifact mapper in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/EventArtifactMapper.java`
 
 **Checkpoint**: Artifact infrastructure ready; user story work can begin.
 
@@ -42,13 +42,13 @@
 
 ### Implementation for User Story 1
 
-- [ ] T013 [US1] Add execution scope + root artifact creation in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ExecutionScopeService.java`
-- [ ] T014 [P] [US1] Emit AgentRequestArtifact in `multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentInterfaces.java`
-- [ ] T015 [P] [US1] Emit AgentResult/CollectorDecision/Interrupt artifacts in `multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentInterfaces.java`
-- [ ] T016 [US1] Emit ExecutionConfig and OutcomeEvidence artifacts in `multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentLifecycleHandler.java`
-- [ ] T017 [US1] Add MessageStreamArtifact model in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/MessageStreamArtifact.java`
-- [ ] T018 [US1] Map stream/message events to MessageStreamArtifact in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/EventArtifactMapper.java`
-- [ ] T019 [US1] Ensure nested sub-agent artifact scopes in `multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/WorkflowGraphService.java`
+- [x] T013 [US1] Add execution scope + root artifact creation in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ExecutionScopeService.java`
+- [x] T014 [P] [US1] Emit AgentRequestArtifact in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactEmissionService.java`
+- [x] T015 [P] [US1] Emit AgentResult/CollectorDecision/Interrupt artifacts in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactEmissionService.java`
+- [x] T016 [US1] Emit ExecutionConfig and OutcomeEvidence artifacts in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactEmissionService.java`
+- [x] T017 [US1] Add MessageStreamArtifact model in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/MessageStreamArtifact.java`
+- [x] T018 [US1] Map stream/message events to MessageStreamArtifact in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/EventArtifactMapper.java`
+- [x] T019 [US1] Ensure nested sub-agent artifact scopes in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ExecutionScopeService.java`
 
 **Checkpoint**: Execution tree can be reconstructed end-to-end for a single run.
 
@@ -62,12 +62,12 @@
 
 ### Implementation for User Story 2
 
-- [ ] T020 [P] [US2] Add Templated contract in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/Templated.java`
-- [ ] T021 [P] [US2] Add PromptTemplateVersion model in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/PromptTemplateVersion.java`
-- [ ] T022 [US2] Implement prompt template loader in `multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptTemplateLoader.java`
-- [ ] T023 [US2] Implement template store + dedup logic in `multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptTemplateStore.java`
-- [ ] T024 [US2] Emit PromptContribution artifacts in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/prompt/PromptAssembly.java`
-- [ ] T025 [US2] Emit PromptExecution/RenderedPrompt/PromptArgs artifacts in `multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentInterfaces.java`
+- [x] T020 [P] [US2] Add Templated contract in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/Templated.java`
+- [x] T021 [P] [US2] Add PromptTemplateVersion model in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/PromptTemplateVersion.java`
+- [x] T022 [US2] Implement prompt template loader in `multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptTemplateLoader.java`
+- [x] T023 [US2] Implement template store + dedup logic in `multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptTemplateStore.java`
+- [x] T024 [US2] Emit PromptContribution artifacts in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/prompt/PromptAssembly.java`
+- [x] T025 [US2] Emit PromptExecution/RenderedPrompt/PromptArgs artifacts in `multi_agent_ide/src/main/java/com/hayden/multiagentide/service/DefaultLlmRunner.java`
 
 **Checkpoint**: Template versions are stable across runs and traceable to outcomes.
 
@@ -81,9 +81,9 @@
 
 ### Implementation for User Story 3
 
-- [ ] T026 [P] [US3] Add SemanticRepresentation model in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/SemanticRepresentation.java`
-- [ ] T027 [US3] Add semantic persistence entity/repository in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/semantic/SemanticRepresentationEntity.java`
-- [ ] T028 [US3] Add semantic attachment service in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/semantic/SemanticRepresentationService.java`
+- [x] T026 [P] [US3] Add SemanticRepresentation model in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/SemanticRepresentation.java`
+- [x] T027 [US3] Add semantic persistence entity/repository in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/semantic/SemanticRepresentationEntity.java`
+- [x] T028 [US3] Add semantic attachment service in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/semantic/SemanticRepresentationService.java`
 
 **Checkpoint**: Semantic layer is functional without mutating source artifacts.
 
@@ -93,8 +93,8 @@
 
 **Purpose**: Documentation and operational checks.
 
-- [ ] T029 [P] Update artifact persistence docs in `multi_agent_ide/README.md`
-- [ ] T030 Validate quickstart steps and update `specs/008-artifacts/quickstart.md` if needed
+- [x] T029 [P] Update artifact persistence docs in `multi_agent_ide/README.md`
+- [x] T030 Validate quickstart steps and update `specs/008-artifacts/quickstart.md` if needed
 
 ---
 

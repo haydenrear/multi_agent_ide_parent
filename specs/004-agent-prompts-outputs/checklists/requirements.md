@@ -132,28 +132,25 @@
 
 ### Typed Interrupt Requests (20 Total - One Per Agent)
 
-| Interrupt Type | Agent-Specific Fields |
-|----------------|----------------------|
-| OrchestratorInterruptRequest | phase, goal, workflow context |
-| OrchestratorCollectorInterruptRequest | phase decision, collector results |
-| DiscoveryOrchestratorInterruptRequest | subdomain partitioning, scope |
-| DiscoveryAgentInterruptRequest | code findings, boundary decisions |
-| DiscoveryCollectorInterruptRequest | codeReferences, subdomainBoundaries, recommendations |
+| Interrupt Type                         | Agent-Specific Fields |
+|----------------------------------------|----------------------|
+| OrchestratorInterruptRequest           | phase, goal, workflow context |
+| OrchestratorCollectorInterruptRequest  | phase decision, collector results |
+| DiscoveryOrchestratorInterruptRequest  | subdomain partitioning, scope |
+| DiscoveryAgentInterruptRequest         | code findings, boundary decisions |
+| DiscoveryCollectorInterruptRequest     | codeReferences, subdomainBoundaries, recommendations |
 | DiscoveryAgentDispatchInterruptRequest | dispatch routing decisions |
-| PlanningOrchestratorInterruptRequest | ticket decomposition, discovery context |
-| PlanningAgentInterruptRequest | proposedTickets, architectureDecisions, discoveryReferences |
-| PlanningCollectorInterruptRequest | consolidatedTickets, dependencyConflicts, mergeDecisions |
-| PlanningAgentDispatchInterruptRequest | dispatch routing decisions |
-| TicketOrchestratorInterruptRequest | implementation scope, planning context |
-| TicketAgentInterruptRequest | filesToModify, testStrategies, implementationApproaches |
-| TicketCollectorInterruptRequest | completion status, follow-ups |
-| TicketAgentDispatchInterruptRequest | dispatch routing decisions |
-| ReviewInterruptRequest | review criteria, assessment |
-| MergerInterruptRequest | conflict resolution, merge strategy |
-| ContextOrchestratorInterruptRequest | context gathering scope |
-| ContextAgentInterruptRequest | context findings |
-| ContextCollectorInterruptRequest | context consolidation |
-| ContextAgentDispatchInterruptRequest | dispatch routing decisions |
+| PlanningOrchestratorInterruptRequest   | ticket decomposition, discovery context |
+| PlanningAgentInterruptRequest          | proposedTickets, architectureDecisions, discoveryReferences |
+| PlanningCollectorInterruptRequest      | consolidatedTickets, dependencyConflicts, mergeDecisions |
+| PlanningAgentDispatchInterruptRequest  | dispatch routing decisions |
+| TicketOrchestratorInterruptRequest     | implementation scope, planning context |
+| TicketAgentInterruptRequest            | filesToModify, testStrategies, implementationApproaches |
+| TicketCollectorInterruptRequest        | completion status, follow-ups |
+| TicketAgentDispatchInterruptRequest    | dispatch routing decisions |
+| ReviewInterruptRequest                 | review criteria, assessment |
+| MergerInterruptRequest                 | conflict resolution, merge strategy |
+| ContextManagerInterruptRequest         | context gathering scope |
 
 ### Prompt-Based Uncertainty Recognition
 - [x] Prompts guide agents to notice implicit implementation decisions
@@ -185,10 +182,7 @@
 - [x] User Story 37: TicketAgentDispatchInterruptRequest - routing context (P2)
 - [x] User Story 38: ReviewInterruptRequest - assessment context (P2)
 - [x] User Story 39: MergerInterruptRequest - conflict context (P2)
-- [x] User Story 40: ContextOrchestratorInterruptRequest - gathering scope context (P2)
-- [x] User Story 41: ContextAgentInterruptRequest - findings context (P2)
-- [x] User Story 42: ContextCollectorInterruptRequest - consolidation context (P2)
-- [x] User Story 43: ContextAgentDispatchInterruptRequest - routing context (P2)
+- [x] User Story 40: ContextManagerInterruptRequest - gathering scope context (P2)
 
 ### User Stories - Prompt Guidance (44)
 - [x] User Story 44: Prompt Guidance for Structured Interrupt Generation (P1)

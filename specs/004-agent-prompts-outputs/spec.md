@@ -100,28 +100,25 @@ Agent receives structured continuation context
 
 Every agent type has its own typed interrupt request with agent-specific context fields:
 
-| Agent | Interrupt Request Type | Agent-Specific Context |
-|-------|----------------------|------------------------|
-| Orchestrator | OrchestratorInterruptRequest | phase, goal, workflow context |
-| Orchestrator Collector | OrchestratorCollectorInterruptRequest | phase decision, collector results |
-| Discovery Orchestrator | DiscoveryOrchestratorInterruptRequest | subdomain partitioning, scope |
-| Discovery Agent | DiscoveryAgentInterruptRequest | code findings, boundary decisions |
-| Discovery Collector | DiscoveryCollectorInterruptRequest | consolidation decisions, recommendations |
+| Agent                    | Interrupt Request Type                 | Agent-Specific Context |
+|--------------------------|----------------------------------------|------------------------|
+| Orchestrator             | OrchestratorInterruptRequest           | phase, goal, workflow context |
+| Orchestrator Collector   | OrchestratorCollectorInterruptRequest  | phase decision, collector results |
+| Discovery Orchestrator   | DiscoveryOrchestratorInterruptRequest  | subdomain partitioning, scope |
+| Discovery Agent          | DiscoveryAgentInterruptRequest         | code findings, boundary decisions |
+| Discovery Collector      | DiscoveryCollectorInterruptRequest     | consolidation decisions, recommendations |
 | Discovery Agent Dispatch | DiscoveryAgentDispatchInterruptRequest | dispatch routing decisions |
-| Planning Orchestrator | PlanningOrchestratorInterruptRequest | ticket decomposition, discovery context |
-| Planning Agent | PlanningAgentInterruptRequest | ticket design, architecture decisions |
-| Planning Collector | PlanningCollectorInterruptRequest | ticket consolidation, dependency resolution |
-| Planning Agent Dispatch | PlanningAgentDispatchInterruptRequest | dispatch routing decisions |
-| Ticket Orchestrator | TicketOrchestratorInterruptRequest | implementation scope, planning context |
-| Ticket Agent | TicketAgentInterruptRequest | implementation approach, file changes |
-| Ticket Collector | TicketCollectorInterruptRequest | completion status, follow-ups |
-| Ticket Agent Dispatch | TicketAgentDispatchInterruptRequest | dispatch routing decisions |
-| Review Agent | ReviewInterruptRequest | review criteria, assessment |
-| Merger Agent | MergerInterruptRequest | conflict resolution, merge strategy |
-| Context Orchestrator | ContextOrchestratorInterruptRequest | context gathering scope |
-| Context Agent | ContextAgentInterruptRequest | context findings |
-| Context Collector | ContextCollectorInterruptRequest | context consolidation |
-| Context Agent Dispatch | ContextAgentDispatchInterruptRequest | dispatch routing decisions |
+| Planning Orchestrator    | PlanningOrchestratorInterruptRequest   | ticket decomposition, discovery context |
+| Planning Agent           | PlanningAgentInterruptRequest          | ticket design, architecture decisions |
+| Planning Collector       | PlanningCollectorInterruptRequest      | ticket consolidation, dependency resolution |
+| Planning Agent Dispatch  | PlanningAgentDispatchInterruptRequest  | dispatch routing decisions |
+| Ticket Orchestrator      | TicketOrchestratorInterruptRequest     | implementation scope, planning context |
+| Ticket Agent             | TicketAgentInterruptRequest            | implementation approach, file changes |
+| Ticket Collector         | TicketCollectorInterruptRequest        | completion status, follow-ups |
+| Ticket Agent Dispatch    | TicketAgentDispatchInterruptRequest    | dispatch routing decisions |
+| Review Agent             | ReviewInterruptRequest                 | review criteria, assessment |
+| Merger Agent             | MergerInterruptRequest                 | conflict resolution, merge strategy |
+| Context Manager          | ContextManagerInterruptRequest         | context gathering scope |
 
 ### Prompt-Based Uncertainty Recognition
 
@@ -887,27 +884,9 @@ As a developer, I want `MergerInterruptRequest` to include conflict fields (conf
 
 ---
 
-### User Story 40 - Context Orchestrator Interrupt with Gathering Scope Context (Priority: P2)
+### User Story 41 - Context Manager Agent Interrupt with Findings Context (Priority: P2)
 
-As a developer, I want `ContextOrchestratorInterruptRequest` to include scope fields (context gathering scope, source priorities, relevance criteria) so that context orchestrator interrupts enable gathering steering.
-
-**Why this priority**: The context orchestrator determines what context to gather. Structured interrupts enable confirmation of gathering scope and priorities.
-
-**Independent Test**: Can be tested by triggering a context orchestrator interrupt and validating it contains scope and priority information.
-
-**Cucumber Test Tag**: `@context-orchestrator-interrupt-context`
-
-**Acceptance Scenarios**:
-
-1. **Given** the context orchestrator scopes gathering, **When** it needs confirmation, **Then** the interrupt includes proposed sources with relevance rationale
-2. **Given** source priorities are ambiguous, **When** producing an interrupt, **Then** structured choices offer priority alternatives
-3. **Given** gathering affects downstream agents, **When** producing an interrupt, **Then** confirmation items include coverage sufficiency checks
-
----
-
-### User Story 41 - Context Agent Interrupt with Findings Context (Priority: P2)
-
-As a developer, I want `ContextAgentInterruptRequest` to include findings fields (context findings, relevance assessments, source references) so that context agent interrupts enable findings steering.
+As a developer, I want `ContextManagerInterruptRequest` to include findings fields (context findings, relevance assessments, source references) so that context agent interrupts enable findings steering.
 
 **Why this priority**: Context agents gather and assess context relevance. Structured interrupts enable confirmation of relevance assessments.
 
@@ -920,42 +899,6 @@ As a developer, I want `ContextAgentInterruptRequest` to include findings fields
 1. **Given** a context agent gathers findings, **When** it needs confirmation, **Then** the interrupt includes findings with relevance scores
 2. **Given** relevance is uncertain, **When** producing an interrupt, **Then** structured choices offer relevance interpretation alternatives
 3. **Given** findings may be redundant, **When** producing an interrupt, **Then** confirmation items include deduplication decisions
-
----
-
-### User Story 42 - Context Collector Interrupt with Consolidation Context (Priority: P2)
-
-As a developer, I want `ContextCollectorInterruptRequest` to include consolidation fields (consolidated context, relevance rankings, pruning decisions) so that context collector interrupts enable consolidation steering.
-
-**Why this priority**: Context collectors consolidate gathered context. Structured interrupts enable confirmation of consolidation and pruning decisions.
-
-**Independent Test**: Can be tested by triggering a context collector interrupt and validating it contains consolidated context and rankings.
-
-**Cucumber Test Tag**: `@context-collector-interrupt-context`
-
-**Acceptance Scenarios**:
-
-1. **Given** a context collector consolidates findings, **When** it needs confirmation, **Then** the interrupt includes consolidated context with rankings
-2. **Given** pruning is needed, **When** producing an interrupt, **Then** structured choices offer pruning strategy alternatives
-3. **Given** context affects downstream quality, **When** producing an interrupt, **Then** confirmation items include sufficiency assessments
-
----
-
-### User Story 43 - Context Dispatch Interrupt with Routing Context (Priority: P2)
-
-As a developer, I want `ContextAgentDispatchInterruptRequest` to include dispatch routing fields (agent assignments, source distribution, gathering strategy) so that context dispatch interrupts enable routing steering.
-
-**Why this priority**: Context dispatch routes work to context agents. Structured interrupts enable confirmation of source assignments and gathering strategy.
-
-**Independent Test**: Can be tested by triggering a context dispatch interrupt and validating it contains routing decisions.
-
-**Cucumber Test Tag**: `@context-dispatch-interrupt-context`
-
-**Acceptance Scenarios**:
-
-1. **Given** the dispatch routes to multiple agents, **When** it needs confirmation, **Then** the interrupt includes agent assignments with source focus
-2. **Given** gathering strategy varies, **When** producing an interrupt, **Then** structured choices offer strategy alternatives
-3. **Given** routing affects context completeness, **When** producing an interrupt, **Then** confirmation items include coverage checks
 
 ---
 
@@ -1220,10 +1163,7 @@ As a developer, I want workflow prompts to include guidance for generating struc
 - **TicketAgentDispatchInterruptRequest**: dispatch routing decisions
 - **ReviewInterruptRequest**: review criteria, assessment
 - **MergerInterruptRequest**: conflict resolution, merge strategy
-- **ContextOrchestratorInterruptRequest**: context gathering scope
-- **ContextAgentInterruptRequest**: context findings
-- **ContextCollectorInterruptRequest**: context consolidation
-- **ContextAgentDispatchInterruptRequest**: dispatch routing decisions
+- **ContextManagerInterruptRequest**: context gathering scope
 
 ## Success Criteria *(mandatory)*
 
