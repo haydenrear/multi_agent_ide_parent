@@ -346,20 +346,130 @@ Canonical JSON ensures identical content produces identical hashes regardless of
 
 **Implementation**: Use Jackson with `SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS` and `JsonGenerator.Feature.WRITE_NUMBERS_AS_STRINGS` disabled.
 
+---
+
+### ArtifactKey Parent Derivation (Critical Implementation Pattern)
+
+**Problem**: In a multi-agent workflow tree, artifacts must be nested under the correct parent to preserve attribution. A common mistake is deriving child artifact keys from the workflow run ID alone, which flattens the tree and loses the hierarchical relationship between agents and their artifacts.
+
+**Correct Pattern**: Child artifact keys MUST be derived from the parent agent's `ArtifactKey`, not from the workflow run ID.
+
+**Why This Matters**:
+- The workflow is a tree of agents: Orchestrator → DiscoveryOrchestrator → DiscoveryAgent(s) → etc.
+- Each agent's request carries an `ArtifactKey` (the agent's contextId)
+- Artifacts emitted during that agent's execution (prompts, tool calls, results) MUST be children of that agent's key
+- Using workflow run ID instead creates a flat list, losing the tree structure needed for reconstruction
+
+**Example - Wrong**:
+```text
+# Flat structure - cannot attribute prompts to specific agents
+ak:01HQXK5V8R.../01HQXK5V9K...  (RenderedPrompt under execution root)
+ak:01HQXK5V8R.../01HQXK5VAK...  (RenderedPrompt under execution root)
+ak:01HQXK5V8R.../01HQXK5VBK...  (RenderedPrompt under execution root)
+```
+
+**Example - Correct**:
+```text
+# Hierarchical structure - prompts attributed to their agent
+ak:01HQXK5V8R.../01HQXK5V9K...                          (DiscoveryOrchestratorRequest)
+ak:01HQXK5V8R.../01HQXK5V9K.../01HQXK5VAK...            (RenderedPrompt for DiscoveryOrchestrator)
+ak:01HQXK5V8R.../01HQXK5V9K.../01HQXK5VBK...            (DiscoveryAgentRequest child)
+ak:01HQXK5V8R.../01HQXK5V9K.../01HQXK5VBK.../01HQX...   (RenderedPrompt for DiscoveryAgent)
+```
+
+**Implementation Rule**: When emitting an artifact during agent execution:
+1. Obtain the current agent request's `contextId` (its `ArtifactKey`)
+2. Create child keys by calling `parentKey.createChild()`
+3. NEVER derive keys directly from workflow run ID except for the execution root
+
+**Key Generation Priority** (from `ContextIdService`):
+```java
+public ArtifactKey generate(String workflowRunId, AgentType agentType, Artifact.AgentModel parent) {
+    // 1. If workflowRunId is itself a valid ArtifactKey, create child from it
+    if (workflowRunId != null && ArtifactKey.isValid(workflowRunId)) {
+        return new ArtifactKey(workflowRunId).createChild();
+    }
+    // 2. If parent model exists, create child from parent's key
+    if (parent != null) {
+        return parent.key().createChild();
+    }
+    // 3. Only create root if no parent context exists
+    return ArtifactKey.createRoot();
+}
+```
+
+**Parent Discovery**: When enriching a request, the system must find the appropriate parent from the execution history (BlackboardHistory). The parent type depends on the request type:
+- `DiscoveryAgentRequest` → parent is `DiscoveryAgentRequests` (the dispatch container)
+- `RenderedPrompt` → parent is the current `AgentRequest` being processed
+- `ToolCallArtifact` → parent is the current `AgentRequest` being processed
+
+---
+
 ### Implementation Scope (Initial Rollout)
 
 This feature is initially implemented in the existing workflow agent execution and prompt assembly paths:
 
+**Core Agent Models and Interfaces**:
 - `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/AgentModels.java`
 - `multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentInterfaces.java`
+
+**Prompt Infrastructure**:
 - Built-in prompt templates under `multi_agent_ide/src/main/resources/prompts/workflow/`
 - Prompt contributor infrastructure in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/prompt/PromptContributor.java` and existing contributors such as `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/prompt/WeAreHerePromptContributor.java`
+
+**Event Infrastructure**:
 - Workflow graph event types and listener infrastructure:
   - `utilitymodule/src/main/java/com/hayden/utilitymodule/acp/events/Events.java`
   - `utilitymodule/src/main/java/com/hayden/utilitymodule/acp/events/EventListener.java`
   - `utilitymodule/src/main/java/com/hayden/utilitymodule/acp/events/EventBus.java`
 
-Operationally:
+**Request Enrichment and ArtifactKey Assignment** (Critical for Hierarchical Keys):
+- `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/service/RequestEnrichment.java` — Central service for enriching agent requests/results with `ArtifactKey` (contextId) and `PreviousContext`. Implements the parent derivation logic described in "ArtifactKey Parent Derivation" above.
+- `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/prompt/ContextIdService.java` — Generates child `ArtifactKey` values from parent keys, ensuring hierarchical structure is preserved.
+- `multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/ArtifactEnrichmentDecorator.java` — Decorator that intercepts agent routing results and applies `RequestEnrichment` to all outgoing requests, ensuring every request has a properly derived `ArtifactKey`.
+
+**Request Enrichment Pattern**:
+
+The `RequestEnrichment` service is invoked via the `ArtifactEnrichmentDecorator` which implements `ResultDecorator`. When an agent completes and returns a routing decision, the decorator enriches all outgoing requests with:
+
+1. **ArtifactKey (contextId)**: Derived from the parent agent's key using `ContextIdService.generate()`
+2. **PreviousContext**: Built from `BlackboardHistory` to provide retry/loop context
+
+The enrichment uses pattern matching to find the correct parent for each request type:
+
+```java
+// Example parent derivation from RequestEnrichment.findParentForInput()
+case AgentModels.DiscoveryAgentRequest ignored ->
+    findLastFromHistory(history, AgentModels.DiscoveryAgentRequests.class);
+case AgentModels.PlanningAgentRequest ignored ->
+    findLastFromHistory(history, AgentModels.PlanningOrchestratorRequest.class);
+case AgentModels.RenderedPrompt ignored ->
+    findLastFromHistory(history, AgentModels.AgentRequest.class);
+```
+
+**Why This Pattern Matters**:
+- Ensures every agent request carries a hierarchical `ArtifactKey` before execution
+- Artifacts emitted during execution (prompts, tool calls) can use the request's key as their parent
+- The decorator pattern intercepts at the routing boundary, guaranteeing enrichment happens for all code paths
+- `BlackboardHistory` provides execution context to find the correct parent without explicit parameter passing
+
+**Integration Points for Artifact Emission**:
+
+The `ArtifactKey` assigned during enrichment becomes the parent key for all artifacts emitted during that agent's execution:
+
+```text
+ArtifactEnrichmentDecorator.decorate()
+    ↓ (enriches outgoing requests with ArtifactKey)
+RequestEnrichment.enrich()
+    ↓ (finds parent from BlackboardHistory, generates child key)
+ContextIdService.generate()
+    ↓ (creates child key from parent)
+Agent executes with request.contextId() = ArtifactKey
+    ↓ (all emissions use this as parent)
+ArtifactEmissionService.emit*(request.contextId(), ...)
+```
+
+**Operationally**:
 
 - On application start, built-in prompt templates are loaded and checked against persistent template storage; new PromptTemplate versions are created only when the template content hash is new.
 - Prompt rendering uses the existing templating integration in the runtime (Jinja-based rendering in embabel); regardless of renderer, the system emits artifacts that separate static templates from dynamic inputs and records contributor outputs.
@@ -367,6 +477,7 @@ Operationally:
 - GraphEvent-to-artifact capture is enabled by continuing to emit existing GraphEvents and mapping them into EventArtifact nodes within the execution tree.
 - A new `ArtifactEvent` is introduced in `Events.java` (carrying the artifact interface only), and an `EventListener` implementation subscribes to ArtifactEvents and incrementally builds/persists the artifact tree using `ArtifactKey` semantics.
 - Sub-agent execution (dispatch subagents and other workflow nodes) emits nested artifact subtrees to preserve attribution and chronology across the workflow graph.
+- **Request enrichment via `ArtifactEnrichmentDecorator` ensures every agent request has a hierarchical `ArtifactKey` before execution begins, enabling proper artifact tree construction.**
 
 ## Success Criteria *(mandatory)*
 
