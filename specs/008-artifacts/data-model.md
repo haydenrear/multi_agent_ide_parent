@@ -50,6 +50,52 @@ ak:01HQXK5V8RPZM4J3NHWGC7SDFG/01HQXK5V9KPZM4J3NHWGC7SDXY                # child
 ak:01HQXK5V8RPZM4J3NHWGC7SDFG/01HQXK5V9KPZM4J3NHWGC7SDXY/01HQXK5VAKXYZ  # grandchild
 ```
 
+### ArtifactKey Parent Derivation (Implementation Pattern)
+
+**Critical Rule**: Child artifact keys MUST be derived from the parent agent's `ArtifactKey`, not from the workflow run ID.
+
+In a multi-agent workflow, the artifact tree mirrors the agent tree. Each agent request carries a `contextId` (its `ArtifactKey`), and all artifacts emitted during that agent's execution are children of that key.
+
+**Parent Lookup by Request Type**:
+
+The parent for a given request/artifact type is determined by the execution context (BlackboardHistory):
+
+| Request/Artifact Type | Parent Type | Rationale |
+|-----------------------|-------------|-----------|
+| `OrchestratorRequest` | (root) | Top-level orchestrator |
+| `DiscoveryOrchestratorRequest` | `OrchestratorRequest` | Phase orchestrator |
+| `DiscoveryAgentRequests` | `DiscoveryOrchestratorRequest` | Dispatch container |
+| `DiscoveryAgentRequest` | `DiscoveryAgentRequests` | Individual agent under dispatch |
+| `DiscoveryAgentResults` | `DiscoveryOrchestratorRequest` | Results container |
+| `DiscoveryCollectorRequest` | `DiscoveryOrchestratorRequest` | Collector under phase |
+| `PlanningOrchestratorRequest` | `OrchestratorRequest` | Phase orchestrator |
+| `PlanningAgentRequests` | `PlanningOrchestratorRequest` | Dispatch container |
+| `PlanningAgentRequest` | `PlanningOrchestratorRequest` | Individual agent |
+| `TicketOrchestratorRequest` | `OrchestratorRequest` | Phase orchestrator |
+| `TicketAgentRequests` | `TicketOrchestratorRequest` | Dispatch container |
+| `TicketAgentRequest` | `TicketOrchestratorRequest` | Individual agent |
+| `ReviewRequest` | `AgentRequest` or `AgentResult` | Review of prior work |
+| `MergerRequest` | `AgentRequest` or `AgentResult` | Merge of prior work |
+| `RenderedPrompt` | Current `AgentRequest` | Prompt for this agent |
+| `PromptArgs` | `RenderedPrompt` | Args for this prompt |
+| `ToolCallArtifact` | Current `AgentRequest` | Tool call by this agent |
+| `InterruptRequest` | Parent request being interrupted | Interrupt inherits parent |
+
+**Implementation**: See `RequestEnrichment.findParentForInput()` in `multi_agent_ide_lib`.
+
+**Example Tree**:
+```text
+ak:01HQX.../                                      # Execution root
+├── ak:01HQX.../01HQX...                          # OrchestratorRequest
+│   ├── ak:01HQX.../01HQX.../01HQX...             # DiscoveryOrchestratorRequest
+│   │   ├── ak:.../01HQX.../01HQX.../01HQX...     # DiscoveryAgentRequests (dispatch)
+│   │   │   ├── ak:.../.../.../.../01HQX...       # DiscoveryAgentRequest[0]
+│   │   │   │   └── ak:.../.../.../.../...        # RenderedPrompt for agent[0]
+│   │   │   └── ak:.../.../.../.../01HQX...       # DiscoveryAgentRequest[1]
+│   │   │       └── ak:.../.../.../.../...        # RenderedPrompt for agent[1]
+│   │   └── ak:.../01HQX.../01HQX.../01HQX...     # DiscoveryCollectorRequest
+```
+
 ### ContentHash
 
 Stable identifier computed from canonical bytes using SHA-256.
@@ -387,3 +433,86 @@ and nested under the correct workflow/sub-agent scope.
 Prompt templates under `multi_agent_ide/src/main/resources/prompts/workflow/` are
 loaded at startup and persisted as PromptTemplateVersion artifacts. Each template
 version is keyed by static template ID + content hash + stable template ArtifactKey.
+
+## Request Enrichment Infrastructure
+
+The request enrichment infrastructure ensures every agent request carries a properly derived `ArtifactKey` (contextId) before execution, enabling correct artifact tree construction.
+
+### Components
+
+**ContextIdService** (`multi_agent_ide_lib/.../prompt/ContextIdService.java`)
+
+Generates child `ArtifactKey` values from parent keys:
+
+```java
+public ArtifactKey generate(String workflowRunId, AgentType agentType, Artifact.AgentModel parent) {
+    // Priority 1: If workflowRunId is itself a valid ArtifactKey, create child from it
+    if (workflowRunId != null && ArtifactKey.isValid(workflowRunId)) {
+        return new ArtifactKey(workflowRunId).createChild();
+    }
+    // Priority 2: If parent model exists, create child from parent's key
+    if (parent != null) {
+        return parent.key().createChild();
+    }
+    // Priority 3: Only create root if no parent context exists
+    return ArtifactKey.createRoot();
+}
+```
+
+**RequestEnrichment** (`multi_agent_ide_lib/.../service/RequestEnrichment.java`)
+
+Central service that enriches agent requests/results with:
+- `ArtifactKey` (contextId) derived from the correct parent
+- `PreviousContext` built from `BlackboardHistory` for retry/loop support
+
+Key responsibilities:
+1. **Parent Discovery**: Uses pattern matching to find the correct parent from `BlackboardHistory`
+2. **Key Generation**: Delegates to `ContextIdService` to create child keys
+3. **Recursive Enrichment**: Enriches nested children (e.g., `DiscoveryAgentRequests` contains multiple `DiscoveryAgentRequest`)
+4. **PreviousContext Building**: Uses `PreviousContextFactory` to build typed previous context for each agent type
+
+**ArtifactEnrichmentDecorator** (`multi_agent_ide/.../agent/ArtifactEnrichmentDecorator.java`)
+
+Decorator implementing `ResultDecorator` that intercepts all agent routing results and applies `RequestEnrichment` to outgoing requests. This ensures every code path that produces an agent request goes through enrichment.
+
+Pattern:
+```java
+public <T extends AgentModels.Routing> T decorate(T routing, OperationContext context) {
+    // For each routing type, enrich all outgoing requests
+    case AgentModels.DiscoveryOrchestratorRouting routing ->
+        routing.toBuilder()
+            .interruptRequest(enrichRequest(routing.interruptRequest(), context))
+            .agentRequests(enrichRequest(routing.agentRequests(), context))
+            .collectorRequest(enrichRequest(routing.collectorRequest(), context))
+            // ... all other request fields
+            .build();
+}
+```
+
+### Data Flow
+
+```text
+Agent completes execution
+    ↓
+Returns Routing object with outgoing requests (contextId may be null)
+    ↓
+ArtifactEnrichmentDecorator.decorate()
+    ↓
+RequestEnrichment.enrich() for each request
+    ↓
+findParentForInput() → looks up correct parent from BlackboardHistory
+    ↓
+ContextIdService.generate() → creates child key from parent
+    ↓
+Request now has contextId = properly derived ArtifactKey
+    ↓
+Next agent executes with request.contextId() as parent for its artifacts
+```
+
+### Why This Pattern
+
+1. **Separation of Concerns**: Agents don't need to know about artifact key derivation
+2. **Consistency**: All requests go through the same enrichment path
+3. **Correctness**: Parent lookup logic is centralized and testable
+4. **Flexibility**: `BlackboardHistory` provides execution context without explicit parameter passing
+5. **Tree Integrity**: Ensures artifact tree structure matches agent execution tree
