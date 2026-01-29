@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/commit-diff-context/multi_agent_ide_parent.commit-diff-context.iml" filepath="$PROJECT_DIR$/.idea/modules/commit-diff-context/multi_agent_ide_parent.commit-diff-context.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/commit-diff-context/multi_agent_ide_parent.commit-diff-context.main.iml" filepath="$PROJECT_DIR$/.idea/modules/commit-diff-context/multi_agent_ide_parent.commit-diff-context.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/commit-diff-context/multi_agent_ide_parent.commit-diff-context.test.iml" filepath="$PROJECT_DIR$/.idea/modules/commit-diff-context/multi_agent_ide_parent.commit-diff-context.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/commit-diff-model/multi_agent_ide_parent.commit-diff-model.main.iml" filepath="$PROJECT_DIR$/.idea/modules/commit-diff-model/multi_agent_ide_parent.commit-diff-model.main.iml" />
@@ -21,10 +22,13 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/proto/multi_agent_ide_parent.proto.main.iml" filepath="$PROJECT_DIR$/.idea/modules/proto/multi_agent_ide_parent.proto.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/proto/multi_agent_ide_parent.proto.test.iml" filepath="$PROJECT_DIR$/.idea/modules/proto/multi_agent_ide_parent.proto.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/test-mcp-server/multi_agent_ide_parent.test-mcp-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/test-mcp-server/multi_agent_ide_parent.test-mcp-server.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/test-mcp-server/multi_agent_ide_parent.test-mcp-server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/test-mcp-server/multi_agent_ide_parent.test-mcp-server.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/test_graph/multi_agent_ide_parent.test_graph.main.iml" filepath="$PROJECT_DIR$/.idea/modules/test_graph/multi_agent_ide_parent.test_graph.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/test_graph/multi_agent_ide_parent.test_graph.test.iml" filepath="$PROJECT_DIR$/.idea/modules/test_graph/multi_agent_ide_parent.test_graph.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tracing/multi_agent_ide_parent.tracing.main.iml" filepath="$PROJECT_DIR$/.idea/modules/tracing/multi_agent_ide_parent.tracing.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tracing/multi_agent_ide_parent.tracing.test.iml" filepath="$PROJECT_DIR$/.idea/modules/tracing/multi_agent_ide_parent.tracing.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tracing_agent/multi_agent_ide_parent.tracing_agent.main.iml" filepath="$PROJECT_DIR$/.idea/modules/tracing_agent/multi_agent_ide_parent.tracing_agent.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tracing_agent/multi_agent_ide_parent.tracing_agent.test.iml" filepath="$PROJECT_DIR$/.idea/modules/tracing_agent/multi_agent_ide_parent.tracing_agent.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tracing_aspect/multi_agent_ide_parent.tracing_aspect.main.iml" filepath="$PROJECT_DIR$/.idea/modules/tracing_aspect/multi_agent_ide_parent.tracing_aspect.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/utilitymodule/multi_agent_ide_parent.utilitymodule.main.iml" filepath="$PROJECT_DIR$/.idea/modules/utilitymodule/multi_agent_ide_parent.utilitymodule.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/utilitymodule/multi_agent_ide_parent.utilitymodule.test.iml" filepath="$PROJECT_DIR$/.idea/modules/utilitymodule/multi_agent_ide_parent.utilitymodule.test.iml" />
