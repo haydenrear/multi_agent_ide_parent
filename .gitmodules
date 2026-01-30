@@ -64,3 +64,6 @@
 [submodule "test-acp-client"]
 	path = test-acp-client
 	url = ./test-acp-client/.git
+[submodule "acp-cdc-ai"]
+	path = acp-cdc-ai
+	url = git@github.com:haydenrear/acp-cdc-ai.git
