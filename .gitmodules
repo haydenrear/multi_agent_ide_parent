@@ -67,3 +67,6 @@
 [submodule "acp-cdc-ai"]
 	path = acp-cdc-ai
 	url = git@github.com:haydenrear/acp-cdc-ai.git
+[submodule "multi_agent_ide_java_parent"]
+	path = multi_agent_ide_java_parent
+	url = ./multi_agent_ide_java_parent/.git

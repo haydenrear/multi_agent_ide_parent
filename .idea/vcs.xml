@@ -2,8 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/acp-cdc-ai" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/buildSrc" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/cdc-ai" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/commit-diff-context" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/commit-diff-model" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/graphql" vcs="Git" />
@@ -17,6 +17,10 @@
     <mapping directory="$PROJECT_DIR$/libs/javabank" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/mcp-tool-gateway" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/multi_agent_ide_java_parent" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/multi_agent_ide_java_parent/acp-cdc-ai" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/multi_agent_ide_java_parent/multi_agent_ide" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/multi_agent_ide_java_parent/multi_agent_ide_lib" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide_lib" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide_python_parent" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide_python_parent/packages/app_template" vcs="Git" />
