@@ -1,6 +1,3 @@
-[submodule "multi_agent_ide_lib"]
-	path = multi_agent_ide_lib
-	url = ./multi_agent_ide_lib/.git
 [submodule "buildSrc"]
 	path = buildSrc
 	url = ./buildSrc/.git
@@ -46,9 +43,6 @@
 [submodule "multi_agent_ide_python_parent"]
 	path = multi_agent_ide_python_parent
 	url = ./multi_agent_ide_python_parent
-[submodule "multi_agent_ide"]
-	path = multi_agent_ide
-	url = git@github.com:haydenrear/multi_agent_ide.git
 [submodule "tracing_aspect"]
 	path = tracing_aspect
 	url = git@github.com:haydenrear/tracing-aspect.git
