@@ -1,0 +1,5 @@
+On the frontend, there should be a data explorer component that allows for pruning the data in the database.
+
+There exists nodes (action) and inside those there are messages. So say a node runs, or a workflow runs, but the data is bad, or it gets reverted. So it would be great to be able to delete some of the nodes, messages, workflows, or mark them up with information. So this can be adding semantic information. It is the viewer of the artifacts, CRUD operations, and then adding semantic information to it (sort of processing it).
+
+One example where I think this will be important is for critiquing reasoning traces. There have been quite a few cases where I see a reasoning trace that is incorrect. So this provides the ability to go in and critique the reasoning trace so that the training data is a bit better. Additionally, the context manager model adds reasoning traces and notes already, so similar can be used.  
