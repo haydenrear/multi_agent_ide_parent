@@ -28,8 +28,10 @@
             <option value="$PROJECT_DIR$/jpa-persistence" />
             <option value="$PROJECT_DIR$/libs-resolver" />
             <option value="$PROJECT_DIR$/mcp-tool-gateway" />
-            <option value="$PROJECT_DIR$/multi_agent_ide" />
-            <option value="$PROJECT_DIR$/multi_agent_ide_lib" />
+            <option value="$PROJECT_DIR$/multi_agent_ide_java_parent" />
+            <option value="$PROJECT_DIR$/multi_agent_ide_java_parent/acp-cdc-ai" />
+            <option value="$PROJECT_DIR$/multi_agent_ide_java_parent/multi_agent_ide" />
+            <option value="$PROJECT_DIR$/multi_agent_ide_java_parent/multi_agent_ide_lib" />
             <option value="$PROJECT_DIR$/persistence" />
             <option value="$PROJECT_DIR$/proto" />
             <option value="$PROJECT_DIR$/runner_code" />
