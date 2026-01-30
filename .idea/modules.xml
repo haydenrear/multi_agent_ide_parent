@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/multi_agent_ide_parent.iml" filepath="$PROJECT_DIR$/.idea/modules/multi_agent_ide_parent.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/acp-cdc-ai/multi_agent_ide_parent.acp-cdc-ai.main.iml" filepath="$PROJECT_DIR$/.idea/modules/acp-cdc-ai/multi_agent_ide_parent.acp-cdc-ai.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/acp-cdc-ai/multi_agent_ide_parent.acp-cdc-ai.test.iml" filepath="$PROJECT_DIR$/.idea/modules/acp-cdc-ai/multi_agent_ide_parent.acp-cdc-ai.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/commit-diff-context/multi_agent_ide_parent.commit-diff-context.iml" filepath="$PROJECT_DIR$/.idea/modules/commit-diff-context/multi_agent_ide_parent.commit-diff-context.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/commit-diff-context/multi_agent_ide_parent.commit-diff-context.main.iml" filepath="$PROJECT_DIR$/.idea/modules/commit-diff-context/multi_agent_ide_parent.commit-diff-context.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/commit-diff-context/multi_agent_ide_parent.commit-diff-context.test.iml" filepath="$PROJECT_DIR$/.idea/modules/commit-diff-context/multi_agent_ide_parent.commit-diff-context.test.iml" />
@@ -32,8 +30,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tracing_agent/multi_agent_ide_parent.tracing_agent.main.iml" filepath="$PROJECT_DIR$/.idea/modules/tracing_agent/multi_agent_ide_parent.tracing_agent.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tracing_agent/multi_agent_ide_parent.tracing_agent.test.iml" filepath="$PROJECT_DIR$/.idea/modules/tracing_agent/multi_agent_ide_parent.tracing_agent.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tracing_aspect/multi_agent_ide_parent.tracing_aspect.main.iml" filepath="$PROJECT_DIR$/.idea/modules/tracing_aspect/multi_agent_ide_parent.tracing_aspect.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/utilitymodule/multi_agent_ide_parent.utilitymodule.main.iml" filepath="$PROJECT_DIR$/.idea/modules/utilitymodule/multi_agent_ide_parent.utilitymodule.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/utilitymodule/multi_agent_ide_parent.utilitymodule.test.iml" filepath="$PROJECT_DIR$/.idea/modules/utilitymodule/multi_agent_ide_parent.utilitymodule.test.iml" />
     </modules>
   </component>
 </project>

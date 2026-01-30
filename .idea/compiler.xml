@@ -30,30 +30,28 @@
         <module name="multi_agent_ide_parent.test-mcp-server.main" />
         <module name="multi_agent_ide_parent.multi_agent_ide_java_parent.multi_agent_ide_lib.main" />
         <module name="multi_agent_ide_parent.tracing_aspect.main" />
+        <module name="multi_agent_ide_parent.multi_agent_ide_java_parent.utilitymodule.main" />
         <module name="multi_agent_ide_parent.runner_code.test" />
         <module name="multi_agent_ide_parent.persistence.test" />
         <module name="multi_agent_ide_parent.tracing_agent.test" />
         <module name="multi_agent_ide_parent.proto.main" />
         <module name="multi_agent_ide_parent.commit-diff-model.main" />
+        <module name="multi_agent_ide_parent.multi_agent_ide_java_parent.utilitymodule.test" />
         <module name="multi_agent_ide_parent.jpa-persistence.test" />
         <module name="multi_agent_ide_parent.commit-diff-context.test" />
         <module name="multi_agent_ide_parent.tracing_aspect.test" />
         <module name="multi_agent_ide_parent.test-mcp-server.test" />
-        <module name="multi_agent_ide_parent.utilitymodule.test" />
         <module name="multi_agent_ide_parent.multi_agent_ide_java_parent.acp-cdc-ai.test" />
         <module name="multi_agent_ide_parent.graphql.test" />
         <module name="multi_agent_ide_parent.multi_agent_ide_java_parent.multi_agent_ide_lib.test" />
         <module name="multi_agent_ide_parent.runner_code.main" />
         <module name="multi_agent_ide_parent.proto.test" />
-        <module name="multi_agent_ide_parent.acp-cdc-ai.test" />
         <module name="multi_agent_ide_parent.commit-diff-model.test" />
         <module name="multi_agent_ide_parent.libs-resolver.test" />
         <module name="multi_agent_ide_parent.tracing_agent.main" />
         <module name="multi_agent_ide_parent.mcp-tool-gateway.test" />
         <module name="multi_agent_ide_parent.test_graph.test" />
-        <module name="multi_agent_ide_parent.acp-cdc-ai.main" />
         <module name="multi_agent_ide_parent.multi_agent_ide_java_parent.acp-cdc-ai.main" />
-        <module name="multi_agent_ide_parent.utilitymodule.main" />
         <module name="multi_agent_ide_parent.graphql.main" />
         <module name="multi_agent_ide_parent.multi_agent_ide_java_parent.multi_agent_ide.test" />
         <module name="multi_agent_ide_parent.tracing.main" />
@@ -143,7 +141,6 @@
       <module name="multi_agent_ide.utilitymodule" options="--enable-preview -parameters" />
       <module name="multi_agent_ide.utilitymodule.main" options="--enable-preview -parameters" />
       <module name="multi_agent_ide.utilitymodule.test" options="--enable-preview -parameters" />
-      <module name="multi_agent_ide_parent.acp-cdc-ai" options="--enable-preview -parameters" />
       <module name="multi_agent_ide_parent.acp-cdc-ai.main" options="--enable-preview -parameters" />
       <module name="multi_agent_ide_parent.acp-cdc-ai.test" options="--enable-preview -parameters" />
       <module name="multi_agent_ide_parent.commit-diff-context" options="--enable-preview -parameters" />
@@ -178,6 +175,9 @@
       <module name="multi_agent_ide_parent.multi_agent_ide_java_parent.multi_agent_ide_lib" options="--enable-preview -parameters" />
       <module name="multi_agent_ide_parent.multi_agent_ide_java_parent.multi_agent_ide_lib.main" options="--enable-preview -parameters" />
       <module name="multi_agent_ide_parent.multi_agent_ide_java_parent.multi_agent_ide_lib.test" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide_parent.multi_agent_ide_java_parent.utilitymodule" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide_parent.multi_agent_ide_java_parent.utilitymodule.main" options="--enable-preview -parameters" />
+      <module name="multi_agent_ide_parent.multi_agent_ide_java_parent.utilitymodule.test" options="--enable-preview -parameters" />
       <module name="multi_agent_ide_parent.multi_agent_ide_lib" options="--enable-preview -parameters" />
       <module name="multi_agent_ide_parent.multi_agent_ide_lib.main" options="--enable-preview -parameters" />
       <module name="multi_agent_ide_parent.multi_agent_ide_lib.test" options="--enable-preview -parameters" />
