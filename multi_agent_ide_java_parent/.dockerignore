@@ -1,0 +1,12 @@
+.git
+.gitignore
+.gradle
+build
+**/build
+**/out
+**/bin
+**/target
+node_modules
+coverage
+*.log*
+.env*
