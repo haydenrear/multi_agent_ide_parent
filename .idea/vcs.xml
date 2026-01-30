@@ -3,14 +3,18 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/buildSrc" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cdc-ai" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/commit-diff-context" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/commit-diff-model" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/graphql" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/jpa-persistence" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs-resolver" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/A2UI" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/CopilotKit" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/acp-kotlin" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/ag-ui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/embabel-agent" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/javabank" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/mcp-tool-gateway" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide_lib" vcs="Git" />
