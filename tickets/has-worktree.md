@@ -1,0 +1,1 @@
+Rest of them should use HasWorktree

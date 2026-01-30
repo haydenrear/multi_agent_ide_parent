@@ -1,0 +1,1 @@
+Need to run it with test graph pointing to open ai through a streaming chat model via REST and a mountebank proxy that intercepts the traffic and records it - then save that as an imposter that we load for each of them.

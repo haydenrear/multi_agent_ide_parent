@@ -1,0 +1,5 @@
+Testing validation for ML has been weird because the ML often creates degenerate tests. And often the verifications are lacking. However, the ML is very good at sifting through a lot of data and finding inconsistencies, and validating.
+
+So I suppose that as part of this framework, as part of the unit tests, the tests emit logs (effectively snapshots of the stack, and the data on the stack) and validate wholly those objects. For example, for the artifact tree, it is difficult to validate everything, write mocks for everything, and that is BRITTLE. However, realizing that an AI with smaller model, or indexing the output and then validating the indexed results asynchronously to find inconsistencies will help, especially when we have a semantic representation of the ticket itself.
+
+Similarly, for stuff involving validation of the frontend. Doing a dump of all the stuff on the screen, then having the AI take prev, do diff on this, then check artifact tree for changes on execution, and semantic representation of the ticket and changes themselves, to perform validation on the UI side, to catch hard to get errors, and push it in a direction towards more validation. 
