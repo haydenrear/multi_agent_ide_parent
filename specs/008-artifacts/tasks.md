@@ -19,14 +19,16 @@
 
 **Purpose**: Core artifact/key/serialization infrastructure and persistence wiring.
 
-- [x] T003 Create ArtifactKey and generator utility in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/ArtifactKey.java`
-- [x] T004 [P] Create base artifact models in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/Artifact.java`
-- [x] T005 [P] Create RefArtifact model in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/RefArtifact.java`
-- [x] T006 [P] Add content hashing + canonical JSON helpers in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/ArtifactHashing.java`
-- [x] T007 Add ArtifactEvent to `utilitymodule/src/main/java/com/hayden/utilitymodule/acp/events/Events.java`
+- [x] T003 Create ArtifactKey and generator utility in `acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/ArtifactKey.java`
+- [x] T004 [P] Create base artifact models in `acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/Artifact.java`
+- [x] T005 [P] Create RefArtifact model in `acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/Artifact.java` (as sealed permits)
+- [x] T006 [P] Add content hashing + canonical JSON helpers in `acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/ArtifactHashing.java`
+- [x] T007 Add ArtifactEvent to `acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/Events.java`
 - [x] T008 [P] Add artifact persistence entity in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/entity/ArtifactEntity.java`
 - [x] T009 [P] Add artifact repository interface in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/repository/ArtifactRepository.java`
 - [x] T010 [P] Add artifact tree builder in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactTreeBuilder.java`
+- [x] T010a [P] Add ArtifactNode trie structure in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactNode.java`
+- [x] T010b [P] Add ArtifactService for persistence/serialization in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactService.java`
 - [x] T011 Add ArtifactEvent listener wired to EventBus in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactEventListener.java`
 - [x] T012 Add GraphEvent -> EventArtifact mapper in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/EventArtifactMapper.java`
 
@@ -62,7 +64,7 @@
 
 ### Implementation for User Story 2
 
-- [x] T020 [P] [US2] Add Templated contract in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/Templated.java`
+- [x] T020 [P] [US2] Add Templated contract in `acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/Templated.java` (interface used by PromptTemplateVersion)
 - [x] T021 [P] [US2] Add PromptTemplateVersion model in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/PromptTemplateVersion.java`
 - [x] T022 [US2] Implement prompt template loader in `multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptTemplateLoader.java`
 - [x] T023 [US2] Implement template store + dedup logic in `multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptTemplateStore.java`
@@ -82,7 +84,9 @@
 ### Implementation for User Story 3
 
 - [x] T026 [P] [US3] Add SemanticRepresentation model in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/SemanticRepresentation.java`
-- [x] T027 [US3] Add semantic persistence entity/repository in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/semantic/SemanticRepresentationEntity.java`
+- [x] T027 [US3] Add semantic persistence entity/repository in:
+  - `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/semantic/SemanticRepresentationEntity.java`
+  - `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/semantic/SemanticRepresentationRepository.java`
 - [x] T028 [US3] Add semantic attachment service in `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/semantic/SemanticRepresentationService.java`
 
 **Checkpoint**: Semantic layer is functional without mutating source artifacts.

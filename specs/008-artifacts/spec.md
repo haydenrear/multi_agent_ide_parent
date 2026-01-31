@@ -2,7 +2,8 @@
 
 **Feature Branch**: `008-artifacts`  
 **Created**: 2026-01-24  
-**Status**: Draft  
+**Status**: Implemented  
+**Last Updated**: 2026-01-31  
 **Input**: User description: "Define canonical execution artifacts, templates, and semantic representations for agent runs"
 
 ## Intent and Vision
@@ -182,6 +183,10 @@ Analysts need to attach semantic interpretations after the fact, so they can sco
 - **SemanticRepresentation**: Post-hoc analysis record that targets a source artifact without mutation.
 - **SemanticPayload**: Sealed payload variant such as `Embedding`, `Summary`, or `SemanticIndexRef`.
 - **RefArtifact**: Explicit reference to another artifact key for dependency modeling.
+- **AgentContext**: Root interface for all agent-related artifacts, extends `Artifact.AgentModel`, requires `ArtifactKey artifactKey()` and serialization methods for different contexts (Standard, Interrupt, GoalResolution, MergeSummary, Results).
+- **ArtifactNode**: Trie-like in-memory tree structure for artifact management during execution, uses concurrent hash maps and content-hash-based sibling deduplication.
+- **DiscoveryReport**: Comprehensive discovery analysis artifact containing file references, cross-links, semantic tags, generated queries, and diagram representations.
+- **PlanningTicket**: Work breakdown structure artifact with tasks, dependencies, acceptance criteria, and discovery links for traceability.
 
 ### Assumptions
 
@@ -407,26 +412,50 @@ public ArtifactKey generate(String workflowRunId, AgentType agentType, Artifact.
 
 ### Implementation Scope (Initial Rollout)
 
-This feature is initially implemented in the existing workflow agent execution and prompt assembly paths:
+This feature is implemented across multiple modules in the multi-agent IDE system:
+
+**Core Artifact Infrastructure** (in `acp-cdc-ai` module):
+- `acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/ArtifactKey.java` — Hierarchical, time-sortable ULID-based identifier
+- `acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/Artifact.java` — Base artifact interface and sealed type hierarchy
+- `acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/ArtifactHashing.java` — Content hashing + canonical JSON helpers
+- `acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/EventBus.java` — Event bus for artifact emission
+
+**Shared Artifact Models** (in `multi_agent_ide_lib` module):
+- `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/PromptTemplateVersion.java` — Versioned prompt templates with static ID + content hash deduplication
+- `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/artifact/SemanticRepresentation.java` — Post-hoc semantic interpretations (embeddings, summaries, indexes)
+- `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/AgentModels.java` — Agent request/result types implementing `AgentContext` with `ArtifactKey contextId()`
+- `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/AgentContext.java` — Root interface for all agent-related artifacts
+
+**Artifact Persistence Services** (in `multi_agent_ide` module):
+- `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactService.java` — Manages persistence and serialization with batch deduplication
+- `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactTreeBuilder.java` — In-memory trie structure management and tree persistence/loading
+- `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactNode.java` — Trie-like tree structure for in-memory artifact management
+- `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactEventListener.java` — Event-driven persistence subscriber for ArtifactEvents and stream events
+- `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/EventArtifactMapper.java` — Maps GraphEvents to EventArtifact/MessageStreamArtifact nodes
+- `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ExecutionScopeService.java` — Execution lifecycle and root artifact management
+- `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactEmissionService.java` — Emits agent models, execution config, tool calls, and events
+
+**Artifact Persistence Layer** (in `multi_agent_ide` module):
+- `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/entity/ArtifactEntity.java` — JPA entity with indexes on key, parent, execution, type, hash
+- `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/repository/ArtifactRepository.java` — JPA repository with specialized queries
+
+**Semantic Representation Layer** (in `multi_agent_ide` module):
+- `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/semantic/SemanticRepresentationEntity.java` — JPA entity for post-hoc semantic attachments
+- `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/semantic/SemanticRepresentationService.java` — Attaches semantics without mutating source artifacts
+- `multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/semantic/SemanticRepresentationRepository.java` — Queries for semantic representations
 
 **Core Agent Models and Interfaces**:
-- `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/AgentModels.java`
-- `multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentInterfaces.java`
+- `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/AgentModels.java` — Sealed interface hierarchy for all agent request/result types
+- `multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentInterfaces.java` — Agent execution interfaces
 
 **Prompt Infrastructure**:
 - Built-in prompt templates under `multi_agent_ide/src/main/resources/prompts/workflow/`
-- Prompt contributor infrastructure in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/prompt/PromptContributor.java` and existing contributors such as `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/prompt/WeAreHerePromptContributor.java`
-
-**Event Infrastructure**:
-- Workflow graph event types and listener infrastructure:
-  - `utilitymodule/src/main/java/com/hayden/utilitymodule/acp/events/Events.java`
-  - `utilitymodule/src/main/java/com/hayden/utilitymodule/acp/events/EventListener.java`
-  - `utilitymodule/src/main/java/com/hayden/utilitymodule/acp/events/EventBus.java`
+- Prompt contributor infrastructure in `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/prompt/PromptContributor.java`
 
 **Request Enrichment and ArtifactKey Assignment** (Critical for Hierarchical Keys):
 - `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/service/RequestEnrichment.java` — Central service for enriching agent requests/results with `ArtifactKey` (contextId) and `PreviousContext`. Implements the parent derivation logic described in "ArtifactKey Parent Derivation" above.
 - `multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/prompt/ContextIdService.java` — Generates child `ArtifactKey` values from parent keys, ensuring hierarchical structure is preserved.
-- `multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/ArtifactEnrichmentDecorator.java` — Decorator that intercepts agent routing results and applies `RequestEnrichment` to all outgoing requests, ensuring every request has a properly derived `ArtifactKey`.
+- `multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/decorator/ArtifactEnrichmentDecorator.java` — Decorator that intercepts agent routing results and applies `RequestEnrichment` to all outgoing requests, ensuring every request has a properly derived `ArtifactKey`.
 
 **Request Enrichment Pattern**:
 
@@ -468,6 +497,33 @@ Agent executes with request.contextId() = ArtifactKey
     ↓ (all emissions use this as parent)
 ArtifactEmissionService.emit*(request.contextId(), ...)
 ```
+
+**In-Memory Artifact Tree Architecture**:
+
+The artifact system uses a trie-like in-memory structure (`ArtifactNode`) during execution before persisting:
+
+```text
+ArtifactEvent emitted
+    ↓
+ArtifactEventListener.onEvent()
+    ↓
+ArtifactTreeBuilder.addArtifact()
+    ↓ (uses ArtifactKey prefix for tree navigation)
+ArtifactNode trie (concurrent hash maps)
+    ↓ (on execution completion)
+ArtifactTreeBuilder.persistExecutionTree()
+    ↓
+ArtifactService.doPersist() (batch with deduplication)
+    ↓
+ArtifactRepository.saveAll()
+```
+
+Key implementation details:
+- `ArtifactNode` uses concurrent hash maps for thread-safe operations
+- Hash-based deduplication at the sibling level (same parent, same content hash → reuse)
+- Duplicate artifacts become `DbRef` type references to the original
+- Append-only structure (nodes are never removed during execution)
+- Orphan artifacts (no parent found) are handled gracefully with warning logs
 
 **Operationally**:
 

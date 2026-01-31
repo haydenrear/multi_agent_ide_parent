@@ -57,20 +57,59 @@ specs/008-artifacts/
 
 ```text
 multi_agent_ide_parent/
-├── multi_agent_ide/                                   # Spring Boot app
-│   ├── src/main/java/com/hayden/multiagentide/agent/AgentInterfaces.java
-│   └── src/main/resources/prompts/workflow/...
-├── multi_agent_ide_lib/                               # shared workflow/prompt models
-│   ├── src/main/java/com/hayden/multiagentidelib/agent/AgentModels.java
-│   ├── src/main/java/com/hayden/multiagentidelib/prompt/PromptContributor.java
-│   └── src/main/java/com/hayden/multiagentidelib/prompt/WeAreHerePromptContributor.java
-├── utilitymodule/                                     # GraphEvents + listeners
-│   └── src/main/java/com/hayden/utilitymodule/acp/events/Events.java
-│   └── src/main/java/com/hayden/utilitymodule/acp/events/EventListener.java
-│   └── src/main/java/com/hayden/utilitymodule/acp/events/EventBus.java
-├── jpa-persistence/
-│   └── src/test/docker/docker-compose.yml
-└── specs/...
+├── multi_agent_ide_java_parent/                       # Java modules parent
+│   ├── acp-cdc-ai/                                    # Core artifact infrastructure
+│   │   └── src/main/java/com/hayden/acp_cdc_ai/acp/events/
+│   │       ├── ArtifactKey.java                       # Hierarchical ULID-based identifier
+│   │       ├── Artifact.java                          # Base artifact sealed interface
+│   │       ├── ArtifactHashing.java                   # Content hashing + canonical JSON
+│   │       └── EventBus.java                          # Event bus for artifact emission
+│   │
+│   ├── multi_agent_ide/                               # Spring Boot app
+│   │   ├── src/main/java/com/hayden/multiagentide/
+│   │   │   ├── agent/
+│   │   │   │   ├── AgentInterfaces.java
+│   │   │   │   └── decorator/
+│   │   │   │       └── ArtifactEnrichmentDecorator.java
+│   │   │   ├── artifacts/                             # Artifact persistence layer
+│   │   │   │   ├── ArtifactService.java               # Persistence + serialization
+│   │   │   │   ├── ArtifactTreeBuilder.java           # In-memory trie + persistence
+│   │   │   │   ├── ArtifactNode.java                  # Trie node structure
+│   │   │   │   ├── ArtifactEventListener.java         # Event subscriber
+│   │   │   │   ├── ArtifactEmissionService.java       # Artifact emission
+│   │   │   │   ├── EventArtifactMapper.java           # GraphEvent mapping
+│   │   │   │   ├── ExecutionScopeService.java         # Execution lifecycle
+│   │   │   │   ├── entity/
+│   │   │   │   │   └── ArtifactEntity.java            # JPA entity
+│   │   │   │   ├── repository/
+│   │   │   │   │   └── ArtifactRepository.java        # JPA repository
+│   │   │   │   └── semantic/
+│   │   │   │       ├── SemanticRepresentationEntity.java
+│   │   │   │       ├── SemanticRepresentationRepository.java
+│   │   │   │       └── SemanticRepresentationService.java
+│   │   │   └── config/
+│   │   │       └── ArtifactConfig.java
+│   │   └── src/main/resources/prompts/workflow/...
+│   │
+│   ├── multi_agent_ide_lib/                           # Shared workflow/prompt models
+│   │   └── src/main/java/com/hayden/multiagentidelib/
+│   │       ├── agent/
+│   │       │   ├── AgentModels.java                   # Agent request/result types
+│   │       │   └── AgentContext.java                  # Root artifact interface
+│   │       ├── artifact/
+│   │       │   ├── PromptTemplateVersion.java         # Versioned templates
+│   │       │   └── SemanticRepresentation.java        # Semantic representations
+│   │       ├── service/
+│   │       │   └── RequestEnrichment.java             # ArtifactKey enrichment
+│   │       └── prompt/
+│   │           ├── ContextIdService.java              # Child key generation
+│   │           └── PromptContributor.java
+│   │
+│   └── utilitymodule/                                 # General utilities
+│       └── src/main/java/com/hayden/utilitymodule/
+│           └── result/                                # Result/error handling
+│
+└── specs/008-artifacts/...
 ```
 
-**Structure Decision**: Implement core artifact/key/template contracts in `multi_agent_ide_lib`, emit/store artifacts from `multi_agent_ide` using existing GraphEvent infrastructure in `utilitymodule`, and map all existing `Events.GraphEvent` variants into `EventArtifact` nodes in the execution tree.
+**Structure Decision**: Core artifact infrastructure (`ArtifactKey`, `Artifact`, `ArtifactHashing`, `EventBus`) lives in `acp-cdc-ai`. Shared artifact models (`PromptTemplateVersion`, `SemanticRepresentation`, `AgentModels`) live in `multi_agent_ide_lib`. Persistence services and event listeners are implemented in `multi_agent_ide`.
