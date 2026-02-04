@@ -206,7 +206,7 @@ Instead, dependencies must be represented by **containment or explicit reference
 If artifact `B` depends on artifact `A`, then one of the following must be true:
 
 * `A` is a child of `B`
-* `B` contains a child `RefArtifact` referencing `A.key`
+* `B` contains a child `ArtifactDbRef` referencing `A.key`
 * `A` is embedded (quoted) in `B`’s bytes
 
 This rule ensures dependencies are reconstructable without inference.
