@@ -13,6 +13,10 @@ Auto-generated from all feature plans. Last updated: 2025-12-20
 - GraphRepository (existing), artifact markdown files (004-agent-prompts-outputs)
 - Java 21 + `embabel-agent` (for Agent API), `multi_agent_ide_lib` (for shared models), `utilitymodule` (for EventBus) (007-context-manager-agent)
 - In-memory `BlackboardHistory` (per session) (007-context-manager-agent)
+- Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (009-worktree-sandbox)
+- GraphRepository (existing), WorktreeRepository (existing) (009-worktree-sandbox)
+- Java 21 (some Kotlin in ACP module) + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework, Lombok, Jackson (009-worktree-sandbox)
+- GraphRepository + WorktreeRepository (existing) (009-worktree-sandbox)
 
 - Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Mockito, AssertJ (001-multi-agent-ide-specs)
 
@@ -32,9 +36,9 @@ tests/
 Java 21: Follow standard conventions
 
 ## Recent Changes
+- 009-worktree-sandbox: Added Java 21 (some Kotlin in ACP module) + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework, Lombok, Jackson
+- 009-worktree-sandbox: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework
 - 007-context-manager-agent: Added Java 21 + `embabel-agent` (for Agent API), `multi_agent_ide_lib` (for shared models), `utilitymodule` (for EventBus)
-- 007-context-manager-agent: Added Java 21 + `embabel-agent` (for Agent API), `multi_agent_ide_lib` (for shared models), `utilitymodule` (for EventBus)
-- 004-agent-prompts-outputs: Added Java 21 (existing project) + Spring Boot 3.x, Embabel Agent Framework (@Agent), LangChain4j
 
 
 <!-- MANUAL ADDITIONS START -->
