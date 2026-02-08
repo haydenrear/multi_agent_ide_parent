@@ -17,11 +17,7 @@
     <mapping directory="$PROJECT_DIR$/mcp-tool-gateway" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide_java_parent" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide_java_parent/acp-cdc-ai" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/multi_agent_ide_java_parent/acp-cdc-ai/whatever/main-project" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/multi_agent_ide_java_parent/acp-cdc-ai/whatever/submodule1" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide_java_parent/multi_agent_ide" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/multi_agent_ide_java_parent/multi_agent_ide/whatever/main-project" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/multi_agent_ide_java_parent/multi_agent_ide/whatever/submodule1" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide_java_parent/multi_agent_ide_lib" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide_java_parent/utilitymodule" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide_python_parent" vcs="Git" />
