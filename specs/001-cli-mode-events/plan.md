@@ -96,3 +96,11 @@ No constitution violations.
 - Render event categories with clear formatting, including tool calls and action lifecycle with hierarchy context.
 - Ensure CLI prompt and event rendering are coordinated (no interleaving corruption).
 - Add coverage for CLI mode start/stop and event rendering behavior.
+
+## Phase 3: Interactive TUI & Event-Driven State
+
+- Introduce a Spring Shell TerminalUI view with a scrollable event history and a persistent chat input pane.
+- Implement keyboard navigation (Up/Down) and an Enter-triggered detail pane for expanded event inspection.
+- Emit `GraphEvent` instances for all TUI interactions (navigation, open/close detail, submit chat).
+- Build a `TuiState` reducer that derives state from `GraphEvent` streams.
+- Render TUI changes strictly from `TuiState` to keep the UI deterministic and supervisor-friendly.

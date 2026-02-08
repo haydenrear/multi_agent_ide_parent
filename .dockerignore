@@ -1,12 +1,13 @@
 .git
-.gitignore
 .gradle
-build
 **/build
 **/out
-**/bin
 **/target
 node_modules
+dist
 coverage
-*.log*
+.idea
+.vscode
+*.log
 .env*
+.DS_Store

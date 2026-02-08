@@ -79,6 +79,25 @@ As a user, I can see different categories of events in the CLI so I can understa
 
 ---
 
+### User Story 5 - Use an interactive TUI for event history and chat (Priority: P1)
+
+As a user, I can navigate a scrolling event history with the keyboard while still typing into a persistent chat box, so I can inspect past events without losing the ability to send input.
+
+**Why this priority**: It is required for the interactive CLI experience and for future supervisor automation.
+
+**Independent Test**: Start a goal, verify events stream into a scrollable list, move selection with arrow keys, open a detail pane, and send chat input without leaving the view.
+
+**Cucumber Test Tag**: `@cli_tui_event_navigation`
+
+**Acceptance Scenarios**:
+
+1. **Given** the CLI TUI is running, **When** I press Up/Down, **Then** the event selection changes within the scrollable history.
+2. **Given** an event is selected, **When** I press Enter, **Then** a detail pane opens showing expanded event data.
+3. **Given** the TUI is running, **When** I type in the chat box and press Enter, **Then** the message is sent while the event history remains visible.
+4. **Given** many events have streamed, **When** I scroll beyond the visible area, **Then** the TUI loads earlier events in the list without losing the current chat input.
+
+---
+
 ### Edge Cases
 
 - What happens when the user submits an empty goal?
@@ -87,6 +106,8 @@ As a user, I can see different categories of events in the CLI so I can understa
 - What happens if an event is missing hierarchy context for an action?
 - How does the CLI handle an unknown or new event type?
 - How does the CLI behave when a goal completes while an interrupt prompt is visible?
+- How does the TUI behave if events arrive while a detail pane is open?
+- How does the TUI behave if a user scrolls while events stream in rapidly?
 
 ## Requirements *(mandatory)*
 
@@ -107,6 +128,10 @@ As a user, I can see different categories of events in the CLI so I can understa
 - **FR-013**: Action-started and action-completed events MUST include hierarchy context derived from artifact keys.
 - **FR-014**: The CLI MUST display hierarchy context for action lifecycle events in a consistent, readable format.
 - **FR-015**: Unknown event types MUST be rendered with a generic fallback that includes event type and available metadata.
+- **FR-016**: The CLI TUI MUST provide a scrollable event history with keyboard navigation (Up/Down) and a detail pane opened via Enter.
+- **FR-017**: The CLI TUI MUST provide a persistent chat input box that can send messages without leaving the event history view.
+- **FR-018**: Every TUI interaction MUST emit a `GraphEvent` representation of that interaction.
+- **FR-019**: The TUI MUST be state-driven: `GraphEvent` → `TuiState` → rendered TUI changes.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -117,6 +142,8 @@ As a user, I can see different categories of events in the CLI so I can understa
 - **Interrupt Prompt**: The CLI request for user input triggered by an interrupt.
 - **Interrupt Response**: The user’s input that allows the workflow to continue.
 - **Artifact Key**: The hierarchical identifier that defines parent/child relationships in the agent graph.
+- **TUI Interaction Event**: A `GraphEvent` emitted for user interactions (navigation, open detail, send message).
+- **TUI State**: The derived state used to render the interactive CLI view.
 
 ## Success Criteria *(mandatory)*
 
