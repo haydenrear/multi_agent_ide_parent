@@ -103,6 +103,21 @@
 - **Fields**: promptId, responseText, respondedAt
 - **Notes**: Captures user input that resumes the workflow.
 
+### Permission Prompt
+
+- **Fields**: requestId, originNodeId, toolCallId, options, requestedAt, status
+- **Notes**: Represents a pending permission request that requires user selection or cancellation through chat submit.
+
+### Permission Response
+
+- **Fields**: requestId, selectedOptionId, outcome, respondedAt, rawInput
+- **Notes**: Captures parsed chat input used to resolve a pending permission request.
+
+### Chat Submit Resolution Route
+
+- **Fields**: submittedText, hasPendingPermission, hasPendingInterrupt, routeType, consumedAsResolution
+- **Notes**: Derived routing decision for each chat submission (`permission`, `interrupt`, or `message`).
+
 ### Artifact Key
 
 - **Fields**: keyValue, parentKey, rootKey, depth

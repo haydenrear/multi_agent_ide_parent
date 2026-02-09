@@ -27,7 +27,7 @@ As a user, I can start the application in CLI mode, enter a goal, and watch the 
 
 ### User Story 2 - Handle interrupts interactively (Priority: P1)
 
-As a user, when an interrupt occurs, I am prompted for input and the workflow resumes after I respond, so I can keep the run moving without leaving the CLI.
+As a user, when an interrupt occurs, I am prompted for input and the workflow resumes after I respond in the CLI chat input, so I can keep the run moving without leaving the CLI.
 
 **Why this priority**: Interrupt handling is necessary to complete many workflows.
 
@@ -39,7 +39,8 @@ As a user, when an interrupt occurs, I am prompted for input and the workflow re
 
 1. **Given** a running goal, **When** an interrupt is raised, **Then** the CLI prompts me for input.
 2. **Given** I submit an interrupt response, **When** the workflow resumes, **Then** the CLI shows the resume event and continues rendering subsequent events.
-3. **Given** the CLI fails to start a goal, **When** the failure is detected, **Then** a clear error is shown and I am re-prompted for a goal.
+3. **Given** an interrupt is pending, **When** I press Enter in the TUI chat with my response, **Then** the input is interpreted as interrupt resolution and is not forwarded as a normal chat message.
+4. **Given** the CLI fails to start a goal, **When** the failure is detected, **Then** a clear error is shown and I am re-prompted for a goal.
 
 ---
 
@@ -95,6 +96,8 @@ As a user, I can navigate a scrolling event history with the keyboard while stil
 2. **Given** an event is selected, **When** I press Enter, **Then** a detail pane opens showing expanded event data.
 3. **Given** the TUI is running, **When** I type in the chat box and press Enter, **Then** the message is sent while the event history remains visible.
 4. **Given** many events have streamed, **When** I scroll beyond the visible area, **Then** the TUI loads earlier events in the list without losing the current chat input.
+5. **Given** a permission request is pending, **When** I submit input in the chat box, **Then** the input is interpreted as a permission resolution command.
+6. **Given** a permission or interrupt request is pending, **When** chat input is consumed to resolve it, **Then** no normal user message is emitted for that submission.
 
 ---
 
@@ -108,6 +111,8 @@ As a user, I can navigate a scrolling event history with the keyboard while stil
 - How does the CLI behave when a goal completes while an interrupt prompt is visible?
 - How does the TUI behave if events arrive while a detail pane is open?
 - How does the TUI behave if a user scrolls while events stream in rapidly?
+- How should the system behave when both a permission request and an interrupt request are pending at the same time?
+- What user feedback is shown when permission input cannot be matched to an explicit option?
 
 ## Requirements *(mandatory)*
 
@@ -132,6 +137,11 @@ As a user, I can navigate a scrolling event history with the keyboard while stil
 - **FR-017**: The CLI TUI MUST provide a persistent chat input box that can send messages without leaving the event history view.
 - **FR-018**: Every TUI interaction MUST emit a `GraphEvent` representation of that interaction.
 - **FR-019**: The TUI MUST be state-driven: `GraphEvent` → `TuiState` → rendered TUI changes.
+- **FR-020**: On each chat submission, the system MUST first check for pending permission or interrupt requests before treating the input as a normal chat message.
+- **FR-021**: If a permission request is pending, the system MUST parse chat input as a permission resolution command (for example: index selection, explicit option identifier, or cancel) and resolve that permission request.
+- **FR-022**: If no permission request is pending and an interrupt request is pending, the system MUST parse chat input as an interrupt resolution payload and resolve that interrupt request.
+- **FR-023**: When chat input is consumed to resolve a pending permission or interrupt, the system MUST NOT emit a normal user chat message for that submission.
+- **FR-024**: Permission and interrupt resolution through TUI chat MUST use the same underlying resolution semantics as the existing permission/interrupt resolution APIs.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -141,6 +151,8 @@ As a user, I can navigate a scrolling event history with the keyboard while stil
 - **CLI Event Listener**: The component that subscribes to the event system when CLI mode is active.
 - **Interrupt Prompt**: The CLI request for user input triggered by an interrupt.
 - **Interrupt Response**: The user’s input that allows the workflow to continue.
+- **Permission Prompt**: A pending request that asks the user to choose a permission option for a tool call.
+- **Permission Resolution Command**: Chat input interpreted as a permission decision for the pending permission request.
 - **Artifact Key**: The hierarchical identifier that defines parent/child relationships in the agent graph.
 - **TUI Interaction Event**: A `GraphEvent` emitted for user interactions (navigation, open detail, send message).
 - **TUI State**: The derived state used to render the interactive CLI view.
@@ -162,6 +174,7 @@ As a user, I can navigate a scrolling event history with the keyboard while stil
 - A single CLI session handles one active goal at a time.
 - Event rendering does not require additional configuration beyond starting in CLI mode.
 - The event system exposes a stable listener interface for CLI mode to consume execution events.
+- Pending permission and interrupt requests are queryable during chat submit handling.
 
 ## Out of Scope
 
