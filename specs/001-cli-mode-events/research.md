@@ -31,3 +31,22 @@
 **Alternatives considered**: 
 - Drop unknown events (loses visibility)
 - Fail hard on unknown events (breaks CLI sessions)
+
+## Decision 5: Resolve pending permission/interrupts from chat submit path
+
+**Decision**: On chat submit, check the permission/interrupt gate for pending requests and resolve those first, before forwarding input as a regular user message.  
+**Rationale**: The event stream is useful for user context ("last event"), but gate state is the authoritative source for whether a request is still unresolved. This avoids stale-event races and ensures deterministic routing of user input.  
+**Alternatives considered**:
+- Infer pending state only from the most recent rendered event (can be stale or out of order)
+- Introduce a separate prompt mode that blocks normal chat until cleared (higher UX complexity)
+
+## Decision 6: Deterministic parsing and precedence for chat-based resolution
+
+**Decision**: Use deterministic precedence and parsing for pending requests:
+- Permission resolution has priority when both pending types exist.
+- Permission input supports command-like forms (selection index, option identifier, cancel).
+- Interrupt input maps to resolution type + notes (approve/default feedback forms).  
+**Rationale**: A simple parser with clear precedence keeps TUI behavior predictable and mirrors existing API semantics.  
+**Alternatives considered**:
+- Natural-language classification for every input (less predictable and harder to test)
+- Require slash commands only (more rigid and slower for users)
