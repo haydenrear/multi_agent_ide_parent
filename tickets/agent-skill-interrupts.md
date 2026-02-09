@@ -10,3 +10,7 @@ So then you can change the MCP servers, remove/add particular tools, and then ad
 So this is a tree option menu in a modal - but any option at any level includes all levels below.
 
 So then, nicely, this option can be extracted into a supervisor and controller.
+
+So this can be easily implemented in the following way:
+
+The LlmCallContext contains all of these things added as default. So then in the decorator, we serialize current (as default), add all the possible ones, with their possible, and then wait for deserialized update tree, then update tool call context, which includes skills.
