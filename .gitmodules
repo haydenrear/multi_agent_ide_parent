@@ -9,34 +9,34 @@
 	url = git@github.com:haydenrear/jpa-persistence.git
 [submodule "tracing"]
 	path = tracing
-	url = git@github.com:haydenrear/tracing/.git
+	url = git@github.com:haydenrear/tracing.git
 [submodule "tracing_agent"]
 	path = tracing_agent
-	url = git@github.com:haydenrear/tracing_agent/.git
+	url = git@github.com:haydenrear/tracing_agent.git
 [submodule "test_graph"]
 	path = test_graph
-	url = git@github.com:haydenrear/test_graph/.git
+	url = git@github.com:haydenrear/test_graph.git
 [submodule "commit-diff-context"]
 	path = commit-diff-context
-	url = git@github.com:haydenrear/commit-diff-context/.git
+	url = git@github.com:haydenrear/commit-diff-context.git
 [submodule "commit-diff-model"]
 	path = commit-diff-model
-	url = git@github.com:haydenrear/commit-diff-model/.git
+	url = git@github.com:haydenrear/commit-diff-model.git
 [submodule "commit-diff-context-mcp"]
 	path = commit-diff-context-mcp
-	url = git@github.com:haydenrear/commit-diff-context-mcp/.git
+	url = git@github.com:haydenrear/commit-diff-context-mcp.git
 [submodule "mcp-tool-gateway"]
 	path = mcp-tool-gateway
-	url = git@github.com:haydenrear/mcp-tool-gateway/.git
+	url = git@github.com:haydenrear/mcp-tool-gateway.git
 [submodule "proto"]
 	path = proto
-	url = git@github.com:haydenrear/proto/.git
+	url = git@github.com:haydenrear/proto.git
 [submodule "graphql"]
 	path = graphql
 	url = git@github.com:haydenrear/federated-graphql-common.git
 [submodule "libs-resolver"]
 	path = libs-resolver
-	url = git@github.com:haydenrear/libs-resolver/.git
+	url = git@github.com:haydenrear/libs-resolver.git
 [submodule "multi_agent_ide_python_parent"]
 	path = multi_agent_ide_python_parent
 	url = git@github.com:haydenrear/multi_agent_ide_python_parent
@@ -45,7 +45,7 @@
 	url = git@github.com:haydenrear/tracing-aspect.git
 [submodule "runner_code"]
 	path = runner_code
-	url = git@github.com:haydenrear/runner_code/.git
+	url = git@github.com:haydenrear/runner_code.git
 [submodule "test-mcp-server"]
 	path = test-mcp-server
 	url = git@github.com:haydenrear/test-mcp-server.git
@@ -54,7 +54,7 @@
 	url = git@github.com:haydenrear/skills.git
 [submodule "test-acp-client"]
 	path = test-acp-client
-	url = git@github.com:haydenrear/test-acp-client/.git
+	url = git@github.com:haydenrear/test-acp-client.git
 [submodule "multi_agent_ide_java_parent"]
 	path = multi_agent_ide_java_parent
-	url = git@github.com:haydenrear/multi_agent_ide_java_parent/.git
+	url = git@github.com:haydenrear/multi_agent_ide_java_parent.git
