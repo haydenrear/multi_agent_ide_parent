@@ -1,0 +1,40 @@
+## Routing Options
+
+Return exactly ONE of:
+
+1. **orchestratorRequest** - Route to Orchestrator for workflow-level coordination
+2. **orchestratorCollectorRequest** - Route to Orchestrator Collector for final consolidation
+3. **discoveryOrchestratorRequest** - Route to Discovery Orchestrator for codebase exploration
+4. **discoveryCollectorRequest** - Route to Discovery Collector for consolidation
+5. **planningOrchestratorRequest** - Route to Planning Orchestrator to break down work
+6. **planningCollectorRequest** - Route to Planning Collector for consolidation
+7. **ticketOrchestratorRequest** - Route to Ticket Orchestrator for execution
+8. **ticketCollectorRequest** - Route to Ticket Collector for consolidation
+9. **reviewRequest** - Route to Review Agent for correctness checks
+10. **mergerRequest** - Route to Merger Agent for merge resolution
+11. **planningAgentRequest** - Route to Planning Agent
+12. **planningAgentRequests** - Route to Planning Agent dispatch
+13. **planningAgentResults** - Route to Planning Agent results
+14. **ticketAgentRequest** - Route to Ticket Agent
+15. **ticketAgentRequests** - Route to Ticket Agent dispatch
+16. **ticketAgentResults** - Route to Ticket Agent results
+17. **discoveryAgentRequest** - Route to Discovery Agent
+18. **discoveryAgentRequests** - Route to Discovery Agent dispatch
+19. **discoveryAgentResults** - Route to Discovery Agent results
+20. **contextOrchestratorRequest** - Route to Context Orchestrator
+21. **interruptRequest** - Pause for human or agent review
+
+- The ContextManagerRequest includes all possible return routes (may be null):
+  - returnToOrchestrator, returnToOrchestratorCollector
+  - returnToDiscoveryOrchestrator, returnToDiscoveryCollector
+  - returnToPlanningOrchestrator, returnToPlanningCollector
+  - returnToTicketOrchestrator, returnToTicketCollector
+  - returnToReview, returnToMerger
+  - returnToPlanningAgent, returnToPlanningAgentRequests, returnToPlanningAgentResults
+  - returnToTicketAgent, returnToTicketAgentRequests, returnToTicketAgentResults
+  - returnToDiscoveryAgent, returnToDiscoveryAgentRequests, returnToDiscoveryAgentResults
+  - returnToContextOrchestrator
+- Exactly one `returnTo*` field should be non-null in the ContextManagerRequest.
+- Do NOT set any `previousContext` fields; the framework populates those automatically.
+
+{% include "workflow/_interrupt_guidance.jinja" %}
