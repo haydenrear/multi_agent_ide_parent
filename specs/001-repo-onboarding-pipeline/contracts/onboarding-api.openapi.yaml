@@ -1,0 +1,314 @@
+openapi: 3.0.3
+info:
+  title: Repository Onboarding API
+  version: 0.1.0
+  description: |
+    Internal API contract for starting and monitoring repository onboarding runs.
+    This contract is planning-level and maps functional requirements to explicit endpoints.
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/v1/onboarding/runs:
+    post:
+      summary: Start a repository onboarding run
+      operationId: startOnboardingRun
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StartOnboardingRunRequest"
+      responses:
+        "202":
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OnboardingRunAccepted"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/onboarding/runs/{runId}:
+    get:
+      summary: Get onboarding run status
+      operationId: getOnboardingRun
+      parameters:
+        - $ref: "#/components/parameters/RunId"
+      responses:
+        "200":
+          description: Run status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OnboardingRunStatus"
+        "404":
+          description: Run not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/onboarding/runs/{runId}/segments:
+    get:
+      summary: Get contiguous segment plan and segment execution statuses
+      operationId: getOnboardingSegments
+      parameters:
+        - $ref: "#/components/parameters/RunId"
+      responses:
+        "200":
+          description: Segment plan
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SegmentPlanResponse"
+        "404":
+          description: Run not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/v1/onboarding/runs/{runId}/logs:
+    get:
+      summary: Get onboarding run telemetry log entries
+      operationId: getOnboardingRunLogs
+      parameters:
+        - $ref: "#/components/parameters/RunId"
+      responses:
+        "200":
+          description: Run logs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RunLogsResponse"
+        "404":
+          description: Run not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+components:
+  parameters:
+    RunId:
+      name: runId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Onboarding run identifier (ULID)
+  schemas:
+    StartOnboardingRunRequest:
+      type: object
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          type: string
+        baseRef:
+          type: string
+          default: HEAD
+        k:
+          type: integer
+          minimum: 1
+        minCommitsPerSegment:
+          type: integer
+          minimum: 1
+          default: 20
+        maxCommitsPerSegment:
+          type: integer
+          minimum: 1
+          default: 250
+        tEpisodesPerSegment:
+          type: integer
+          minimum: 1
+          default: 5
+        segmentationStrategy:
+          type: string
+          enum: [DRIFT, DP, HDBSCAN_EXPERIMENTAL]
+          default: DRIFT
+        embeddingVersion:
+          type: string
+        keepIngestionRepo:
+          type: boolean
+          default: false
+        dryRun:
+          type: boolean
+          default: false
+    OnboardingRunAccepted:
+      type: object
+      required:
+        - runId
+        - status
+      properties:
+        runId:
+          type: string
+        status:
+          type: string
+          enum:
+            [
+              CREATED,
+              PREPARING_INGESTION,
+              EMBEDDING,
+              SEGMENTING,
+              EPISODIC_PROCESSING,
+              CLEANUP,
+              COMPLETED,
+              CLEANUP_WARNING,
+              FAILED,
+            ]
+        submittedAt:
+          type: string
+          format: date-time
+    OnboardingRunStatus:
+      type: object
+      required:
+        - runId
+        - status
+        - repoUrl
+        - startedAt
+      properties:
+        runId:
+          type: string
+        repoUrl:
+          type: string
+        requestedRef:
+          type: string
+        resolvedHeadSha:
+          type: string
+        status:
+          type: string
+          enum:
+            [
+              CREATED,
+              PREPARING_INGESTION,
+              EMBEDDING,
+              SEGMENTING,
+              EPISODIC_PROCESSING,
+              CLEANUP,
+              COMPLETED,
+              CLEANUP_WARNING,
+              FAILED,
+            ]
+        startedAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+        dryRun:
+          type: boolean
+        keepIngestionRepo:
+          type: boolean
+        errorSummary:
+          type: string
+    SegmentPlanResponse:
+      type: object
+      required:
+        - runId
+        - effectiveK
+        - segments
+      properties:
+        runId:
+          type: string
+        strategy:
+          type: string
+          enum: [DRIFT, DP, HDBSCAN_EXPERIMENTAL]
+        requestedK:
+          type: integer
+        effectiveK:
+          type: integer
+        segments:
+          type: array
+          items:
+            $ref: "#/components/schemas/Segment"
+        segmentExecutions:
+          type: array
+          items:
+            $ref: "#/components/schemas/SegmentExecution"
+    Segment:
+      type: object
+      required:
+        - index
+        - startCommitSha
+        - endCommitSha
+        - commitCount
+      properties:
+        index:
+          type: integer
+        startCommitSha:
+          type: string
+        endCommitSha:
+          type: string
+        commitCount:
+          type: integer
+        startTimestamp:
+          type: string
+          format: date-time
+        endTimestamp:
+          type: string
+          format: date-time
+    SegmentExecution:
+      type: object
+      required:
+        - segmentIndex
+        - status
+        - attemptCount
+      properties:
+        segmentIndex:
+          type: integer
+        status:
+          type: string
+          enum: [PENDING, RUNNING, RETRYING, COMPLETED, FAILED]
+        attemptCount:
+          type: integer
+        agentRunCalled:
+          type: boolean
+        episodesRetained:
+          type: integer
+        handoffSummary:
+          type: string
+    RunLogsResponse:
+      type: object
+      required:
+        - runId
+        - entries
+      properties:
+        runId:
+          type: string
+        entries:
+          type: array
+          items:
+            $ref: "#/components/schemas/RunLogEntry"
+    RunLogEntry:
+      type: object
+      required:
+        - timestamp
+        - level
+        - component
+        - message
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        level:
+          type: string
+          enum: [INFO, WARN, ERROR]
+        component:
+          type: string
+        segmentIndex:
+          type: integer
+        message:
+          type: string
+        errorCode:
+          type: string
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
