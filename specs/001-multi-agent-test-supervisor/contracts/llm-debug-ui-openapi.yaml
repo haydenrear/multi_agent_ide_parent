@@ -1,0 +1,496 @@
+openapi: 3.0.3
+info:
+  title: Multi-Agent IDE LLM Debug UI API
+  version: 0.2.0
+  description: >
+    UI-first debugging contract for node-scoped state, actions, goal start, and
+    event inspection used by the multi_agent_test_supervisor skill.
+    Prompt-management and in-app build-rerun endpoints are intentionally out of scope.
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: Goals
+  - name: QuickActions
+  - name: UIState
+  - name: UIEvents
+paths:
+  /api/llm-debug/ui/goals/start:
+    post:
+      tags: [Goals]
+      summary: Start a goal and return root node identity
+      description: >
+        Starts orchestration asynchronously and returns root node identity.
+        `runId` is returned for compatibility and always equals `nodeId`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StartGoalRequest"
+      responses:
+        "200":
+          description: Goal start accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StartGoalResponse"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /api/llm-debug/ui/quick-actions:
+    post:
+      tags: [QuickActions]
+      summary: Execute quick agent-level action
+      description: >
+        Supported actions currently include START_GOAL and SEND_MESSAGE.
+        Additional actions may be added in future without changing the endpoint path.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuickActionRequest"
+      responses:
+        "200":
+          description: Quick action result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuickActionResponse"
+
+  /api/llm-debug/ui/nodes/{nodeId}/state:
+    parameters:
+      - in: path
+        name: nodeId
+        required: true
+        schema:
+          type: string
+    get:
+      tags: [UIState]
+      summary: Get materialized UI state snapshot for node scope
+      description: >
+        Returns the current materialized shared UI state for the requested node scope.
+        Scope includes the exact node and descendants.
+      responses:
+        "200":
+          description: UI state snapshot
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UiStateSnapshot"
+
+  /api/llm-debug/ui/nodes/{nodeId}/actions:
+    parameters:
+      - in: path
+        name: nodeId
+        required: true
+        schema:
+          type: string
+    post:
+      tags: [UIState]
+      summary: Apply UI action through shared abstraction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UiActionRequest"
+      responses:
+        "200":
+          description: Action result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionResponse"
+
+  /api/llm-debug/ui/nodes/{nodeId}/events:
+    parameters:
+      - in: path
+        name: nodeId
+        required: true
+        schema:
+          type: string
+    get:
+      tags: [UIEvents]
+      summary: Poll paged event summaries for node scope
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 500
+            default: 50
+        - in: query
+          name: cursor
+          schema:
+            type: string
+            nullable: true
+        - in: query
+          name: truncate
+          schema:
+            type: integer
+            minimum: 80
+            maximum: 10000
+            default: 180
+      responses:
+        "200":
+          description: Event summary page
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UiEventPage"
+
+  /api/llm-debug/ui/nodes/{nodeId}/events/{eventId}:
+    parameters:
+      - in: path
+        name: nodeId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: eventId
+        required: true
+        schema:
+          type: string
+    get:
+      tags: [UIEvents]
+      summary: Get expanded detail for one event
+      parameters:
+        - in: query
+          name: pretty
+          schema:
+            type: boolean
+            default: true
+        - in: query
+          name: maxFieldLength
+          schema:
+            type: integer
+            minimum: 120
+            maximum: 80000
+            default: 20000
+      responses:
+        "200":
+          description: Event detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UiEventDetail"
+        "404":
+          description: Event not found or not in node scope
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /api/llm-debug/ui/nodes/{nodeId}/events/stream:
+    parameters:
+      - in: path
+        name: nodeId
+        required: true
+        schema:
+          type: string
+    get:
+      tags: [UIEvents]
+      summary: Stream node-scoped events (SSE)
+      responses:
+        "200":
+          description: text/event-stream payload
+          content:
+            text/event-stream:
+              schema:
+                type: string
+
+components:
+  schemas:
+    ActionStatus:
+      type: string
+      enum: [started, queued, rejected]
+
+    UiFocus:
+      type: string
+      enum: [CHAT_INPUT, EVENT_STREAM, SESSION_LIST, CHAT_SEARCH]
+
+    UiActionType:
+      type: string
+      enum:
+        - FOCUS_CHAT_INPUT
+        - FOCUS_EVENT_STREAM
+        - FOCUS_SESSION_LIST
+        - EVENT_STREAM_MOVE_SELECTION
+        - EVENT_STREAM_SCROLL
+        - EVENT_STREAM_OPEN_DETAIL
+        - EVENT_STREAM_CLOSE_DETAIL
+        - CHAT_INPUT_CHANGED
+        - CHAT_INPUT_SUBMITTED
+        - CHAT_SEARCH_OPENED
+        - CHAT_SEARCH_QUERY_CHANGED
+        - CHAT_SEARCH_RESULT_NAVIGATE
+        - CHAT_SEARCH_CLOSED
+        - SESSION_SELECTED
+        - SESSION_CREATED
+
+    StartGoalRequest:
+      type: object
+      required: [goal, repositoryUrl]
+      properties:
+        goal:
+          type: string
+        repositoryUrl:
+          type: string
+        baseBranch:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+
+    StartGoalResponse:
+      type: object
+      required: [nodeId, runId, status]
+      properties:
+        nodeId:
+          type: string
+        runId:
+          type: string
+          description: Compatibility alias of root nodeId.
+        status:
+          type: string
+          enum: [started]
+
+    QuickActionRequest:
+      type: object
+      required: [actionType]
+      properties:
+        actionType:
+          type: string
+          enum: [START_GOAL, SEND_MESSAGE]
+        nodeId:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+        goal:
+          type: string
+          nullable: true
+        repositoryUrl:
+          type: string
+          nullable: true
+        baseBranch:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+      description: >
+        START_GOAL requires goal + repositoryUrl.
+        SEND_MESSAGE requires nodeId.
+
+    QuickActionResponse:
+      type: object
+      required: [status]
+      properties:
+        actionId:
+          type: string
+          nullable: true
+        status:
+          $ref: "#/components/schemas/ActionStatus"
+        nodeId:
+          type: string
+          nullable: true
+        error:
+          type: string
+          nullable: true
+
+    UiActionRequest:
+      type: object
+      required: [actionType]
+      properties:
+        actionType:
+          $ref: "#/components/schemas/UiActionType"
+        payload:
+          type: object
+          additionalProperties: true
+          nullable: true
+
+    ActionResponse:
+      type: object
+      required: [status]
+      properties:
+        actionId:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum: [queued, rejected]
+
+    UiChatSearchSnapshot:
+      type: object
+      required: [active, query, resultIndices, selectedResultIndex]
+      properties:
+        active:
+          type: boolean
+        query:
+          type: string
+        resultIndices:
+          type: array
+          items:
+            type: integer
+        selectedResultIndex:
+          type: integer
+
+    UiSessionSnapshot:
+      type: object
+      required:
+        - selectedIndex
+        - scrollOffset
+        - autoFollow
+        - detailOpen
+        - chatInput
+        - chatSearch
+        - eventCount
+      properties:
+        selectedIndex:
+          type: integer
+        scrollOffset:
+          type: integer
+        autoFollow:
+          type: boolean
+        detailOpen:
+          type: boolean
+        detailEventId:
+          type: string
+          nullable: true
+        chatInput:
+          type: string
+        chatSearch:
+          $ref: "#/components/schemas/UiChatSearchSnapshot"
+        repo:
+          type: string
+          nullable: true
+        eventCount:
+          type: integer
+
+    UiStateSnapshot:
+      type: object
+      required:
+        - nodeId
+        - activeNodeId
+        - nodeOrder
+        - nodes
+        - focus
+        - chatScrollOffset
+        - repo
+        - revision
+        - capturedAt
+      properties:
+        nodeId:
+          type: string
+        activeNodeId:
+          type: string
+        nodeOrder:
+          type: array
+          items:
+            type: string
+        nodes:
+          type: object
+          additionalProperties:
+            $ref: "#/components/schemas/UiSessionSnapshot"
+        focus:
+          $ref: "#/components/schemas/UiFocus"
+        chatScrollOffset:
+          type: integer
+        repo:
+          type: string
+        revision:
+          type: string
+        capturedAt:
+          type: string
+          format: date-time
+
+    UiEventSummary:
+      type: object
+      required: [eventId, nodeId, eventType, timestamp, summary]
+      properties:
+        eventId:
+          type: string
+        nodeId:
+          type: string
+        eventType:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        summary:
+          type: string
+
+    PageMeta:
+      type: object
+      required: [limit, hasNext]
+      properties:
+        limit:
+          type: integer
+        cursor:
+          type: string
+          nullable: true
+        nextCursor:
+          type: string
+          nullable: true
+        hasNext:
+          type: boolean
+
+    UiEventPage:
+      type: object
+      required: [items, page, total]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/UiEventSummary"
+        page:
+          $ref: "#/components/schemas/PageMeta"
+        total:
+          type: integer
+
+    UiEventDetail:
+      type: object
+      required: [eventId, nodeId, eventType, timestamp, summary, formatted]
+      properties:
+        eventId:
+          type: string
+        nodeId:
+          type: string
+        eventType:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        summary:
+          type: string
+        formatted:
+          type: string
+
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          nullable: true
+        status:
+          type: integer
+          nullable: true
+        error:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+        path:
+          type: string
+          nullable: true
