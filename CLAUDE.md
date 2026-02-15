@@ -23,6 +23,9 @@ Auto-generated from all feature plans. Last updated: 2025-12-20
 - PostgreSQL-backed persistence for execution artifacts and run metadata; existing event repository for event stream access (001-multi-agent-test-supervisor)
 - Java 21 (app), Kotlin (existing modules), Python 3.x (skill scripts), Markdown/YAML (skill docs + contracts) + Spring Boot 3.x, LangChain4j-Agentic, Embabel framework, Jackson/Lombok, existing ACP events and TUI reducers (001-multi-agent-test-supervisor)
 - Existing run/event persistence mechanisms; no new multi-tenant profile/version stores required in this ticke (001-multi-agent-test-supervisor)
+- Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withPropertyFilter), Lombok, Jackson (001-unified-interrupt-handler)
+- N/A (in-memory BlackboardHistory, existing GraphRepository) (001-unified-interrupt-handler)
+- Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson (001-unified-interrupt-handler)
 
 - Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Mockito, AssertJ (001-multi-agent-ide-specs)
 
@@ -42,9 +45,9 @@ tests/
 Java 21: Follow standard conventions
 
 ## Recent Changes
-- 001-multi-agent-test-supervisor: Added Java 21 (app), Kotlin (existing modules), Python 3.x (skill scripts), Markdown/YAML (skill docs + contracts) + Spring Boot 3.x, LangChain4j-Agentic, Embabel framework, Jackson/Lombok, existing ACP events and TUI reducers
-- 001-multi-agent-test-supervisor: Added Java 21 (primary app), Kotlin (existing modules), Markdown/YAML (skill package and contracts) + Spring Boot 3.x, LangChain4j-Agentic, Embabel agent framework, Jackson, Lombok, existing ACP event model (`Events.*`)
-- 001-repo-onboarding-pipeline: Added Java 21 (with existing Kotlin interoperability in the Java parent modules) + Spring Boot 3.x, LangChain4j-Agentic, Embabel agent framework, Lombok, Jackson, existing parser operations (`SetEmbedding`, `AddEpisodicMemory`, `RewriteHistory`, `GitParser`), existing embedding client (`ModelServerEmbeddingClient`)
+- 001-unified-interrupt-handler: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson
+- 001-unified-interrupt-handler: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson
+- 001-unified-interrupt-handler: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson
 
 
 <!-- MANUAL ADDITIONS START -->

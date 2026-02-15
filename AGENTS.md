@@ -8,6 +8,8 @@ Auto-generated from all feature plans. Last updated: 2025-12-26
 - PostgreSQL via Spring Data (production target); Postgres via Docker Compose for tests (008-artifacts)
 - Java 21 + Spring Boot 3.x, Embabel agent framework, LangChain4j, Lombok, Jackson (001-cli-mode-events)
 - PostgreSQL (production), H2/Postgres for tests via Spring Data (001-cli-mode-events)
+- Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson (001-unified-interrupt-handler)
+- N/A (in-memory BlackboardHistory, existing GraphRepository) (001-unified-interrupt-handler)
 
 - Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Lombok (001-collector-orchestrator-routing)
 
@@ -27,9 +29,9 @@ tests/
 Java 21: Follow standard conventions
 
 ## Recent Changes
-- 001-cli-mode-events: Added Java 21 + Spring Boot 3.x, Embabel agent framework, LangChain4j, Lombok, Jackson
-- 008-artifacts: Added Java 21 (and some Kotlin in the app) + Spring Boot 3.x, Embabel agent framework, LangChain4j, Lombok, Jackson (JSON), Spring events/listener infrastructure (custom)
-- 008-artifacts: Added Java 21 (and some Kotlin in the app) + Spring Boot 3.x, Embabel agent framework, LangChain4j, Lombok, Jackson (JSON), Spring events/listener infrastructure (custom)
+- 001-unified-interrupt-handler: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson
+- 001-unified-interrupt-handler: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson
+- 001-unified-interrupt-handler: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson
 
 
 <!-- MANUAL ADDITIONS START -->

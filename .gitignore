@@ -47,3 +47,9 @@ node_modules/
 dist/
 
 build
+
+# universal temp/system
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
