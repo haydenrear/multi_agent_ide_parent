@@ -53,3 +53,5 @@ build
 Thumbs.db
 *.tmp
 *.swp
+
+.kotlin
