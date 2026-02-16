@@ -52,9 +52,6 @@
 [submodule "skills"]
 	path = skills
 	url = git@github.com:haydenrear/skills.git
-[submodule "test-acp-client"]
-	path = test-acp-client
-	url = git@github.com:haydenrear/test-acp-client.git
 [submodule "multi_agent_ide_java_parent"]
 	path = multi_agent_ide_java_parent
 	url = git@github.com:haydenrear/multi_agent_ide_java_parent.git
