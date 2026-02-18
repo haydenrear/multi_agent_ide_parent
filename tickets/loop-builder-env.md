@@ -26,3 +26,16 @@ to be adding that, a versioned loop ID identifier, with phase of loop as well.
 Additionally, to start the agent will recursively be repeated. It will return once it thinks we need to break the
 loop, or go to outer loop, or inner loop. It will be included in the prompt the information about the loops, and then
 this allows the events to be emitted and the trace metadata loop versions to be updated. 
+
+
+---
+
+This can probably be merged in with the inclusion of skills dynamically for each agent, for ticket agent. In particular,
+loop can be considered a sort of dynamic skill, whereby the skill.md has instructions for adding to a directory for a 
+particular project, for a particular loop. Then, when including information from that skill in the tree view, you'll
+include that loop. And then that directory, for that project and that loop, is getting versioned. The nice thing is 
+that for the skill, we're versioning the prompt template. So it gets versioned implicitly in the database. However,
+this does mean that for skills we'll have to add an additional child for references, and version each of these 
+independently, and then the loop will be one of the references. And the agent can then make changes to that directory,
+and the collector can then merge these changes in - remember that there's a skills directory per project as well, so 
+these changes get merged into that, and then pushed up. 
