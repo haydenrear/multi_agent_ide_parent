@@ -35,6 +35,10 @@ Java 21: Follow standard conventions
 
 
 <!-- MANUAL ADDITIONS START -->
+- Prompt contributor naming/versioning rule:
+  - `PromptContributor.name()` must be deterministic and static for the template variant.
+  - `PromptContributor.template()` must be static text for that variant and map 1:1 with the name.
+  - Do not use sequence/counter-based names for contributors whose template text is versioned.
 <!-- MANUAL ADDITIONS END -->
 
 
