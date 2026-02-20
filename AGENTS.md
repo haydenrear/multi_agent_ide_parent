@@ -42,7 +42,9 @@ Java 21: Follow standard conventions
 <!-- MANUAL ADDITIONS END -->
 
 
-## Profiles
+## Testing
+
+Unit tests take approximately 2.5 minutes to run. Integration tests may take longer. Use a timeout of at least 300000ms (5 min) when running tests via Bash.
 
 Run tests with gradle profile "integration" i.e.
 
