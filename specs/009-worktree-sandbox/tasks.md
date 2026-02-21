@@ -33,7 +33,7 @@
 - [ ] T006 [P] Add sandbox validation result model in `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/model/worktree/SandboxValidationResult.java`
 - [ ] T007 [P] Add worktree sandbox validation utility in `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/model/worktree/WorktreeSandbox.java`
 - [ ] T008 [P] Add sandbox translation SPI + registry in `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/sandbox/SandboxTranslationStrategy.java` and `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/sandbox/SandboxTranslationRegistry.java`
-- [ ] T009 [P] Add provider translation strategies in `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/sandbox/ClaudeCodeSandboxStrategy.java`, `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/sandbox/CodexSandboxStrategy.java`, and `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/sandbox/GooseSandboxStrategy.java`
+- [ ] T009 [P] Add provider translation strategies in `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/sandbox/ClaudeCodeSandboxStrategy.java`, `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/sandbox/CodexSandboxStrategy.java`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 

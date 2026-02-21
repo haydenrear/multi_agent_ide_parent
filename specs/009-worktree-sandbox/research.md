@@ -13,7 +13,7 @@
 **Alternatives considered**: Enforcing in each individual tool method or at the filesystem layer; rejected due to duplication and increased maintenance overhead.
 
 ## Decision: Provider-specific sandbox translation strategies
-**Rationale**: ACP providers (Claude Code, Codex, Goose) require different env vars and CLI args. A strategy registry isolates provider differences and keeps AcpChatModel clean, while enabling future extensions.
+**Rationale**: ACP providers (Claude Code, Codex) require different env vars and CLI args. A strategy registry isolates provider differences and keeps AcpChatModel clean, while enabling future extensions.
 **Alternatives considered**: Hard-coding provider logic in AcpChatModel; rejected to avoid conditional sprawl and reduce coupling.
 
 ## Decision: Ticket orchestrator prompt contributor for worktree creation

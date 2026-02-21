@@ -160,7 +160,7 @@ As a ticket orchestrator, I need to create separate worktrees for each ticket ag
 
 #### Provider-Specific Sandbox Translation
 
-- **FR-004f**: Sandbox translation from RequestContext to command options MUST be provider-specific (Claude Code, Codex, Goose, etc.).
+- **FR-004f**: Sandbox translation from RequestContext to command options MUST be provider-specific (Claude Code, Codex, etc.).
 - **FR-004g**: Each ACP provider MUST have its own strategy for translating worktree sandbox into environment variables and command line arguments.
 - **FR-004h**: Sandbox configuration MUST be passed during ACP command creation via environment variables and/or command line arguments.
 - **FR-004i**: System MUST support extensibility for adding new ACP providers with their own sandbox translation strategies.

@@ -14,6 +14,7 @@
     <mapping directory="$PROJECT_DIR$/libs/ag-ui" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/embabel-agent" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/javabank" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/spring-shell" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/mcp-tool-gateway" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide_java_parent" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/multi_agent_ide_java_parent/acp-cdc-ai" vcs="Git" />

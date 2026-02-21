@@ -126,7 +126,7 @@ public interface RequestContextRepository {
 
 ### 2a. Provider-Specific Sandbox Translation (NEW)
 
-**Purpose**: Each ACP provider (Claude Code, Codex, Goose, etc.) has different mechanisms for sandbox enforcement. Translation strategies convert WorktreeContext into provider-specific environment variables and command line arguments.
+**Purpose**: Each ACP provider (Claude Code, Codex, etc.) has different mechanisms for sandbox enforcement. Translation strategies convert WorktreeContext into provider-specific environment variables and command line arguments.
 
 **Interface**: `SandboxTranslationStrategy`
 
@@ -208,9 +208,9 @@ public class CodexSandboxStrategy implements SandboxTranslationStrategy {
     public boolean supportsSandbox() { return true; }
 }
 
-// Goose sandbox translation
+// Codex sandbox translation
 @Component
-public class GooseSandboxStrategy implements SandboxTranslationStrategy {
+public class CodexSandboxStrategy implements SandboxTranslationStrategy {
     @Override
     public String providerName() { return "goose"; }
     

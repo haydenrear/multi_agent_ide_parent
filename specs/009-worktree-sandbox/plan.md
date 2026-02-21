@@ -85,8 +85,7 @@ multi_agent_ide_java_parent/
 │           ├── SandboxTranslationStrategy.java           # NEW
 │           ├── SandboxTranslationRegistry.java           # NEW
 │           ├── ClaudeCodeSandboxStrategy.java            # NEW
-│           ├── CodexSandboxStrategy.java                 # NEW
-│           └── GooseSandboxStrategy.java                 # NEW
+│           └── CodexSandboxStrategy.java                 # NEW
 │
 └── acp-cdc-ai/
     └── src/main/kotlin/com/hayden/acp_cdc_ai/acp/
