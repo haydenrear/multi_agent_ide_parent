@@ -23,3 +23,7 @@ java.lang.IllegalArgumentException: One of setGitDir or setWorkTree must be call
 	at java.base/java.lang.VirtualThread.run(VirtualThread.java:311)
 18:24:28.396 [task-1] INFO  c.h.m.a.ArtifactEventListener - Found event NodeErrorEvent.
 ```
+
+
+Additionally, for this, the git URL is the "source of truth". And it's the thing we'll use to determine if a repository
+has been onboarded.

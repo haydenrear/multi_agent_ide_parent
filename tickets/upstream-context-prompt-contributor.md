@@ -1,1 +1,0 @@
-Add @JsonIgnore to PreviousContext for response and result type.

@@ -16,3 +16,5 @@ Additionally, blackboards (artifact trees) should connect in a graph structure. 
 software because it happens across multiple executions in the database. However, artifact entity needs to connect across
 tickets (like in jira) - and the CtxFs system will connect them so that it can traverse graphs of tickets. So then this
 becomes another memory tool that the agents can then access to search across sessions as well.
+
+Could try with drivine - and neo4j or try Cypher with Postgres and drivine?
