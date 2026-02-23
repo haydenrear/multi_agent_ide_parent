@@ -44,18 +44,31 @@ Java 21: Follow standard conventions
 
 ## Testing
 
-Unit tests take approximately 2.5 minutes to run. Integration tests may take longer. Use a timeout of at least 300000ms (5 min) when running tests via Bash.
+### Timing and Timeouts
 
-Run tests with gradle profile "integration" i.e.
+| Test suite | Approximate duration | Bash timeout |
+|---|---|---|
+| Unit tests (`./gradlew multi_agent_ide:test`) | ~3 minutes | 180000ms |
+| Integration tests (`./gradlew multi_agent_ide:test -Pprofile=integration`) | ~10 minutes | 600000ms |
+| Full pipeline (`tests.sh`) | ~15 minutes | 900000ms |
 
+### Running Tests
+
+Unit tests (default profile):
 ```shell
-./gradlew :multi_agent_ide:test -Pprofile=integration
+./gradlew multi_agent_ide:test
 ```
 
-to run the integration tests. You should do this as the final step when implementing a ticket.
-
+Integration tests (does NOT include unit tests):
 ```shell
-./gradlew :multi_agent_ide:test
+./gradlew multi_agent_ide:test -Pprofile=integration
 ```
 
-In practice you'll want to run both of these because integration profile does not include non-integration tests.
+In practice you'll want to run both of these because the integration profile does not include non-integration tests.
+
+Full test pipeline (unit + shell-integration + integration):
+```shell
+cd multi_agent_ide_java_parent/multi_agent_ide && ./tests.sh
+```
+
+This runs all test profiles sequentially: unit tests, shell-integration tests, and integration tests.
