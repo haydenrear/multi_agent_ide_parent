@@ -1,0 +1,1 @@
+When we have degenerate, or error handler - we should be trying to get a human review in and having it be so that the human can route to the agent that it needs to. That human review should contain enough information to retrieve the context.
