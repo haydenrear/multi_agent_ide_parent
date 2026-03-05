@@ -26,6 +26,8 @@ Auto-generated from all feature plans. Last updated: 2025-12-20
 - Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withPropertyFilter), Lombok, Jackson (001-unified-interrupt-handler)
 - N/A (in-memory BlackboardHistory, existing GraphRepository) (001-unified-interrupt-handler)
 - Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson (001-unified-interrupt-handler)
+- Java 21 + Spring Boot 3.x, Jackson, LangChain4j-Agentic, Embabel agent framework (001-data-layer-policy-filter)
+- Existing persistence layer (PostgreSQL in production, H2/Postgres test profiles) for policy definitions, activation state, and filter decision history (001-data-layer-policy-filter)
 
 - Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Mockito, AssertJ (001-multi-agent-ide-specs)
 
@@ -45,7 +47,7 @@ tests/
 Java 21: Follow standard conventions
 
 ## Recent Changes
-- 001-unified-interrupt-handler: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson
+- 001-data-layer-policy-filter: Added Java 21 + Spring Boot 3.x, Jackson, LangChain4j-Agentic, Embabel agent framework
 - 001-unified-interrupt-handler: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson
 - 001-unified-interrupt-handler: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson
 

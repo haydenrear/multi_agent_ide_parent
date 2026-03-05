@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/json-path-filter-policy.schema.json",
+  "title": "JsonPathFilterPolicy",
+  "description": "Policy for PathFilter with JsonPath interpreter. I/O is always JsonDocument/JsonDocument. JsonPathInterpreter is implicit. Any executor type allowed.",
+  "type": "object",
+  "allOf": [
+    { "$ref": "filter-policy.schema.json#/$defs/PolicyCommonFields" }
+  ],
+  "properties": {
+    "id": true,
+    "name": true,
+    "description": true,
+    "sourcePath": true,
+    "status": true,
+    "priority": true,
+    "isInheritable": true,
+    "isPropagatedToParent": true,
+    "layerBindings": true,
+    "createdAt": true,
+    "updatedAt": true,
+    "filterType": {
+      "const": "JSON_PATH",
+      "description": "Discriminator — always JSON_PATH for this schema."
+    },
+    "executor": {
+      "$ref": "filter-policy.schema.json#/$defs/ExecutorOneOf"
+    }
+  },
+  "required": ["filterType", "executor"],
+  "additionalProperties": false
+}

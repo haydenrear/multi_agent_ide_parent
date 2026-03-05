@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/policy-registration-response.schema.json",
+  "title": "PolicyRegistrationResponse",
+  "description": "Response from any policy registration endpoint.",
+  "type": "object",
+  "properties": {
+    "ok": { "type": "boolean" },
+    "policyId": { "type": ["string", "null"] },
+    "filterType": {
+      "type": ["string", "null"],
+      "enum": ["JSON_PATH", "MARKDOWN_PATH", "REGEX_PATH", "AI_PATH", null]
+    },
+    "status": {
+      "type": ["string", "null"],
+      "enum": ["ACTIVE", "INACTIVE", null]
+    },
+    "message": { "type": "string" }
+  },
+  "required": ["ok", "policyId", "filterType", "status", "message"],
+  "additionalProperties": false
+}

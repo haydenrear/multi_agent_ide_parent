@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/put-policy-layer-response.schema.json",
+  "title": "PutPolicyLayerResponse",
+  "type": "object",
+  "properties": {
+    "ok": { "type": "boolean" },
+    "policyId": { "type": "string", "minLength": 1 },
+    "layerBinding": { "$ref": "filter-policy.schema.json#/$defs/PolicyLayerBinding" },
+    "message": { "type": "string" }
+  },
+  "required": ["ok", "policyId", "layerBinding", "message"],
+  "additionalProperties": false
+}

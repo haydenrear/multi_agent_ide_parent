@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/toggle-policy-layer-response.schema.json",
+  "title": "TogglePolicyLayerResponse",
+  "description": "Response from enable/disable policy at a specific layer.",
+  "type": "object",
+  "properties": {
+    "ok": { "type": "boolean" },
+    "policyId": { "type": "string", "minLength": 1 },
+    "layerId": { "type": "string", "minLength": 1 },
+    "enabled": {
+      "type": "boolean",
+      "description": "The new enabled state for this policy at this layer."
+    },
+    "affectedDescendantLayers": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of descendant layer IDs also affected (empty if includeDescendants was false)."
+    },
+    "message": { "type": "string" }
+  },
+  "required": [
+    "ok",
+    "policyId",
+    "layerId",
+    "enabled",
+    "affectedDescendantLayers",
+    "message"
+  ],
+  "additionalProperties": false
+}

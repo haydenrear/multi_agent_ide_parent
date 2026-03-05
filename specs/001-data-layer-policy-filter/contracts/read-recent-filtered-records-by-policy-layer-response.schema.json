@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/read-recent-filtered-records-by-policy-layer-response.schema.json",
+  "title": "ReadRecentFilteredRecordsByPolicyLayerResponse",
+  "description": "Response for most recent filtered records for a policy constrained to a layer.",
+  "type": "object",
+  "properties": {
+    "policyId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "layerId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "decisionId": { "type": "string", "minLength": 1 },
+          "filterType": {
+            "type": "string",
+            "enum": ["JSON_PATH", "MARKDOWN_PATH", "REGEX_PATH", "AI_PATH"]
+          },
+          "action": {
+            "type": "string",
+            "enum": ["DROPPED", "TRANSFORMED", "PASSTHROUGH", "ERROR"]
+          },
+          "inputSummary": { "type": ["string", "null"] },
+          "outputSummary": { "type": ["string", "null"] },
+          "appliedInstructionCount": { "type": "integer", "minimum": 0 },
+          "errorMessage": { "type": ["string", "null"] },
+          "createdAt": { "type": "string", "format": "date-time" }
+        },
+        "required": [
+          "decisionId",
+          "filterType",
+          "action",
+          "inputSummary",
+          "outputSummary",
+          "appliedInstructionCount",
+          "errorMessage",
+          "createdAt"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "totalCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "nextCursor": {
+      "type": ["string", "null"]
+    }
+  },
+  "required": ["policyId", "layerId", "records", "totalCount", "nextCursor"],
+  "additionalProperties": false
+}

@@ -1,0 +1,1 @@
+python sources and binaries should always be copied over to bin. 

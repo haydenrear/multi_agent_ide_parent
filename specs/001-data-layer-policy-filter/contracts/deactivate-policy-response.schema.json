@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/deactivate-policy-response.schema.json",
+  "title": "DeactivatePolicyResponse",
+  "description": "Response for globally deactivating a policy.",
+  "type": "object",
+  "properties": {
+    "ok": { "type": "boolean" },
+    "policyId": { "type": "string", "minLength": 1 },
+    "status": { "type": "string", "enum": ["INACTIVE"] },
+    "deactivatedAt": { "type": "string", "format": "date-time" },
+    "message": { "type": "string" }
+  },
+  "required": ["ok", "policyId", "status", "deactivatedAt", "message"],
+  "additionalProperties": false
+}

@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/filtered-output-response.schema.json",
+  "title": "FilteredOutputResponse",
+  "type": "object",
+  "properties": {
+    "policyId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/FilterDecisionRecord"
+      }
+    },
+    "nextCursor": {
+      "type": ["string", "null"]
+    }
+  },
+  "required": ["policyId", "active", "records", "nextCursor"],
+  "$defs": {
+    "Layer": {
+      "type": "object",
+      "properties": {
+        "layerType": {
+          "type": "string",
+          "enum": [
+            "CONTROLLER",
+            "CONTROLLER_UI_EVENT_POLL",
+            "WORKFLOW_AGENT",
+            "WORKFLOW_AGENT_ACTION"
+          ]
+        },
+        "layerKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["layerType", "layerKey"],
+      "additionalProperties": false
+    },
+    "FilterDecisionRecord": {
+      "type": "object",
+      "properties": {
+        "decisionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "policyId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "layer": {
+          "$ref": "#/$defs/Layer"
+        },
+        "filterType": {
+          "type": "string",
+          "enum": [
+            "JSON_PATH",
+            "MARKDOWN_PATH",
+            "REGEX_PATH",
+            "AI_PATH",
+            "PATH",
+            "AI"
+          ],
+          "description": "Filter-kind discriminator captured at decision-record time."
+        },
+        "action": {
+          "type": "string",
+          "enum": ["DROPPED", "TRANSFORMED", "PASSTHROUGH", "ERROR"]
+        },
+        "inputPayload": {
+          "type": ["string", "object", "array", "number", "boolean", "null"]
+        },
+        "outputPayload": {
+          "type": ["string", "object", "array", "number", "boolean", "null"]
+        },
+        "hasOutput": {
+          "type": "boolean"
+        },
+        "errorMessage": {
+          "type": ["string", "null"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "appliedInstructions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Instruction"
+          }
+        }
+      },
+      "required": [
+        "decisionId",
+        "policyId",
+        "layer",
+        "filterType",
+        "action",
+        "inputPayload",
+        "hasOutput",
+        "createdAt",
+        "appliedInstructions"
+      ],
+      "additionalProperties": false
+    },
+    "Instruction": {
+      "$ref": "filter-policy.schema.json#/$defs/Instruction"
+    }
+  },
+  "additionalProperties": false
+}

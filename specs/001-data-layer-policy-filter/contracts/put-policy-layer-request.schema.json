@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/put-policy-layer-request.schema.json",
+  "title": "PutPolicyLayerRequest",
+  "description": "Request body for upserting a policy-layer binding",
+  "type": "object",
+  "properties": {
+    "policyId": { "type": "string", "minLength": 1 },
+    "layerBinding": { "$ref": "filter-policy.schema.json#/$defs/PolicyLayerBinding" }
+  },
+  "required": ["policyId", "layerBinding"],
+  "additionalProperties": false
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/ai-path-filter-policy.schema.json",
+  "title": "AiPathFilterPolicy",
+  "description": "Policy for AiPathFilter. Delegates to LlmRunner.runWithTemplate() using an AiFilterContext built from the originating PromptContributorContext. The AI executor produces AiFilterResult containing instructions which are applied through the configured interpreter. Requires a PromptContributorContext with OperationContext for LLM dispatch.",
+  "type": "object",
+  "allOf": [{ "$ref": "filter-policy.schema.json#/$defs/PolicyCommonFields" }],
+  "properties": {
+    "id": true,
+    "name": true,
+    "description": true,
+    "sourcePath": true,
+    "status": true,
+    "priority": true,
+    "isInheritable": true,
+    "isPropagatedToParent": true,
+    "layerBindings": true,
+    "createdAt": true,
+    "updatedAt": true,
+    "filterType": {
+      "const": "AI",
+      "description": "Discriminator — always AI for this schema."
+    },
+    "executor": {
+      "$ref": "filter-policy.schema.json#/$defs/AiExecutorConfig"
+    }
+  },
+  "required": ["filterType", "executor"],
+  "additionalProperties": false
+}

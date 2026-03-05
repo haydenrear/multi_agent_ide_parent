@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/regex-path-filter-policy.schema.json",
+  "title": "RegexPathFilterPolicy",
+  "description": "Policy for PathFilter with Regex interpreter. I/O is always String/String. RegexInterpreter is implicit. Any executor type allowed.",
+  "type": "object",
+  "allOf": [
+    { "$ref": "filter-policy.schema.json#/$defs/PolicyCommonFields" }
+  ],
+  "properties": {
+    "id": true,
+    "name": true,
+    "description": true,
+    "sourcePath": true,
+    "status": true,
+    "priority": true,
+    "isInheritable": true,
+    "isPropagatedToParent": true,
+    "layerBindings": true,
+    "createdAt": true,
+    "updatedAt": true,
+    "filterType": {
+      "const": "PATH"
+    },
+    "executor": {
+      "$ref": "filter-policy.schema.json#/$defs/ExecutorOneOf"
+    }
+  },
+  "required": ["filterType", "executor"],
+  "additionalProperties": false
+}

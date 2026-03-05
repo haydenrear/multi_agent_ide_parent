@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/read-layer-children-response.schema.json",
+  "title": "ReadLayerChildrenResponse",
+  "description": "Response for reading all direct and/or recursive child layers for a parent layer.",
+  "type": "object",
+  "properties": {
+    "layerId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "children": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "layerId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "layerType": {
+            "type": "string",
+            "enum": [
+              "WORKFLOW_AGENT",
+              "WORKFLOW_AGENT_ACTION",
+              "CONTROLLER",
+              "CONTROLLER_UI_EVENT_POLL"
+            ]
+          },
+          "layerKey": {
+            "type": "string",
+            "minLength": 1
+          },
+          "parentLayerId": {
+            "type": ["string", "null"]
+          },
+          "depth": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "layerId",
+          "layerType",
+          "layerKey",
+          "parentLayerId",
+          "depth"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "totalCount": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": ["layerId", "children", "totalCount"],
+  "additionalProperties": false
+}

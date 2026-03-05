@@ -1,0 +1,291 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/filter-policy.schema.json",
+  "title": "FilterPolicy shared definitions",
+  "description": "Shared $defs referenced by per-filter-type schemas. No longer a standalone policy schema — each concrete filter type has its own schema.",
+  "$defs": {
+    "PolicyLayerBinding": {
+      "type": "object",
+      "properties": {
+        "layerId": { "type": "string", "minLength": 1 },
+        "layerType": {
+          "type": "string",
+          "enum": [
+            "WORKFLOW_AGENT",
+            "WORKFLOW_AGENT_ACTION",
+            "CONTROLLER",
+            "CONTROLLER_UI_EVENT_POLL"
+          ]
+        },
+        "layerKey": { "type": "string", "minLength": 1 },
+        "enabled": { "type": "boolean" },
+        "includeDescendants": { "type": "boolean" },
+        "isInheritable": { "type": "boolean" },
+        "isPropagatedToParent": { "type": "boolean" },
+        "matcherKey": {
+          "type": "string",
+          "enum": ["NAME", "TEXT"],
+          "description": "NAME: match on PromptContributor.name() or GraphEvent class name. TEXT: match on contribute() output or serialized event payload."
+        },
+        "matcherType": {
+          "type": "string",
+          "enum": ["REGEX", "EQUALS"],
+          "description": "REGEX: matcherText is a regex pattern. EQUALS: matcherText must exactly equal the resolved value."
+        },
+        "matcherText": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The regex expression or exact text to match against the resolved matcherKey value."
+        },
+        "matchOn": {
+          "type": "string",
+          "enum": ["PROMPT_CONTRIBUTOR", "GRAPH_EVENT"],
+          "description": "Which domain object type to match against within the bound layer."
+        }
+      },
+      "required": [
+        "layerId",
+        "layerType",
+        "layerKey",
+        "enabled",
+        "includeDescendants",
+        "isInheritable",
+        "isPropagatedToParent",
+        "matcherKey",
+        "matcherType",
+        "matcherText",
+        "matchOn"
+      ],
+      "additionalProperties": false
+    },
+    "PolicyCommonFields": {
+      "type": "object",
+      "description": "Fields shared by all filter policy types.",
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "sourcePath": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["ACTIVE", "INACTIVE"] },
+        "priority": { "type": "integer", "minimum": 0 },
+        "isInheritable": { "type": "boolean" },
+        "isPropagatedToParent": { "type": "boolean" },
+        "layerBindings": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/PolicyLayerBinding" }
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "sourcePath",
+        "status",
+        "priority",
+        "isInheritable",
+        "isPropagatedToParent",
+        "layerBindings"
+      ]
+    },
+    "BinaryExecutorConfig": {
+      "type": "object",
+      "properties": {
+        "executorType": { "const": "BINARY" },
+        "command": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "workingDirectory": { "type": ["string", "null"] },
+        "env": {
+          "type": ["object", "null"],
+          "additionalProperties": { "type": "string" }
+        },
+        "outputParserRef": { "type": ["string", "null"] },
+        "timeoutMs": { "type": "integer", "minimum": 1 }
+      },
+      "required": ["executorType", "command", "timeoutMs"],
+      "additionalProperties": false
+    },
+    "JavaFunctionExecutorConfig": {
+      "type": "object",
+      "properties": {
+        "executorType": { "const": "JAVA_FUNCTION" },
+        "functionRef": { "type": "string", "minLength": 1 },
+        "className": { "type": ["string", "null"] },
+        "methodName": { "type": ["string", "null"] },
+        "timeoutMs": { "type": "integer", "minimum": 1 }
+      },
+      "required": ["executorType", "functionRef", "timeoutMs"],
+      "additionalProperties": false
+    },
+    "PythonExecutorConfig": {
+      "type": "object",
+      "properties": {
+        "executorType": { "const": "PYTHON" },
+        "scriptPath": { "type": "string", "minLength": 1 },
+        "entryFunction": { "type": "string", "minLength": 1 },
+        "instructionSchemaVersion": {
+          "type": ["string", "null"],
+          "description": "Version tag for the expected instruction envelope returned by the script (for example instruction-envelope-v2)."
+        },
+        "runtimeArgsSchema": { "type": ["object", "null"] },
+        "timeoutMs": { "type": "integer", "minimum": 1 }
+      },
+      "required": ["executorType", "scriptPath", "entryFunction", "timeoutMs"],
+      "additionalProperties": false
+    },
+    "AiExecutorConfig": {
+      "type": "object",
+      "properties": {
+        "executorType": { "const": "AI" },
+        "modelRef": { "type": "string", "minLength": 1 },
+        "promptTemplate": { "type": "string", "minLength": 1 },
+        "registrarPrompt": {
+          "type": ["string", "null"],
+          "description": "Optional registrar-authored guidance prompt used to distinguish policy intent beyond the main promptTemplate."
+        },
+        "sessionMode": {
+          "type": ["string", "null"],
+          "enum": [
+            "PER_INVOCATION",
+            "SAME_SESSION_FOR_ALL",
+            "SAME_SESSION_FOR_ACTION",
+            "SAME_SESSION_FOR_AGENT",
+            null
+          ],
+          "description": "Controls ACP chat-session reuse scope."
+        },
+        "sessionKeyOverride": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "description": "Optional explicit session key when deterministic grouping is needed."
+        },
+        "requestModelType": {
+          "type": ["string", "null"],
+          "description": "Optional AgentModels.AgentRequest type name used to shape AI-filter prompt context."
+        },
+        "resultModelType": {
+          "type": ["string", "null"],
+          "description": "Optional AgentModels.AgentResult type name used to shape AI-filter response context."
+        },
+        "includeAgentDecorators": {
+          "type": ["boolean", "null"],
+          "description": "When true, apply the same prompt/tool/request/result decorators used by workflow agents."
+        },
+        "controllerModelRef": {
+          "type": ["string", "null"],
+          "description": "Optional controller-model reference for importance checks/rewrite arbitration."
+        },
+        "controllerPromptTemplate": {
+          "type": ["string", "null"],
+          "description": "Optional controller prompt template used when controller arbitration is enabled."
+        },
+        "maxTokens": { "type": ["integer", "null"], "minimum": 1 },
+        "timeoutMs": { "type": "integer", "minimum": 1 },
+        "outputSchema": { "type": ["object", "null"] },
+        "configVersion": {
+          "type": ["string", "null"],
+          "description": "Version tag for the AI executor configuration. Used for tracking config changes across policy updates."
+        }
+      },
+      "required": ["executorType", "modelRef", "promptTemplate", "timeoutMs"],
+      "additionalProperties": false
+    },
+    "Path": {
+      "type": "object",
+      "properties": {
+        "pathType": {
+          "type": "string",
+          "enum": ["JSON_PATH", "MARKDOWN_PATH"]
+        },
+        "expression": { "type": "string", "minLength": 1 }
+      },
+      "required": ["pathType", "expression"],
+      "additionalProperties": false
+    },
+    "InstructionMatcher": {
+      "type": "object",
+      "properties": {
+        "matcherType": { "type": "string", "enum": ["REGEX", "EQUALS"] },
+        "value": { "type": "string" }
+      },
+      "required": ["matcherType", "value"],
+      "additionalProperties": false
+    },
+    "Instruction": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "op": { "const": "REMOVE" },
+            "targetPath": { "$ref": "#/$defs/Path" },
+            "order": { "type": "integer", "minimum": 0 }
+          },
+          "required": ["op", "targetPath", "order"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": { "enum": ["REPLACE", "SET"] },
+            "targetPath": { "$ref": "#/$defs/Path" },
+            "value": {
+              "type": ["string", "object", "array", "number", "boolean", "null"]
+            },
+            "order": { "type": "integer", "minimum": 0 }
+          },
+          "required": ["op", "targetPath", "value", "order"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": { "const": "REPLACE_IF_MATCH" },
+            "targetPath": { "$ref": "#/$defs/Path" },
+            "matcher": { "$ref": "#/$defs/InstructionMatcher" },
+            "value": {
+              "type": ["string", "object", "array", "number", "boolean", "null"]
+            },
+            "order": { "type": "integer", "minimum": 0 }
+          },
+          "required": ["op", "targetPath", "matcher", "value", "order"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": { "const": "REMOVE_IF_MATCH" },
+            "targetPath": { "$ref": "#/$defs/Path" },
+            "matcher": { "$ref": "#/$defs/InstructionMatcher" },
+            "order": { "type": "integer", "minimum": 0 }
+          },
+          "required": ["op", "targetPath", "matcher", "order"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "InstructionEnvelope": {
+      "type": "object",
+      "properties": {
+        "instructions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Instruction" }
+        }
+      },
+      "required": ["instructions"],
+      "additionalProperties": false
+    },
+    "ExecutorOneOf": {
+      "oneOf": [
+        { "$ref": "#/$defs/BinaryExecutorConfig" },
+        { "$ref": "#/$defs/JavaFunctionExecutorConfig" },
+        { "$ref": "#/$defs/PythonExecutorConfig" },
+        { "$ref": "#/$defs/AiExecutorConfig" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/markdown-path-filter-policy.schema.json",
+  "title": "MarkdownPathFilterPolicy",
+  "description": "Policy for PathFilter with MarkdownPath interpreter. I/O is always MarkdownDocument/MarkdownDocument. MarkdownPathInterpreter is implicit. Any executor type allowed.",
+  "type": "object",
+  "allOf": [
+    { "$ref": "filter-policy.schema.json#/$defs/PolicyCommonFields" }
+  ],
+  "properties": {
+    "id": true,
+    "name": true,
+    "description": true,
+    "sourcePath": true,
+    "status": true,
+    "priority": true,
+    "isInheritable": true,
+    "isPropagatedToParent": true,
+    "layerBindings": true,
+    "createdAt": true,
+    "updatedAt": true,
+    "filterType": {
+      "const": "MARKDOWN_PATH",
+      "description": "Discriminator — always MARKDOWN_PATH for this schema."
+    },
+    "executor": {
+      "$ref": "filter-policy.schema.json#/$defs/ExecutorOneOf"
+    }
+  },
+  "required": ["filterType", "executor"],
+  "additionalProperties": false
+}

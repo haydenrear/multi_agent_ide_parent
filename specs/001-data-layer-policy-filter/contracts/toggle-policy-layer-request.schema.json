@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://multi-agent-ide/schemas/toggle-policy-layer-request.schema.json",
+  "title": "TogglePolicyLayerRequest",
+  "description": "Convenience request to enable or disable a policy at a specific layer without sending the full binding. Used by POST /api/filters/policies/{policyId}/layers/{layerId}/enable and /disable endpoints.",
+  "type": "object",
+  "properties": {
+    "includeDescendants": {
+      "type": "boolean",
+      "description": "Whether the enable/disable should also apply to descendant layers. Defaults to false if omitted.",
+      "default": false
+    }
+  },
+  "additionalProperties": false
+}
