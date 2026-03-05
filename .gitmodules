@@ -22,9 +22,6 @@
 [submodule "commit-diff-model"]
 	path = commit-diff-model
 	url = git@github.com:haydenrear/commit-diff-model.git
-[submodule "commit-diff-context-mcp"]
-	path = commit-diff-context-mcp
-	url = git@github.com:haydenrear/commit-diff-context-mcp.git
 [submodule "mcp-tool-gateway"]
 	path = mcp-tool-gateway
 	url = git@github.com:haydenrear/mcp-tool-gateway.git

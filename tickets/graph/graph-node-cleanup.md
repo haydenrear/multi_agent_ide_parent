@@ -1,0 +1,1 @@
+A lot of the fields in GraphNode are unnecessary and can be dropped entirely.
