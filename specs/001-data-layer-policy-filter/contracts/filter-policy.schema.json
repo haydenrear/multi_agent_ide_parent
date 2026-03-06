@@ -25,12 +25,12 @@
         "matcherKey": {
           "type": "string",
           "enum": ["NAME", "TEXT"],
-          "description": "NAME: match on PromptContributor.name() or GraphEvent class name. TEXT: match on contribute() output or serialized event payload."
+          "description": "NAME: match on PromptContributor.name() or GraphEvent class simple name (for example AddMessageEvent, not payload eventType ADD_MESSAGE_EVENT). TEXT: match on the string surface being filtered (contributor text, controller-formatted event text, or serialized event JSON)."
         },
         "matcherType": {
           "type": "string",
           "enum": ["REGEX", "EQUALS"],
-          "description": "REGEX: matcherText is a regex pattern. EQUALS: matcherText must exactly equal the resolved value."
+          "description": "REGEX: matcherText is evaluated with full-string matches() semantics; use (?s).*...* for substring matching. EQUALS: matcherText must exactly equal the resolved value."
         },
         "matcherText": {
           "type": "string",
@@ -200,7 +200,8 @@
       "properties": {
         "pathType": {
           "type": "string",
-          "enum": ["JSON_PATH", "MARKDOWN_PATH"]
+          "enum": ["REGEX", "JSON_PATH", "MARKDOWN_PATH"],
+          "description": "Instruction target path type. REGEX applies to the raw string payload supplied by the invoking surface, JSON_PATH applies to serialized JSON payloads, and MARKDOWN_PATH applies to heading-structured text."
         },
         "expression": { "type": "string", "minLength": 1 }
       },

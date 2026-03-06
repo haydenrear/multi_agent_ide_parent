@@ -2,11 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://multi-agent-ide/schemas/regex-path-filter-policy.schema.json",
   "title": "RegexPathFilterPolicy",
-  "description": "Policy for PathFilter with Regex interpreter. I/O is always String/String. RegexInterpreter is implicit. Any executor type allowed.",
+  "description": "Policy for PathFilter registrations made through the regex-path endpoint. Used for raw string surfaces including prompt contributor text, controller-formatted event text, and serialized event JSON. Persisted filter JSON still uses filterType=PATH; the endpoint/discovery filter kind remains REGEX_PATH.",
   "type": "object",
-  "allOf": [
-    { "$ref": "filter-policy.schema.json#/$defs/PolicyCommonFields" }
-  ],
+  "allOf": [{ "$ref": "filter-policy.schema.json#/$defs/PolicyCommonFields" }],
   "properties": {
     "id": true,
     "name": true,
@@ -20,7 +18,8 @@
     "createdAt": true,
     "updatedAt": true,
     "filterType": {
-      "const": "PATH"
+      "const": "PATH",
+      "description": "Persisted filter discriminator — always PATH for path filters registered through the regex-path endpoint."
     },
     "executor": {
       "$ref": "filter-policy.schema.json#/$defs/ExecutorOneOf"

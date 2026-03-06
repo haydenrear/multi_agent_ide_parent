@@ -7,7 +7,7 @@
 
 - `Filter<I, O, CTX>`: sealed interface
   - `PathFilter<I, O, CTX extends FilterContext>`
-  - `AiPathFilter` (wraps `AiFilterTool` executor + `Interpreter`)
+  - `AiPathFilter` (wraps `AiFilterTool` executor + dispatching interpreter)
 - `ExecutableTool<I, O, CTX>`: sealed interface
   - `BinaryExecutor`
   - `JavaFunctionExecutor`
@@ -18,6 +18,7 @@
   - `MarkdownPathInterpreter`
   - `JsonPathInterpreter`
 - `Path`: sealed interface
+  - `RegexPath`
   - `MarkdownPath`
   - `JsonPath`
 - `Instruction`: sealed interface
@@ -68,10 +69,11 @@ Permitted subclasses:
 
 **Purpose**: Path-instruction filtering over partial document/object structure.
 
-| Field | Type | Description |
-|---|---|---|
-| interpreter | Interpreter | instruction interpreter |
-| instructionLanguage | Enum(`REGEX`,`MARKDOWN_PATH`,`JSON_PATH`) | path language family |
+Runtime notes:
+- `PathFilter`/`AiPathFilter` do not persist an interpreter field.
+- Instructions are applied through a dispatching interpreter that routes each ordered instruction batch by `targetPath.pathType` (`REGEX`, `MARKDOWN_PATH`, `JSON_PATH`).
+- Policy registration kind, persisted `filterType`, and instruction `targetPath.pathType` are distinct. Persisted `filterType` is `PATH` for regex/json/markdown path filters and `AI` for AI filters; registration/discovery metadata tracks concrete kinds such as `AI_PATH`, `REGEX_PATH`, `MARKDOWN_PATH`, and `JSON_PATH`; returned instructions still target `REGEX`, `MARKDOWN_PATH`, or `JSON_PATH`.
+- Prompt contributor filtering and controller/UI event list-detail filtering operate on string text surfaces; stream/SSE/WebSocket event filtering operates on serialized JSON string surfaces.
 
 All serialization (including instruction deserialization) is Jackson/JSON — no separate serialization context needed.
 
@@ -84,6 +86,10 @@ Typical type bindings:
 ### 4. ExecutableTool<I, O, CTX> (sealed)
 
 **Purpose**: Produces either transformed payload output, instruction list, or both.
+
+Operational note for external executors:
+- `PythonExecutor` and `BinaryExecutor` use the configured `filter.bins` directory as subprocess working directory when present.
+- In this repo's default app config that resolves to `<repo>/multi_agent_ide_java_parent/multi_agent_ide/bin` because `PROJ_DIR` is the Spring app module project dir, so deployments/tests that exercise external executors must provision that directory.
 
 | Field | Type | Description | Validation |
 |---|---|---|---|
@@ -139,9 +145,9 @@ Execution contract:
 | configVersion | String or null | version tag for tracking config changes |
 | timeoutMs | int | execution timeout in milliseconds |
 
-**Execution Flow**: `AiFilterTool.apply()` delegates to `LlmRunner.runWithTemplate()` using the `AiFilterContext` which carries `PromptContext`, `ToolContext`, `OperationContext`, template model map, and `AgentModels.AiFilterResult.class` as the response type. The `FilterExecutionService.runAiFilter()` method builds the `AiFilterContext` by extracting `OperationContext` from the originating `PromptContributorContext` and applying the full decorator chain (request, prompt-context, tool-context, result) keyed to agent name `ai-filter`, action `path-filter`, method `runAiFilter`.
+**Execution Flow**: `AiFilterTool.apply()` delegates to `LlmRunner.runWithTemplate()` using the `AiFilterContext` which carries `PromptContext`, `ToolContext`, `OperationContext`, template model map, and `AgentModels.AiFilterResult.class` as the response type. The `FilterExecutionService.runAiFilter()` method builds the `AiFilterContext` from either the originating `PromptContributorContext` or a `GraphEventObjectContext` that can be resolved back to an agent process, then applies the full decorator chain (request, prompt-context, tool-context, result) keyed to agent name `ai-filter`, action `path-filter`, method `runAiFilter`.
 
-**Prerequisite**: Requires a `PromptContributorContext` (or `PathFilterContext` wrapping one) as the source filter context. When no `PromptContributorContext` is reachable, execution is skipped with PASSTHROUGH.
+**Prerequisite**: Requires filter context that can resolve both `PromptContext` and `OperationContext`: either a `PromptContributorContext` (or `PathFilterContext` wrapping one), or a `GraphEventObjectContext` whose artifact key can be traced to an agent process. When neither path is available, execution is skipped with PASSTHROUGH.
 
 ### 8a. AiFilterContext (record, implements PathFilterContext)
 
@@ -186,10 +192,11 @@ Execution contract:
 
 | Field | Type | Description |
 |---|---|---|
-| pathType | Enum(`MARKDOWN_PATH`,`JSON_PATH`) | path family |
+| pathType | Enum(`REGEX`,`MARKDOWN_PATH`,`JSON_PATH`) | path family |
 | expression | String | path expression |
 
 Records:
+- `RegexPath(expression)`
 - `MarkdownPath(expression)`
 - `JsonPath(expression)`
 
@@ -267,6 +274,10 @@ Initial variants:
 
 Contract:
 - `matchOn(): MatchOn`
+- `GraphEventSource.NAME` resolves `event.getClass().getSimpleName()`
+- `GraphEventSource.TEXT` resolves the string surface being filtered by the integration path
+- `PromptContributorSource.NAME` resolves `PromptContributor.name()`
+- `PromptContributorSource.TEXT` resolves `PromptContributor.template()`
 - `matcherValue(MatcherKey key): String`
 
 Variants:
@@ -341,7 +352,7 @@ Behavior rules:
 - `matcherKey=NAME` + `matchOn=GRAPH_EVENT`: matches against the `GraphEvent` class name (e.g. `NodeStatusChanged`)
 - `matcherKey=TEXT` + `matchOn=PROMPT_CONTRIBUTOR`: matches against prompt contributor source text metadata (template/static text) and path filters then run over `contribute(...)` output
 - `matcherKey=TEXT` + `matchOn=GRAPH_EVENT`: matches against graph event source text metadata (pretty/event text) and path filters then run over serialized payload text
-- `matcherType=REGEX`: `matcherText` is a regex pattern applied to the resolved value
+- `matcherType=REGEX`: `matcherText` is a regex pattern applied with full-string `matches()` semantics; use `(?s).*...*` for substring matching
 - `matcherType=EQUALS`: `matcherText` must exactly equal the resolved value
 
 **matchOn constraints by filter type**:
@@ -362,15 +373,16 @@ Behavior rules:
 - `PolicyRegistration` binds to many `Layer` nodes via `PolicyLayerBinding`.
 - `PolicyRegistration` contains one `Filter<I, O, CTX>`.
 - `Filter<I, O, CTX>` has one `ExecutableTool<I, O, CTX>`.
-- `PathFilter` has one `Interpreter`.
-- `ExecutableTool` may return instruction lists interpreted by `PathFilter`.
+- `PathFilter` uses a dispatching interpreter selected by each instruction `targetPath.pathType`.
+- `ExecutableTool` may return instruction lists interpreted by `PathFilter`/`AiPathFilter`.
+- For `PathFilter`, `PythonExecutor` response payloads are deserialized directly as `List<Instruction>`; the on-wire shape is a bare JSON array, not `{"instructions": [...]}`.
 - `FilterDecisionRecord<I, O>` stores final output and applied instructions.
 
 ## Validation Rules
 
 - `Filter`, `ExecutableTool`, `Interpreter`, `Path`, `Instruction`, `Layer`, and `LayerCtx` must satisfy sealed-interface constraints.
 - Prompt contributor/event object filters must preserve type parity (`I == O`).
-- Path filters must use interpreter/path-language compatible instruction targets.
+- Path filters must use valid instruction targets (`targetPath.pathType` + `expression`) for runtime dispatch.
 - Executor output must validate against instruction/output schemas before application.
 - `AiFilterTool` output must validate against declared response mode/schema before execution.
 - Layer hierarchy must support subtree and parent propagation rules.

@@ -78,7 +78,7 @@ As an agent operating at a layer, I need to inspect filtered output tied to a pa
 - **FR-006**: The registrar MUST validate incoming policy definitions before persistence and activation.
 - **FR-007**: `Filter` MUST be modeled as a sealed interface with concrete implementations `ObjectSerializerFilter` and `PathFilter`.
 - **FR-008**: The execution mechanism MUST be modeled as an `ExecutableTool` mix-in (sealed interface) with concrete implementations `BinaryExecutor`, `JavaFunctionExecutor`, `PythonExecutor`, and `AiFilterTool`.
-- **FR-008a**: Path targets MUST be modeled as a sealed `Path` interface with concrete record implementations `MarkdownPath` and `JsonPath`.
+- **FR-008a**: Path targets MUST be modeled as a sealed `Path` interface with concrete record implementations `RegexPath`, `MarkdownPath`, and `JsonPath`.
 - **FR-008b**: Path execution MUST use a sealed `Interpreter` interface with concrete implementations `RegexInterpreter`, `MarkdownPathInterpreter`, and `JsonPathInterpreter`.
 - **FR-008c**: Filter instructions MUST be modeled as sealed instruction records `Replace`, `Set`, `Remove`, `ReplaceIfMatch`, and `RemoveIfMatch`.
 - **FR-009**: Invalid policy definitions MUST be rejected with validation feedback that identifies the failed schema constraints.
@@ -93,7 +93,10 @@ As an agent operating at a layer, I need to inspect filtered output tied to a pa
 - **FR-015**: `Filter` MUST be generic over input, output, and context (`Filter<I,O,CTX>`), where `CTX` extends `FilterContext`.
 - **FR-016**: For prompt-contributor and event filtering, `ObjectSerializerFilter` MUST preserve input/output type parity (`PromptContributor -> PromptContributor`, `Event -> Event`) and use serialization context for typed conversion without runtime polymorphism requirements.
 - **FR-016b**: Matcher evaluation MUST be driven by a typed source object (`FilterSource`) rather than payload aliases, so bindings can consistently evaluate `matcherKey`, `matcherType`, and `matchOn` against the originating `PromptContributor` or `GraphEvent`.
-- **FR-016a**: `PathFilter` MUST consume instructions produced by an `ExecutableTool` and apply them via the configured `Interpreter`.
+- **FR-016d**: For `matcherType=REGEX`, `matcherText` MUST be evaluated with full-string regex `matches()` semantics against the resolved source value. Substring-oriented bindings therefore require patterns such as `(?s).*needle.*`.
+- **FR-016c**: For `matchOn=GRAPH_EVENT`, `matcherKey=NAME` MUST resolve the event class simple name (for example `AddMessageEvent`), not the serialized payload `eventType` field (for example `ADD_MESSAGE_EVENT`). `matcherKey=TEXT` MUST resolve the string surface actually being filtered by the invoking integration.
+- **FR-016a**: `PathFilter` MUST consume instructions produced by an `ExecutableTool` and apply them via dispatching interpreters selected by each instruction `targetPath.pathType`.
+- **FR-016e**: Persisted `Filter.filterType` discriminators MUST remain `PATH` for regex/json/markdown path filters and `AI` for AI filters. Endpoint/discovery kinds (`REGEX_PATH`, `MARKDOWN_PATH`, `JSON_PATH`, `AI_PATH`) MUST be tracked separately as registration metadata rather than serialized `Filter.filterType` values.
 - **FR-017**: `FilterDecisionRecord` MUST be generic over input/output (`FilterDecisionRecord<I,O>`) and owned by the policy/filter execution result, not by executor type.
 - **FR-018**: For each processed input item, filter evaluation MUST return a `FilterDecisionRecord<I,O>` whose optional output determines forwarding behavior (present => use output, empty => drop item).
 - **FR-019**: `ExecutableTool` implementations MUST support outcomes that can remove an item entirely, return a transformed item, or return a reduced-item variant.
@@ -107,19 +110,25 @@ As an agent operating at a layer, I need to inspect filtered output tied to a pa
 - **FR-023**: The system MUST support policy implementations delivered as executable artifacts, regardless of implementation language.
 - **FR-024**: Dynamically registered prompt-contributor policies MUST propagate to workflow-agent prompt assembly paths, and dynamically registered event policies MUST propagate to controller event-processing paths.
 - **FR-024a**: Prompt contributor filtering MUST run in two phases: (1) object-serializer filters over the `PromptContributor` object, then (2) path filters over the result of `contribute(...)`.
-- **FR-024b**: Graph event filtering MUST run in two phases: (1) object-serializer filters over the `GraphEvent` object, then (2) path filters over the serialized representation; JSON serialization paths MUST run JSON path filters only.
-- **FR-025**: `PathFilter` execution MUST support markdown-path and json-path instruction targets and apply `Replace`, `Set`, `Remove`, `ReplaceIfMatch`, and `RemoveIfMatch` operations.
+- **FR-024b**: Graph event filtering MUST run in two phases: (1) object-serializer filters over the `GraphEvent` object, then (2) path filters over the string surface chosen by the invoking integration.
+- **FR-024c**: Controller/UI event list-detail rendering paths MUST apply path filters to formatted/pretty event text and therefore support `MARKDOWN_PATH`, `REGEX`, and AI-emitted instructions over those text path types.
+- **FR-024d**: Event stream/SSE/WebSocket serialization paths MUST apply path filters to serialized event JSON and therefore support `JSON_PATH`, `REGEX`, and AI-emitted instructions over those path types.
+- **FR-024e**: Controller/UI graph-event text filtering operates on the event's raw `prettyPrint()` output prior to final UI wrapping. Nested markdown embedded inside artifact pretty-print payloads is not normalized before `MARKDOWN_PATH` evaluation.
+- **FR-025**: `PathFilter` execution MUST support regex-path, markdown-path, and json-path instruction targets and apply `Replace`, `Set`, `Remove`, `ReplaceIfMatch`, and `RemoveIfMatch` operations.
 - **FR-026**: Instruction execution MUST apply operations deterministically, preserving operation order and recording each applied operation in policy-scoped decision history.
-- **FR-027**: Policy registration MUST validate instruction schemas, path-language compatibility, and executor/interpreter compatibility before policy activation.
+- **FR-027**: Policy registration MUST validate instruction schemas, path-language compatibility, and executor compatibility before policy activation.
 - **FR-028**: `ExecutableTool` implementations MUST be swappable at runtime so the same filter contract can run as external binary execution or in-process function execution.
+- **FR-028a**: When an external executor uses a configured `filter.bins` working directory, that directory MUST exist before subprocess launch; otherwise the executor invocation fails before the external script/binary starts.
+- **FR-028b**: In this app, `filter.bins` MUST be resolved from the deployed Spring app module `PROJ_DIR` rather than assumed to be the repo root; tmp-deploy workflows therefore MUST provision `<tmp-repo>/multi_agent_ide_java_parent/multi_agent_ide/bin` (or inspect the processed app config and provision the resolved directory).
 - **FR-029**: `AiFilterTool` MUST be supported as an executor that accepts filter context and prompt inputs and returns either transformed output payloads or executable instruction lists.
 - **FR-029a**: `AiFilterTool` MUST support configurable chat-session reuse strategies (per invocation, global, per action, and per agent) for ACP chat model calls.
 - **FR-029b**: `AiFilterTool` execution MUST be able to build AI-call context from `AgentModels.AgentRequest`/`AgentModels.AgentResult` metadata and apply the same prompt/tool/request/result decorators used by workflow agents when configured.
 - **FR-029c**: AI filter registration MUST be exposed via a dedicated endpoint (`POST /api/filters/ai-path-filters/policies`) while policy discovery and inspection continue to use existing shared read endpoints.
-- **FR-029d**: `AiFilterTool` execution MUST delegate to `LlmRunner.runWithTemplate()` using an `AiFilterContext` that carries a decorated `PromptContext`, `ToolContext`, `OperationContext`, template model map, and response class. The `AiFilterContext` is built by `FilterExecutionService.runAiFilter()` which extracts `OperationContext` from the originating `PromptContributorContext`.
-- **FR-029e**: `AiFilterTool` MUST require a `PromptContributorContext` (or a `PathFilterContext` wrapping one) as the source filter context so that `OperationContext` and `PromptContext` are available for LLM dispatch. When no `PromptContributorContext` is reachable, AI filter execution MUST be skipped with a warning and PASSTHROUGH action.
+- **FR-029d**: `AiFilterTool` execution MUST delegate to `LlmRunner.runWithTemplate()` using an `AiFilterContext` that carries a decorated `PromptContext`, `ToolContext`, `OperationContext`, template model map, and response class. The `AiFilterContext` is built by `FilterExecutionService.runAiFilter()` from either the originating `PromptContributorContext` or a `GraphEventObjectContext` that can be resolved back to an agent process.
+- **FR-029e**: `AiFilterTool` MUST require filter context that can resolve both `OperationContext` and `PromptContext` for LLM dispatch: either a `PromptContributorContext` (or a `PathFilterContext` wrapping one), or a `GraphEventObjectContext` whose artifact key can be traced to an agent process. When neither is reachable, AI filter execution MUST be skipped with a warning and PASSTHROUGH action.
 - **FR-029f**: `AiFilterTool` MUST apply the full decorator chain (request, prompt-context, tool-context, result decorators) consistent with workflow agent actions, keyed to the agent name `ai-filter`, action `path-filter`, and method `runAiFilter`.
 - **FR-029g**: `AiFilterTool` MUST support an optional `registrarPrompt` field on AI executor registration, persist it in executor configuration, and pass it into the AI filter template model so registrar-authored policy intent can guide instruction generation.
+- **FR-029h**: `PythonExecutor` / `PathFilter` instruction executors MUST deserialize a bare JSON array of `Instruction` values (`[]` for no-op). A top-level `{"instructions": ...}` envelope MUST NOT be treated as a valid path-filter response contract.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -136,7 +145,7 @@ As an agent operating at a layer, I need to inspect filtered output tied to a pa
 - **RegexInterpreter**: Applies instructions against regex-oriented targets.
 - **MarkdownPathInterpreter**: Applies instructions against markdown-path targets.
 - **JsonPathInterpreter**: Applies instructions against json-path targets.
-- **Path**: Sealed path model with concrete records `MarkdownPath` and `JsonPath`.
+- **Path**: Sealed path model with concrete records `RegexPath`, `MarkdownPath`, and `JsonPath`.
 - **Instruction**: Sealed instruction model with concrete records `Replace`, `Set`, `Remove`, `ReplaceIfMatch`, and `RemoveIfMatch`.
 - **Layer**: Sealed interface representing filter execution scope at multiple granularities.
 - **LayerCtx**: Sealed context interface used by `Layer.matches(LayerCtx)` to evaluate policy applicability at runtime.
@@ -154,7 +163,7 @@ As an agent operating at a layer, I need to inspect filtered output tied to a pa
 - A **Policy Registration** has many **Policy Layer Bindings**.
 - An **ExecutableTool** evaluates one typed item with filter context and returns a `FilterDecisionRecord<I,O>` that may include instructions.
 - **ObjectSerializerFilter** is used for prompt-contributor and event full-object filtering paths.
-- **PathFilter** uses an **Interpreter** to apply ordered **Instruction** records over **Path** targets.
+- **PathFilter** uses dispatching interpreters to apply ordered **Instruction** records over **Path** targets.
 - **BinaryExecutor**, **JavaFunctionExecutor**, **PythonExecutor**, and **AiFilterTool** are attachable to filters through the same executor contract.
 - A call executes all active filters bound to layers where `Layer.matches(LayerCtx)` is true for the invocation context.
 - For a call scope, policy inclusion is true when any matched layer binding is enabled.
@@ -198,23 +207,23 @@ As an agent operating at a layer, I need to inspect filtered output tied to a pa
 ## Dynamic Runtime Use Case
 
 - An agent identifies low-value repeated prompt-contributor content and registers an `ObjectSerializerFilter` using `AiFilterTool` to summarize or drop noisy content at runtime.
-- The registrar validates the submitted filter kind, executor type, interpreter compatibility (if path-based), scope, and required metadata, then activates it without requiring a service restart.
+- The registrar validates the submitted filter kind, executor type, path-target compatibility (if path-based), scope, and required metadata, then activates it without requiring a service restart.
 - A second policy registers a `PathFilter` with a swappable executor (`BinaryExecutor` or `JavaFunctionExecutor`) that returns ordered `Replace/Set/Remove` instructions.
-- The `PathFilter` routes instructions to `RegexInterpreter`, `MarkdownPathInterpreter`, or `JsonPathInterpreter` based on path language and applies deterministic operations.
-- A controller operator can similarly register an event-targeting `ObjectSerializerFilter` using `PythonExecutor` and apply it to controller-streamed events.
+- The `PathFilter` routes instructions to `RegexInterpreter`, `MarkdownPathInterpreter`, or `JsonPathInterpreter` based on each instruction `targetPath.pathType` and applies deterministic operations.
+- A controller operator can similarly register an event-targeting filter and validate it against the correct runtime surface: controller/UI formatted text for list/detail paths, serialized JSON for stream/SSE/WebSocket paths.
 - Agents and operators can inspect filtered output by policy to verify that dynamic runtime changes are behaving as intended.
 
 ## Delivery Approach
 
 - Define a sealed generic `Filter<I,O,CTX>` model with concrete variant 'PathFilter`.
 - Define a sealed `ExecutableTool` mix-in with concrete variants: `BinaryExecutor`, `JavaFunctionExecutor`, `PythonExecutor`, and `AiFilterTool`.
-- Define sealed `Path` records (`MarkdownPath`, `JsonPath`) and sealed `Instruction` records (`Replace`, `Set`, `Remove`).
+- Define sealed `Path` records (`RegexPath`, `MarkdownPath`, `JsonPath`) and sealed `Instruction` records (`Replace`, `Set`, `Remove`).
 - Define sealed interpreter variants (`RegexInterpreter`, `MarkdownPathInterpreter`, `JsonPathInterpreter`) for path-instruction execution.
 - Define sealed `Layer` and sealed `LayerCtx` models so layers can match granular invocation scopes through `Layer.matches(LayerCtx)`.
 - All serialization is Jackson/JSON — no separate SerializationContext type. Each filter type owns its deserialization semantics.
-- Provide per-filter-type registration endpoints (one per concrete filter type) instead of a single generic endpoint. The filter type, I/O types, and interpreter are implicit from the endpoint — request bodies contain only executor config and common policy fields.
+- Provide per-filter-type registration endpoints (one per concrete filter type) instead of a single generic endpoint. The filter type and I/O types are implicit from the endpoint — request bodies contain only executor config and common policy fields.
 - Enrich `PolicyLayerBinding` with matcher fields (`matcherKey`, `matcherType`, `matcherText`, `matchOn`) so policies can narrow which specific `PromptContributor` or `GraphEvent` they apply to within a bound layer.
 - Use a typed `FilterSource` marker model in execution so `PolicyLayerBinding` matcher evaluation is based on source object fields (name/text/match domain) instead of payload-name aliases.
-- Execute filters in ordered phases per domain: object serializer first, then path filtering on post-object output (`contribute(...)` text for prompt contributors; serialized output for graph events).
+- Execute filters in ordered phases per domain: object serializer first, then path filtering on post-object output (`contribute(...)` text for prompt contributors; formatted text for controller/UI graph-event paths; serialized JSON for event-stream paths).
 - Apply filtering as `FilterDecisionRecord<I,O>` output where present output is forwarded and absent output is dropped.
 - Route filter activation by scope so object filters affect workflow-agent/controller data and path filters apply deterministic instruction execution through interpreters.

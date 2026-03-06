@@ -2,11 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://multi-agent-ide/schemas/json-path-filter-policy.schema.json",
   "title": "JsonPathFilterPolicy",
-  "description": "Policy for PathFilter with JsonPath interpreter. I/O is always JsonDocument/JsonDocument. JsonPathInterpreter is implicit. Any executor type allowed.",
+  "description": "Policy for PathFilter registrations made through the json-path endpoint. Used for serialized JSON string surfaces such as graph-event stream output. Persisted filter JSON still uses filterType=PATH; the endpoint/discovery filter kind remains JSON_PATH.",
   "type": "object",
-  "allOf": [
-    { "$ref": "filter-policy.schema.json#/$defs/PolicyCommonFields" }
-  ],
+  "allOf": [{ "$ref": "filter-policy.schema.json#/$defs/PolicyCommonFields" }],
   "properties": {
     "id": true,
     "name": true,
@@ -20,8 +18,8 @@
     "createdAt": true,
     "updatedAt": true,
     "filterType": {
-      "const": "JSON_PATH",
-      "description": "Discriminator — always JSON_PATH for this schema."
+      "const": "PATH",
+      "description": "Persisted filter discriminator — always PATH for path filters registered through the json-path endpoint."
     },
     "executor": {
       "$ref": "filter-policy.schema.json#/$defs/ExecutorOneOf"
