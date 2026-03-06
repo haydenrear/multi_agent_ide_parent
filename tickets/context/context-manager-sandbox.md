@@ -1,18 +1,11 @@
-
-
 So I hate this sort of static idea of context manager tool.
 
-And instead, I'd like it to be sandbox-style.
+What about seeing what works with jupyter notebooks. 
 
-So here's the idea:
+1. provide a set of datasets to jupyter notebook with tools and tools
+2. have it do stuff (very powerful model)
+3. watch what it does and see what works
 
-```markdown
----
-name: context manager sandbox header
-variables: ... ?
 ---
 
-The idea here is to do a REPL-like operation over some context graph with arbitrary python code.
-And the idea here is that we can even go to sessions and ask questions from agents (because in this line, remember,
-these agents are specialized models, that have special coding)
-```
+replace context manager tools with pass-through jupyter events - add an event formatter for jupyter.
