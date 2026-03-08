@@ -47,3 +47,24 @@ So of course each time an agent starts, to add to it's context, it has to take t
 model, then it just reads it, releases the lock (it just wants to get the latest one, and waits if it's in 
 process).
 
+---
+
+One thing I recently considered is that there may be a better way to break down tasks for the controller.
+
+Say we have some big model and k small models. The big model is best for planning tasks. And the small models should
+have small enough tasks distributed amongst them that they can do.
+
+So the task size, in this case should be related to the model size. Bigger tasks get assigned to bigger models, that 
+break them down into smaller tasks that get assigned broken down or done, depending on if it's a small enough task for
+the model smallest model to complete.
+
+And then if we're at the smallest model, then the guard jumps in and asks the small model to escalate back to the 
+bigger model, so that the task can be broken down some more. And then, the user injects approval at some task size, 
+as the tasks are completed, providing feedback at each step, and the depending on the feedback the plan gets updated,
+code gets reverted, etc. So then this gets extracted into the controller model, because the yes approve is one token,
+and the no go back with this is small tokens, but the implementation is big token. In other words, you can redo about
+100 times with a small model, big model one token.
+
+So it's this sort of dynamic that I'm interested in introducing for the controller, this interruption process dynamic
+in not only the planning but also the implementation. And then being able to extract it into a controller.
+

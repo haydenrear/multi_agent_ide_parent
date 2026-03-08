@@ -1,0 +1,172 @@
+openapi: 3.1.0
+info:
+  title: Runtime ACP Selection Contract
+  version: 1.0.0
+  description: |
+    Internal design contract for validating, resolving, and observing runtime ACP
+    routing decisions for LLM calls.
+servers:
+  - url: https://multi-agent-ide.internal
+paths:
+  /internal/acp/call-options/resolve:
+    post:
+      summary: Resolve a runtime ACP call payload into an executable ACP selection
+      operationId: resolveAcpCallOptions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcpCallOptionsResolveRequest'
+      responses:
+        '200':
+          description: Runtime ACP selection resolved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcpResolvedCall'
+        '400':
+          description: Payload invalid, provider missing, or default cannot be resolved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+  /internal/acp/providers:
+    get:
+      summary: List configured ACP providers and indicate the default provider
+      operationId: listAcpProviders
+      responses:
+        '200':
+          description: Provider catalog available for diagnostics and validation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcpProviderCatalog'
+  /internal/acp/providers/{providerName}:
+    get:
+      summary: Retrieve a single ACP provider definition by name
+      operationId: getAcpProvider
+      parameters:
+        - name: providerName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Provider definition returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcpProviderDefinition'
+        '404':
+          description: Unknown provider name
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+components:
+  schemas:
+    AcpCallOptionsResolveRequest:
+      type: object
+      required:
+        - encodedModelField
+      properties:
+        encodedModelField:
+          type: string
+          description: Opaque transport string in the form sessionIdentity___jsonPayload.
+        fallbackModel:
+          type: string
+          description: Legacy model input mapped into the new payload when needed.
+        fallbackSessionIdentity:
+          type: string
+          description: Legacy session identity input mapped into the new payload when needed.
+    AcpChatOptionsString:
+      type: object
+      required:
+        - version
+        - sessionArtifactKey
+      properties:
+        version:
+          type: string
+        sessionArtifactKey:
+          type: string
+        requestedModel:
+          type: string
+        requestedProvider:
+          type: string
+        options:
+          type: object
+          additionalProperties: true
+    AcpProviderDefinition:
+      type: object
+      required:
+        - name
+        - transport
+      properties:
+        name:
+          type: string
+        transport:
+          type: string
+        command:
+          type: string
+        args:
+          type: string
+        workingDirectory:
+          type: string
+        endpoint:
+          type: string
+          format: uri
+        authMethod:
+          type: string
+        apiKeyRef:
+          type: string
+        env:
+          type: object
+          additionalProperties:
+            type: string
+        defaultModel:
+          type: string
+    AcpProviderCatalog:
+      type: object
+      required:
+        - providers
+      properties:
+        defaultProvider:
+          type: string
+        providers:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AcpProviderDefinition'
+    AcpResolvedCall:
+      type: object
+      required:
+        - sessionArtifactKey
+        - providerName
+        - effectiveModel
+        - providerDefinition
+      properties:
+        sessionArtifactKey:
+          type: string
+        providerName:
+          type: string
+        effectiveModel:
+          type: string
+        providerDefinition:
+          $ref: '#/components/schemas/AcpProviderDefinition'
+        options:
+          type: object
+          additionalProperties: true
+    ValidationError:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
