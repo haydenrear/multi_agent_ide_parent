@@ -24,7 +24,17 @@ tests/
 
 ## Commands
 
-# Add commands for Java 21
+From the repo root, compile the main Java modules with fully qualified Gradle paths:
+
+```shell
+./multi_agent_ide_java_parent/gradlew :multi_agent_ide_java_parent:acp-cdc-ai:compileJava :multi_agent_ide_java_parent:multi_agent_ide_lib:compileJava :multi_agent_ide_java_parent:multi_agent_ide:compileJava
+```
+
+From `multi_agent_ide_java_parent`, run the same compile targets with fully qualified Gradle paths:
+
+```shell
+./gradlew :multi_agent_ide_java_parent:acp-cdc-ai:compileJava :multi_agent_ide_java_parent:multi_agent_ide_lib:compileJava :multi_agent_ide_java_parent:multi_agent_ide:compileJava
+```
 
 ## Code Style
 
@@ -49,10 +59,10 @@ Java 21: Follow standard conventions
 
 | Test suite                                                                                                    | Approximate duration | Bash timeout |
 |---------------------------------------------------------------------------------------------------------------|----------------------|--------------|
-| Unit tests (`./gradlew multi_agent_ide_java_parent:multi_agent_ide:test`)                                     | ~3 minutes           | 180000ms     |
+| Unit tests (`./gradlew :multi_agent_ide_java_parent:multi_agent_ide:test`)                                    | ~3 minutes           | 180000ms     |
 | Full pipeline (`multi_agent_ide_java_parent/tests.sh`)                                                        | ~25-30 minutes       | 900000ms     |
-| ACP integration test (`./gradlew multi_agent_ide_java_parent:multi_agent_ide:test -Pprofile=acp-integration`) | ~60 minutes          | 3600000ms    |
-| ACP chat model test (`./gradlew multi_agent_ide_java_parent:acp-cdc-ai:test -Pprofile=acp-integration`)       | ~3 minutes           | 3600000ms    |
+| ACP integration test (`./gradlew :multi_agent_ide_java_parent:multi_agent_ide:test -Pprofile=acp-integration`) | ~60 minutes          | 3600000ms    |
+| ACP chat model test (`./gradlew :multi_agent_ide_java_parent:acp-cdc-ai:test -Pprofile=acp-integration`)      | ~3 minutes           | 3600000ms    |
 
 ### Running Tests
 
@@ -67,7 +77,7 @@ This runs the standard Gradle test flow across the Java/Kotlin submodules.
 For LLM end-to-end coverage, run the ACP integration test separately:
 
 ```shell
-./gradlew multi_agent_ide:test -Pprofile=acp-integration
+./gradlew :multi_agent_ide_java_parent:multi_agent_ide:test -Pprofile=acp-integration
 ```
 
 Run it from `multi_agent_ide_java_parent`. It takes about 60 minutes and exercises a full ACP-backed workflow with automatic permission resolution.

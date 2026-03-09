@@ -29,6 +29,7 @@ Add `skills/multi_agent_test_supervisor/SKILL.md` based on `skills/skills_templa
 - Required args/options
 - Output format (JSON)
 - Common failure modes and retries
+- Goal-tagging guidance with examples (`bugfix`, `feature`, `artifacts`, `workflow`, `diagnostic`, etc.)
 - Prompt file locations and prompt extension architecture references
 - Routing/model source anchors (`AgentInterfaces`, `AgentModels`, `BlackboardRoutingPlanner`)
 - Context-manager and memory source anchors (`ContextManagerTools`, `BlackboardHistory`)
@@ -47,6 +48,7 @@ Script requirements:
 - argument validation
 - machine-readable JSON output
 - non-zero exit code on failure
+- `start-goal` supports repeatable `--tag` descriptors and includes them in the request body
 
 ## Step 3: Implement shared UI abstraction in app
 
@@ -72,7 +74,7 @@ Implement endpoints per `contracts/llm-debug-ui-openapi.yaml` for:
 2. Confirm resulting state snapshots are semantically equivalent.
 3. Execute debug loop end-to-end:
    - deploy/restart
-   - start goal
+   - start goal with semantic tags
    - poll events
    - inspect event detail
    - inspect UI state
@@ -96,7 +98,7 @@ Examples:
 
 ```bash
 python3 skills/multi_agent_test_supervisor/scripts/deploy_restart.py --mode bootrun
-python3 skills/multi_agent_test_supervisor/scripts/quick_action.py start-goal --goal "debug graph routing" --repo /path/to/repo
+python3 skills/multi_agent_test_supervisor/scripts/quick_action.py start-goal --goal "debug graph routing" --repo /path/to/repo --tag investigation --tag workflow --tag routing
 python3 skills/multi_agent_test_supervisor/scripts/quick_action.py poll-events --node-id <node-id> --limit 20
 python3 skills/multi_agent_test_supervisor/scripts/quick_action.py event-detail --node-id <node-id> --event-id <event-id>
 python3 skills/multi_agent_test_supervisor/scripts/ui_state.py --node-id <node-id>

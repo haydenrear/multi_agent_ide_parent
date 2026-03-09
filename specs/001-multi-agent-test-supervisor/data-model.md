@@ -82,6 +82,11 @@ Intentionally excluded:
 - `repositoryUrl` (string, required for `START_GOAL`)
 - `baseBranch` (string, optional)
 - `title` (string, optional)
+- `tags` (array<string>, required for `START_GOAL` in skill-driven usage; semantic descriptors such as `bugfix`, `workflow`, `diagnostic`)
+
+**Validation rules**:
+- `START_GOAL` should include 3-8 short descriptor tags when invoked through the supervisor skill.
+- Tags should classify at least the change type and affected subsystem when practical.
 
 ---
 

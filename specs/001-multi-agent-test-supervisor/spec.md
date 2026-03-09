@@ -39,7 +39,7 @@ As an LLM supervisor, I can run a deterministic script loop to deploy, start a g
 **Acceptance Scenarios**:
 
 1. **Given** the application is not ready, **When** `deploy_restart.py` runs, **Then** it stops any process on port `8080`, restarts via configured mode, and waits for `actuator/health = UP`.
-2. **Given** a debug goal, **When** `quick_action.py start-goal` runs, **Then** the response returns root `nodeId` and uses that same value as `runId`.
+2. **Given** a debug goal with semantic tags, **When** `quick_action.py start-goal` runs, **Then** the response returns root `nodeId`, uses that same value as `runId`, and preserves the submitted tags in the goal-start contract.
 3. **Given** an active node execution, **When** `quick_action.py poll-events` runs, **Then** it returns paged, truncated event summaries scoped to the node and descendants.
 4. **Given** a selected event id, **When** `quick_action.py event-detail` runs, **Then** it returns expanded event content formatted for human/LLM inspection.
 5. **Given** a node and message, **When** `quick_action.py send-message` runs, **Then** the message action is queued for that node.
@@ -113,6 +113,8 @@ As an LLM operator, I can load workflow/routing context from the skill reference
 - **FR-002**: The system MUST expose node-scoped UI state snapshots through an LLM-friendly endpoint.
 - **FR-003**: The system MUST expose LLM-invokable UI actions through a shared action contract.
 - **FR-004**: The system MUST expose a convenience endpoint to start a goal and return root execution `nodeId`.
+- **FR-004A**: Goal-start requests MUST accept a `tags: List<String>` field so operators can classify the goal semantically at submission time.
+- **FR-004B**: Skill guidance and script schemas MUST instruct operators to submit semantic goal tags for every new goal and provide example tag categories.
 - **FR-005**: The system MUST expose paged event summaries for a node scope with truncation controls.
 - **FR-006**: The system MUST expose expanded event-detail retrieval for a specific event id using CLI-style formatting.
 - **FR-007**: The system MUST expose a quick-action endpoint for agent-level convenience actions, including `SEND_MESSAGE`.
@@ -135,7 +137,7 @@ As an LLM operator, I can load workflow/routing context from the skill reference
 
 - **Node-Scoped UI State Snapshot**: Interface-neutral state view representing shared UI semantics.
 - **UI Action Command**: Action payload applied through the shared UI abstraction.
-- **Quick Action Request/Response**: Agent-level convenience command contract (`START_GOAL`, `SEND_MESSAGE`).
+- **Quick Action Request/Response**: Agent-level convenience command contract (`START_GOAL`, `SEND_MESSAGE`), including semantic goal tags for `START_GOAL`.
 - **Event Summary Item**: Paged, truncated event representation for polling.
 - **Event Detail Item**: Expanded, formatter-based event representation for focused inspection.
 - **Deploy/Restart Result**: Script-level process/health status result for app restart loop.
