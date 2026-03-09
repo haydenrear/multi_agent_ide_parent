@@ -59,10 +59,11 @@ Java 21: Follow standard conventions
 
 | Test suite                                                                                                    | Approximate duration | Bash timeout |
 |---------------------------------------------------------------------------------------------------------------|----------------------|--------------|
-| Unit tests (`./gradlew :multi_agent_ide_java_parent:multi_agent_ide:test`)                                    | ~3 minutes           | 180000ms     |
+| Unit tests (`./gradlew :multi_agent_ide_java_parent:multi_agent_ide:test --info`)                             | ~3 minutes           | 180000ms     |
+| Spring integration tests (`./gradlew :multi_agent_ide_java_parent:multi_agent_ide:test -Pprofile=integration --info`) | ~5-10 minutes        | 600000ms     |
 | Full pipeline (`multi_agent_ide_java_parent/tests.sh`)                                                        | ~25-30 minutes       | 900000ms     |
-| ACP integration test (`./gradlew :multi_agent_ide_java_parent:multi_agent_ide:test -Pprofile=acp-integration`) | ~60 minutes          | 3600000ms    |
-| ACP chat model test (`./gradlew :multi_agent_ide_java_parent:acp-cdc-ai:test -Pprofile=acp-integration`)      | ~3 minutes           | 3600000ms    |
+| ACP integration test (`./gradlew :multi_agent_ide_java_parent:multi_agent_ide:test -Pprofile=acp-integration --info`) | ~60 minutes          | 3600000ms    |
+| ACP chat model test (`./gradlew :multi_agent_ide_java_parent:acp-cdc-ai:test -Pprofile=acp-integration --info`) | ~3 minutes           | 3600000ms    |
 
 ### Running Tests
 
@@ -74,13 +75,29 @@ multi_agent_ide_java_parent/tests.sh
 
 This runs the standard Gradle test flow across the Java/Kotlin submodules.
 
+For `multi_agent_ide` integration tests under `src/test/.../integration`, you must opt into the integration profile:
+
+```shell
+./gradlew :multi_agent_ide_java_parent:multi_agent_ide:test -Pprofile=integration --info
+```
+
+Without `-Pprofile=integration`, Gradle excludes `**/integration/**` in `multi_agent_ide/build.gradle.kts`.
+
 For LLM end-to-end coverage, run the ACP integration test separately:
 
 ```shell
-./gradlew :multi_agent_ide_java_parent:multi_agent_ide:test -Pprofile=acp-integration
+./gradlew :multi_agent_ide_java_parent:multi_agent_ide:test -Pprofile=acp-integration --info
 ```
 
 Run it from `multi_agent_ide_java_parent`. It takes about 60 minutes and exercises a full ACP-backed workflow with automatic permission resolution.
+
+For ACP chat model coverage in `acp-cdc-ai`, that module uses a different test gate:
+
+```shell
+./gradlew :multi_agent_ide_java_parent:acp-cdc-ai:test -Pprofile=acp-integration --info
+```
+
+Without `-Pprofile=acp-integration`, `acp-cdc-ai/build.gradle.kts` excludes `AcpChatModelIntegrationTest`.
 
 Common failure modes:
 
