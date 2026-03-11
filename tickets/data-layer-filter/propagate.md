@@ -32,3 +32,10 @@ propagators affect downstream performance.
 
 So mostly this can happen client-side as the controller agent moves to the java code and deployment happens in the 
 controller supervisor skill.
+
+
+---
+
+After thinking bout this for some time, I like the idea of adding this more as an aspect or interceptor. You run the 
+data through the session, saying only things like (does this look out of domain ?) and then provide the call_controller
+under escalate.

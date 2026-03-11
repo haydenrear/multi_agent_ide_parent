@@ -1,0 +1,1 @@
+When there exists an unresolvable error, the system will go to the interrupt handler, wait for the response that's parsed as a route, with the instructions, and then when it receives it, it will route to that agent. This allows for the controller to handle these errors.
