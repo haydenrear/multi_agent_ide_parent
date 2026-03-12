@@ -1,0 +1,31 @@
+{
+  "name": "workflow-graph-string-transformer",
+  "description": "Transform a controller endpoint response into a controller-oriented string representation.",
+  "transformerKind": "AI_TEXT",
+  "sourcePath": "specs/001-propagator-data/examples/register-transformer.json",
+  "priority": 100,
+  "replaceEndpointResponse": true,
+  "activate": true,
+  "executor": {
+    "executorType": "AI",
+    "modelRef": "controller-default",
+    "promptTemplate": "transformation/ai_transformer",
+    "timeoutMs": 5000,
+    "configVersion": "1"
+  },
+  "layerBindings": [
+    {
+      "layerId": "replace-with-controller-endpoint-layer-id-from-attachables",
+      "enabled": true,
+      "includeDescendants": false,
+      "isInheritable": true,
+      "isPropagatedToParent": false,
+      "matcherKey": "NAME",
+      "matcherType": "EQUALS",
+      "matcherText": "workflow-graph",
+      "matchOn": "CONTROLLER_ENDPOINT_RESPONSE",
+      "updatedBy": "quickstart",
+      "updatedAt": "2026-03-11T00:00:00Z"
+    }
+  ]
+}

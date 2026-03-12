@@ -1,0 +1,984 @@
+openapi: 3.1.0
+info:
+  title: Controller Data Propagator and Transformer API
+  version: 0.2.0
+  description: |
+    Contract for registering propagators on action requests/responses,
+    registering transformers on controller endpoint responses,
+    resolving propagation items, and querying propagation/transformation audit records.
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/propagators/attachables:
+    get:
+      summary: List attachable action-layer targets for propagators
+      operationId: listPropagatorAttachables
+      responses:
+        '200':
+          description: Available action-layer targets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachableTargetsResponse'
+
+  /api/propagators/registrations:
+    post:
+      summary: Register a propagator
+      operationId: registerPropagator
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropagatorRegistrationRequest'
+      responses:
+        '201':
+          description: Propagator created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropagatorRegistrationResponse'
+        '400':
+          description: Validation error
+
+  /api/propagators/layers/{layerId}/registrations:
+    get:
+      summary: List active propagators bound to an action layer
+      operationId: listPropagatorsByLayer
+      parameters:
+        - $ref: '#/components/parameters/LayerId'
+      responses:
+        '200':
+          description: Active propagators for the requested action layer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadPropagatorsByLayerResponse'
+
+  /api/propagators/registrations/{registrationId}/deactivate:
+    post:
+      summary: Deactivate a propagator registration globally
+      operationId: deactivatePropagator
+      parameters:
+        - $ref: '#/components/parameters/RegistrationId'
+      responses:
+        '200':
+          description: Propagator deactivated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeactivateRegistrationResponse'
+        '404':
+          description: Registration not found
+
+  /api/propagators/registrations/{registrationId}/layers/{layerId}:
+    put:
+      summary: Create or update a layer binding for a propagator
+      operationId: putPropagatorLayerBinding
+      parameters:
+        - $ref: '#/components/parameters/RegistrationId'
+        - $ref: '#/components/parameters/LayerId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutPropagatorLayerRequest'
+      responses:
+        '200':
+          description: Propagator binding updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PutRegistrationLayerResponse'
+        '404':
+          description: Registration or layer not found
+
+  /api/transformers/attachables:
+    get:
+      summary: List attachable controller-endpoint targets for transformers
+      operationId: listTransformerAttachables
+      responses:
+        '200':
+          description: Available controller-endpoint targets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachableTargetsResponse'
+
+  /api/transformers/registrations:
+    post:
+      summary: Register a transformer
+      operationId: registerTransformer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformerRegistrationRequest'
+      responses:
+        '201':
+          description: Transformer created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformerRegistrationResponse'
+        '400':
+          description: Validation error
+
+  /api/transformers/layers/{layerId}/registrations:
+    get:
+      summary: List active transformers bound to a controller endpoint layer
+      operationId: listTransformersByLayer
+      parameters:
+        - $ref: '#/components/parameters/LayerId'
+      responses:
+        '200':
+          description: Active transformers for the requested controller layer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadTransformersByLayerResponse'
+
+  /api/transformers/registrations/{registrationId}/deactivate:
+    post:
+      summary: Deactivate a transformer registration globally
+      operationId: deactivateTransformer
+      parameters:
+        - $ref: '#/components/parameters/RegistrationId'
+      responses:
+        '200':
+          description: Transformer deactivated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeactivateRegistrationResponse'
+        '404':
+          description: Registration not found
+
+  /api/transformers/registrations/{registrationId}/layers/{layerId}:
+    put:
+      summary: Create or update a layer binding for a transformer
+      operationId: putTransformerLayerBinding
+      parameters:
+        - $ref: '#/components/parameters/RegistrationId'
+        - $ref: '#/components/parameters/LayerId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutTransformerLayerRequest'
+      responses:
+        '200':
+          description: Transformer binding updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PutRegistrationLayerResponse'
+        '404':
+          description: Registration or layer not found
+
+  /api/propagations/items:
+    get:
+      summary: Query propagation items
+      operationId: listPropagationItems
+      parameters:
+        - $ref: '#/components/parameters/LayerIdOptional'
+        - $ref: '#/components/parameters/SourceNodeIdOptional'
+        - in: query
+          name: status
+          schema:
+            $ref: '#/components/schemas/PropagationItemStatus'
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 200
+        - in: query
+          name: cursor
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Matching propagation items
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropagationItemPage'
+
+  /api/propagations/items/{itemId}/resolve:
+    post:
+      summary: Resolve a propagation item
+      operationId: resolvePropagationItem
+      parameters:
+        - $ref: '#/components/parameters/ItemId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResolvePropagationItemRequest'
+      responses:
+        '200':
+          description: Propagation item resolved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResolvePropagationItemResponse'
+        '404':
+          description: Item not found
+
+  /api/propagations/records:
+    get:
+      summary: Query propagation audit records
+      operationId: listPropagationRecords
+      parameters:
+        - $ref: '#/components/parameters/RegistrationIdOptional'
+        - $ref: '#/components/parameters/LayerIdOptional'
+        - $ref: '#/components/parameters/SourceNodeIdOptional'
+        - in: query
+          name: action
+          schema:
+            $ref: '#/components/schemas/PropagationAction'
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 200
+        - in: query
+          name: cursor
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Matching propagation audit records
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PropagationRecordPage'
+
+  /api/transformations/records:
+    get:
+      summary: Query transformation audit records
+      operationId: listTransformationRecords
+      parameters:
+        - $ref: '#/components/parameters/RegistrationIdOptional'
+        - $ref: '#/components/parameters/LayerIdOptional'
+        - in: query
+          name: action
+          schema:
+            $ref: '#/components/schemas/TransformationAction'
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 200
+        - in: query
+          name: cursor
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Matching transformation audit records
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationRecordPage'
+
+components:
+  parameters:
+    RegistrationId:
+      in: path
+      name: registrationId
+      required: true
+      schema:
+        type: string
+    RegistrationIdOptional:
+      in: query
+      name: registrationId
+      schema:
+        type: string
+    LayerId:
+      in: path
+      name: layerId
+      required: true
+      schema:
+        type: string
+    LayerIdOptional:
+      in: query
+      name: layerId
+      schema:
+        type: string
+    SourceNodeIdOptional:
+      in: query
+      name: sourceNodeId
+      schema:
+        type: string
+    ItemId:
+      in: path
+      name: itemId
+      required: true
+      schema:
+        type: string
+
+  schemas:
+    PropagationMode:
+      type: string
+      enum:
+        - INFORMATIONAL
+        - ACKNOWLEDGEMENT_REQUIRED
+        - APPROVAL_REQUIRED
+        - ESCALATION_REQUIRED
+
+    PropagationItemStatus:
+      type: string
+      enum:
+        - CREATED
+        - WAITING_REVIEW
+        - RESOLVED
+        - FAILED
+        - CANCELLED
+
+    PropagationResolutionType:
+      type: string
+      enum:
+        - ACKNOWLEDGED
+        - APPROVED
+        - REJECTED
+        - DISMISSED
+        - FEEDBACK
+
+    PropagationAction:
+      type: string
+      enum:
+        - PASSTHROUGH
+        - TRANSFORMED
+        - ITEM_CREATED
+        - PROPAGATION_ACKNOWLEDGED
+        - DUPLICATE_ITEM_SUPPRESSED
+        - FAILED
+
+    TransformationAction:
+      type: string
+      enum:
+        - PASSTHROUGH
+        - TRANSFORMED
+        - FAILED
+
+    MatcherKey:
+      type: string
+      enum: [NAME, TEXT]
+
+    MatcherType:
+      type: string
+      enum: [EQUALS, REGEX, CONTAINS]
+
+    PropagatorMatchOn:
+      type: string
+      enum: [ACTION_REQUEST, ACTION_RESPONSE]
+
+    TransformerMatchOn:
+      type: string
+      enum: [CONTROLLER_ENDPOINT_RESPONSE]
+
+    PropagatorLayerBinding:
+      type: object
+      required:
+        - layerId
+        - enabled
+        - includeDescendants
+        - isInheritable
+        - isPropagatedToParent
+        - matcherKey
+        - matcherType
+        - matchOn
+      properties:
+        layerId:
+          type: string
+        enabled:
+          type: boolean
+        includeDescendants:
+          type: boolean
+        isInheritable:
+          type: boolean
+        isPropagatedToParent:
+          type: boolean
+        matcherKey:
+          $ref: '#/components/schemas/MatcherKey'
+        matcherType:
+          $ref: '#/components/schemas/MatcherType'
+        matcherText:
+          type: string
+        matchOn:
+          $ref: '#/components/schemas/PropagatorMatchOn'
+        updatedBy:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+
+    TransformerLayerBinding:
+      type: object
+      required:
+        - layerId
+        - enabled
+        - includeDescendants
+        - isInheritable
+        - isPropagatedToParent
+        - matcherKey
+        - matcherType
+        - matchOn
+      properties:
+        layerId:
+          type: string
+        enabled:
+          type: boolean
+        includeDescendants:
+          type: boolean
+        isInheritable:
+          type: boolean
+        isPropagatedToParent:
+          type: boolean
+        matcherKey:
+          $ref: '#/components/schemas/MatcherKey'
+        matcherType:
+          $ref: '#/components/schemas/MatcherType'
+        matcherText:
+          type: string
+        matchOn:
+          $ref: '#/components/schemas/TransformerMatchOn'
+        updatedBy:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+
+    PythonExecutorConfig:
+      type: object
+      required: [executorType, timeoutMs, scriptPath]
+      properties:
+        executorType:
+          type: string
+          const: PYTHON
+        scriptPath:
+          type: string
+        entryFunction:
+          type: string
+        runtimeArgsSchema:
+          type: object
+          additionalProperties: true
+        timeoutMs:
+          type: integer
+        configVersion:
+          type: string
+
+    AiPropagatorToolConfig:
+      type: object
+      required: [executorType, timeoutMs, modelRef, promptTemplate]
+      properties:
+        executorType:
+          type: string
+          const: AI
+        modelRef:
+          type: string
+        promptTemplate:
+          type: string
+        registrarPrompt:
+          type: string
+        maxTokens:
+          type: integer
+        outputSchema:
+          type: object
+          additionalProperties: true
+        sessionMode:
+          type: string
+          enum:
+            - PER_INVOCATION
+            - SAME_SESSION_FOR_ALL
+            - SAME_SESSION_FOR_ACTION
+            - SAME_SESSION_FOR_AGENT
+        sessionKeyOverride:
+          type: string
+        requestModelType:
+          type: string
+        resultModelType:
+          type: string
+        includeAgentDecorators:
+          type: boolean
+        controllerModelRef:
+          type: string
+        controllerPromptTemplate:
+          type: string
+        responseMode:
+          type: string
+        timeoutMs:
+          type: integer
+        configVersion:
+          type: string
+
+    AiTransformerToolConfig:
+      type: object
+      required: [executorType, timeoutMs, modelRef, promptTemplate]
+      properties:
+        executorType:
+          type: string
+          const: AI
+        modelRef:
+          type: string
+        promptTemplate:
+          type: string
+        registrarPrompt:
+          type: string
+        maxTokens:
+          type: integer
+        outputSchema:
+          type: object
+          additionalProperties: true
+        sessionMode:
+          type: string
+          enum:
+            - PER_INVOCATION
+            - SAME_SESSION_FOR_ALL
+            - SAME_SESSION_FOR_ACTION
+            - SAME_SESSION_FOR_AGENT
+        sessionKeyOverride:
+          type: string
+        requestModelType:
+          type: string
+        resultModelType:
+          type: string
+        includeAgentDecorators:
+          type: boolean
+        controllerModelRef:
+          type: string
+        controllerPromptTemplate:
+          type: string
+        responseMode:
+          type: string
+        timeoutMs:
+          type: integer
+        configVersion:
+          type: string
+
+    PropagatorExecutorConfig:
+      oneOf:
+        - $ref: '#/components/schemas/PythonExecutorConfig'
+        - $ref: '#/components/schemas/AiPropagatorToolConfig'
+
+    TransformerExecutorConfig:
+      oneOf:
+        - $ref: '#/components/schemas/PythonExecutorConfig'
+        - $ref: '#/components/schemas/AiTransformerToolConfig'
+
+    PropagatorRegistrationRequest:
+      type: object
+      required:
+        - name
+        - description
+        - propagatorKind
+        - sourcePath
+        - priority
+        - propagationMode
+        - executor
+        - layerBindings
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        propagatorKind:
+          type: string
+          enum: [TEXT, AI_TEXT]
+        sourcePath:
+          type: string
+        priority:
+          type: integer
+          minimum: 0
+        propagationMode:
+          $ref: '#/components/schemas/PropagationMode'
+        activate:
+          type: boolean
+          default: true
+        executor:
+          $ref: '#/components/schemas/PropagatorExecutorConfig'
+        layerBindings:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/PropagatorLayerBinding'
+
+    PropagatorRegistrationResponse:
+      type: object
+      required: [registrationId, status, propagatorKind, layerBindings]
+      properties:
+        registrationId:
+          type: string
+        status:
+          type: string
+        propagatorKind:
+          type: string
+        layerBindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropagatorLayerBinding'
+
+    TransformerRegistrationRequest:
+      type: object
+      required:
+        - name
+        - description
+        - transformerKind
+        - sourcePath
+        - priority
+        - replaceEndpointResponse
+        - executor
+        - layerBindings
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        transformerKind:
+          type: string
+          enum: [TEXT, AI_TEXT]
+        sourcePath:
+          type: string
+        priority:
+          type: integer
+          minimum: 0
+        replaceEndpointResponse:
+          type: boolean
+        activate:
+          type: boolean
+          default: true
+        executor:
+          $ref: '#/components/schemas/TransformerExecutorConfig'
+        layerBindings:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/TransformerLayerBinding'
+
+    TransformerRegistrationResponse:
+      type: object
+      required: [registrationId, status, transformerKind, layerBindings]
+      properties:
+        registrationId:
+          type: string
+        status:
+          type: string
+        transformerKind:
+          type: string
+        layerBindings:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransformerLayerBinding'
+
+    ReadPropagatorsByLayerResponse:
+      type: object
+      required: [layerId, registrations]
+      properties:
+        layerId:
+          type: string
+        registrations:
+          type: array
+          items:
+            type: object
+            required: [registrationId, name, description, propagatorKind, priority, propagationMode]
+            properties:
+              registrationId:
+                type: string
+              name:
+                type: string
+              description:
+                type: string
+              propagatorKind:
+                type: string
+              priority:
+                type: integer
+              propagationMode:
+                $ref: '#/components/schemas/PropagationMode'
+
+    ReadTransformersByLayerResponse:
+      type: object
+      required: [layerId, registrations]
+      properties:
+        layerId:
+          type: string
+        registrations:
+          type: array
+          items:
+            type: object
+            required: [registrationId, name, description, transformerKind, priority, replaceEndpointResponse]
+            properties:
+              registrationId:
+                type: string
+              name:
+                type: string
+              description:
+                type: string
+              transformerKind:
+                type: string
+              priority:
+                type: integer
+              replaceEndpointResponse:
+                type: boolean
+
+    PutPropagatorLayerRequest:
+      allOf:
+        - $ref: '#/components/schemas/PropagatorLayerBinding'
+
+    PutTransformerLayerRequest:
+      allOf:
+        - $ref: '#/components/schemas/TransformerLayerBinding'
+
+    PutRegistrationLayerResponse:
+      type: object
+      required: [registrationId, layerId, enabled]
+      properties:
+        registrationId:
+          type: string
+        layerId:
+          type: string
+        enabled:
+          type: boolean
+        updatedAt:
+          type: string
+          format: date-time
+
+    DeactivateRegistrationResponse:
+      type: object
+      required: [registrationId, status]
+      properties:
+        registrationId:
+          type: string
+        status:
+          type: string
+        deactivatedAt:
+          type: string
+          format: date-time
+
+    PropagationItem:
+      type: object
+      required:
+        - itemId
+        - registrationId
+        - layerId
+        - sourceType
+        - status
+        - propagationMode
+        - summaryText
+        - correlationKey
+        - createdAt
+      properties:
+        itemId:
+          type: string
+        registrationId:
+          type: string
+        layerId:
+          type: string
+        sourceNodeId:
+          type: string
+        sourceType:
+          $ref: '#/components/schemas/PropagatorMatchOn'
+        status:
+          $ref: '#/components/schemas/PropagationItemStatus'
+        resolutionType:
+          $ref: '#/components/schemas/PropagationResolutionType'
+        propagationMode:
+          $ref: '#/components/schemas/PropagationMode'
+        summaryText:
+          type: string
+        beforePayloadRef:
+          type: string
+        afterPayloadRef:
+          type: string
+        correlationKey:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        resolvedAt:
+          type: string
+          format: date-time
+        resolutionNotes:
+          type: string
+
+    PropagationItemPage:
+      type: object
+      required: [items, limit, hasNext]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropagationItem'
+        limit:
+          type: integer
+        nextCursor:
+          type: string
+        hasNext:
+          type: boolean
+
+    ResolvePropagationItemRequest:
+      type: object
+      required: [resolutionType]
+      properties:
+        resolutionType:
+          $ref: '#/components/schemas/PropagationResolutionType'
+        resolutionNotes:
+          type: string
+        reviewOutput:
+          type: string
+        feedbackLinks:
+          type: array
+          items:
+            type: string
+
+    ResolvePropagationItemResponse:
+      type: object
+      required: [itemId, status]
+      properties:
+        itemId:
+          type: string
+        status:
+          $ref: '#/components/schemas/PropagationItemStatus'
+        resolutionType:
+          $ref: '#/components/schemas/PropagationResolutionType'
+        resolvedAt:
+          type: string
+          format: date-time
+
+    PropagationRecord:
+      type: object
+      required:
+        - eventId
+        - registrationId
+        - layerId
+        - sourceType
+        - action
+        - beforePayload
+        - createdAt
+      properties:
+        eventId:
+          type: string
+        registrationId:
+          type: string
+        layerId:
+          type: string
+        sourceNodeId:
+          type: string
+        sourceType:
+          $ref: '#/components/schemas/PropagatorMatchOn'
+        action:
+          $ref: '#/components/schemas/PropagationAction'
+        beforePayload:
+          type: string
+        afterPayload:
+          type: string
+        summaryText:
+          type: string
+        itemId:
+          type: string
+        correlationKey:
+          type: string
+        descriptorJson:
+          type: string
+        error:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    PropagationRecordPage:
+      type: object
+      required: [items, limit, hasNext]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropagationRecord'
+        limit:
+          type: integer
+        nextCursor:
+          type: string
+        hasNext:
+          type: boolean
+
+    TransformationRecord:
+      type: object
+      required:
+        - eventId
+        - registrationId
+        - layerId
+        - action
+        - beforePayload
+        - createdAt
+      properties:
+        eventId:
+          type: string
+        registrationId:
+          type: string
+        layerId:
+          type: string
+        controllerId:
+          type: string
+        endpointId:
+          type: string
+        action:
+          $ref: '#/components/schemas/TransformationAction'
+        beforePayload:
+          type: string
+        afterPayload:
+          type: string
+        descriptorJson:
+          type: string
+        error:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    TransformationRecordPage:
+      type: object
+      required: [items, limit, hasNext]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransformationRecord'
+        limit:
+          type: integer
+        nextCursor:
+          type: string
+        hasNext:
+          type: boolean
+
+    AttachableTargetsResponse:
+      type: object
+      required: [layers]
+      properties:
+        layers:
+          type: array
+          items:
+            type: object
+            required: [layerId, layerType, layerKey]
+            properties:
+              layerId:
+                type: string
+              layerType:
+                type: string
+              layerKey:
+                type: string
+              parentLayerId:
+                type: string
+              childLayerIds:
+                type: array
+                items:
+                  type: string

@@ -1,5 +1,9 @@
 # multi_agent_ide_parent Development Guidelines
 
+# Claude Code
+
+Please do not use parallel sub-agents. Please do not spawn a parallel sub-agent.
+
 Auto-generated from all feature plans. Last updated: 2025-12-26
 
 ## Active Technologies
@@ -12,8 +16,10 @@ Auto-generated from all feature plans. Last updated: 2025-12-26
 - N/A (in-memory BlackboardHistory, existing GraphRepository) (001-unified-interrupt-handler)
 - Java 21 and Kotlin on Spring Boot 3.x + Spring Boot configuration properties, Embabel agent runtime, Spring AI/LangChain4j integration, Jackson, Lombok (001-multiple-models)
 - Application configuration files for provider catalog; in-memory ACP session manager/cache for active sessions; no new persistent storage required (001-multiple-models)
+- Java 21 with existing Kotlin in the app module + Spring Boot 3.x, Jackson, Lombok, Embabel agent framework, existing layer/filter execution infrastructure, shared executable-tool model for propagators and transformers (001-propagator-data)
+- Existing persistence layer (PostgreSQL in production, H2/Postgres test profiles) for propagator registrations, transformer registrations, layer bindings, propagation items, propagation records, and transformation records (001-propagator-data)
 
-- Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Lombok (001-collector-orchestrator-routing)
+- Java 21 + Spring Boot 3.x, Embabel, Lombok (001-collector-orchestrator-routing)
 
 ## Project Structure
 
@@ -41,9 +47,9 @@ From `multi_agent_ide_java_parent`, run the same compile targets with fully qual
 Java 21: Follow standard conventions
 
 ## Recent Changes
+- 001-propagator-data: Added Java 21 with existing Kotlin in the app module + Spring Boot 3.x, Jackson, Lombok, Embabel Agents, Embabel agent framework, existing layer/filter execution infrastructure, shared executable-tool model for propagators and transformers
 - 001-multiple-models: Added Java 21 and Kotlin on Spring Boot 3.x + Spring Boot configuration properties, Embabel agent runtime, Spring AI/LangChain4j integration, Jackson, Lombok
-- 001-unified-interrupt-handler: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson
-- 001-unified-interrupt-handler: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson
+- 001-unified-interrupt-handler: Added Java 21 + Spring Boot 3.x, Embabel Agents, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson
 
 
 <!-- MANUAL ADDITIONS START -->

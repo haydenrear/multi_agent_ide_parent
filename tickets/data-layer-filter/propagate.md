@@ -39,3 +39,9 @@ controller supervisor skill.
 After thinking bout this for some time, I like the idea of adding this more as an aspect or interceptor. You run the 
 data through the session, saying only things like (does this look out of domain ?) and then provide the call_controller
 under escalate.
+
+---
+
+In particular, it seems that the controller layer often has difficulty filtering through the information from the agents to check the status. We tried to fix this with quick-actions. However, the input often gets cut off. So we should consider this the primary mechanism for propagator. Whereby important information needs to be approved and opportunities to intercept are provided.
+
+For example, discovery collector, finish of discovery agent, and collector and agent, should have propagators for approval.

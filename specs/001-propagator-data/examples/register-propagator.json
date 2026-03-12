@@ -1,0 +1,31 @@
+{
+  "name": "action-response-controller-ack",
+  "description": "Propagate important action responses to the controller and require acknowledgement before the propagation is considered resolved.",
+  "propagatorKind": "AI_TEXT",
+  "sourcePath": "specs/001-propagator-data/examples/register-propagator.json",
+  "priority": 100,
+  "propagationMode": "ACKNOWLEDGEMENT_REQUIRED",
+  "activate": true,
+  "executor": {
+    "executorType": "AI",
+    "modelRef": "controller-default",
+    "promptTemplate": "propagation/ai_propagator",
+    "timeoutMs": 5000,
+    "configVersion": "1"
+  },
+  "layerBindings": [
+    {
+      "layerId": "replace-with-action-layer-id-from-attachables",
+      "enabled": true,
+      "includeDescendants": false,
+      "isInheritable": true,
+      "isPropagatedToParent": false,
+      "matcherKey": "NAME",
+      "matcherType": "EQUALS",
+      "matcherText": "ACTION_RESPONSE",
+      "matchOn": "ACTION_RESPONSE",
+      "updatedBy": "quickstart",
+      "updatedAt": "2026-03-11T00:00:00Z"
+    }
+  ]
+}

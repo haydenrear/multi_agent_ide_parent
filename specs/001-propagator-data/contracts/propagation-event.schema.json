@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hayden.example/schemas/propagation-event.schema.json",
+  "title": "PropagationEvent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "registrationId",
+    "layerId",
+    "sourceType",
+    "action",
+    "beforePayload",
+    "createdAt"
+  ],
+  "properties": {
+    "eventId": { "type": "string" },
+    "registrationId": { "type": "string" },
+    "layerId": { "type": "string" },
+    "sourceNodeId": { "type": ["string", "null"] },
+    "sourceType": {
+      "type": "string",
+      "enum": ["ACTION_REQUEST", "ACTION_RESPONSE"]
+    },
+    "action": {
+      "type": "string",
+      "enum": [
+        "PASSTHROUGH",
+        "TRANSFORMED",
+        "ITEM_CREATED",
+        "PROPAGATION_ACKNOWLEDGED",
+        "DUPLICATE_ITEM_SUPPRESSED",
+        "FAILED"
+      ]
+    },
+    "beforePayload": { "type": "string" },
+    "afterPayload": { "type": ["string", "null"] },
+    "summaryText": { "type": ["string", "null"] },
+    "itemId": { "type": ["string", "null"] },
+    "correlationKey": { "type": ["string", "null"] },
+    "descriptorJson": { "type": ["string", "null"] },
+    "error": { "type": ["string", "null"] },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

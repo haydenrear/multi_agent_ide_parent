@@ -97,7 +97,7 @@ python3 -m unittest skills/multi_agent_test_supervisor/tests/test_scripts.py
 Examples:
 
 ```bash
-python3 skills/multi_agent_test_supervisor/scripts/deploy_restart.py --mode bootrun
+python3 skills/multi_agent_test_supervisor/scripts/deploy_restart.py
 python3 skills/multi_agent_test_supervisor/scripts/quick_action.py start-goal --goal "debug graph routing" --repo /path/to/repo --tag investigation --tag workflow --tag routing
 python3 skills/multi_agent_test_supervisor/scripts/quick_action.py poll-events --node-id <node-id> --limit 20
 python3 skills/multi_agent_test_supervisor/scripts/quick_action.py event-detail --node-id <node-id> --event-id <event-id>

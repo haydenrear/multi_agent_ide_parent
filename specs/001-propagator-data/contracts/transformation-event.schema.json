@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hayden.example/schemas/transformation-event.schema.json",
+  "title": "TransformationEvent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "registrationId",
+    "layerId",
+    "action",
+    "beforePayload",
+    "createdAt"
+  ],
+  "properties": {
+    "eventId": { "type": "string" },
+    "registrationId": { "type": "string" },
+    "layerId": { "type": "string" },
+    "controllerId": { "type": ["string", "null"] },
+    "endpointId": { "type": ["string", "null"] },
+    "action": {
+      "type": "string",
+      "enum": ["PASSTHROUGH", "TRANSFORMED", "FAILED"]
+    },
+    "beforePayload": { "type": "string" },
+    "afterPayload": { "type": ["string", "null"] },
+    "descriptorJson": { "type": ["string", "null"] },
+    "error": { "type": ["string", "null"] },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
