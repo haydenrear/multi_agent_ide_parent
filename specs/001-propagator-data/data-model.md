@@ -241,6 +241,8 @@
 
 **Purpose**: Normalized output from a propagator.
 
+NEEDS UPDATE
+
 | Field | Type | Description |
 |---|---|---|
 | propagatedText | String | Primary propagated text |

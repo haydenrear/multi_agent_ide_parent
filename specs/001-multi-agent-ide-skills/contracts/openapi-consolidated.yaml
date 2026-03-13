@@ -1,0 +1,111 @@
+# OpenAPI Consolidated Endpoint Contract
+# Feature: 001-multi-agent-ide-skills
+# Purpose: Documents the target hierarchical path structure, tag groupings,
+#          and consolidated schemas for the springdoc-openapi annotations.
+# This is NOT a standalone OpenAPI spec — it documents the annotation targets.
+#
+# DESIGN PRINCIPLE: Hierarchical paths for progressive disclosure
+# The first path segment after /api/ uniquely identifies the controller domain.
+# The api_schema.py script uses this structure to group and filter endpoints
+# at different granularity levels without hardcoding any endpoint knowledge.
+
+openapi: 3.0.3
+info:
+  title: multi_agent_ide Controller API (Consolidated)
+  version: 1.0.0
+  description: >
+    Consolidated endpoint schema for multi_agent_ide controllers.
+    After this feature, springdoc-openapi will auto-generate the real spec
+    at /v3/api-docs. This contract documents the target path hierarchy,
+    tag groupings, and shared types that the annotations must produce.
+
+# Hierarchical path mapping (current → target):
+#   /api/llm-debug/ui/...    → /api/ui/...
+#   /api/llm-debug/runs/...  → /api/runs/...
+#   /api/agents/...           → /api/agents/...       (no change)
+#   /api/orchestrator/...     → /api/orchestrator/...  (no change)
+#   /api/events/...           → /api/events/...        (no change)
+#   (interrupts)              → /api/interrupts/...
+#   (permissions)             → /api/permissions/...
+#   (prompts)                 → /api/prompts/...
+#   (filter policies)         → /api/filters/...
+#   (propagation)             → /api/propagation/...
+#   (transformation)          → /api/transformation/...
+
+tags:
+  - name: runs
+    description: Debug run lifecycle — start, list, get, timeline, actions, persistence validation
+  - name: ui
+    description: UI state snapshots, goal start, node actions, workflow graph, event polling
+  - name: agents
+    description: Agent control — pause, stop, resume, prune, branch, delete, review-request
+  - name: orchestrator
+    description: Goal orchestration — start goal, onboarding runs
+  - name: events
+    description: SSE event stream
+  - name: interrupts
+    description: Interrupt handling
+  - name: permissions
+    description: Permission requests and responses
+  - name: prompts
+    description: LLM prompt inspection
+  - name: filters
+    description: Data-layer filter policy CRUD
+  - name: propagation
+    description: Propagation — propagators, propagation records, propagation control
+  - name: transformation
+    description: Transformation — transformers, transformation records
+
+components:
+  schemas:
+    # --- Shared request types (consolidated from duplicate local records) ---
+    NodeIdRequest:
+      type: object
+      required: [nodeId]
+      properties:
+        nodeId:
+          type: string
+          description: ArtifactKey value identifying a workflow node
+
+    RunIdRequest:
+      type: object
+      required: [runId]
+      properties:
+        runId:
+          type: string
+          description: Unique debug run identifier
+
+    StartGoalRequest:
+      type: object
+      required: [goal, repositoryUrl]
+      properties:
+        goal:
+          type: string
+        repositoryUrl:
+          type: string
+        baseBranch:
+          type: string
+        title:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+
+    ControlActionRequest:
+      type: object
+      required: [nodeId]
+      properties:
+        nodeId:
+          type: string
+        message:
+          type: string
+
+    ControlActionResponse:
+      type: object
+      properties:
+        actionId:
+          type: string
+        status:
+          type: string
+          enum: [queued, rejected]
