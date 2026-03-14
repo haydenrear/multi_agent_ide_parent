@@ -147,8 +147,8 @@ This structured error format is designed to be actionable by an AI agent — it 
 
 **Rationale**: The deploy script already outputs the log and build file paths on completion. A separate log-search Python script would duplicate what `grep`/`rg` already do well. The real value is in structured triage instructions, known error patterns, and a place to accumulate debug tips over time.
 
-**Known log file paths** (documented in the skill, sourced from project memory):
-- Build/Gradle: `/tmp/multi_agent_test_supervisor/multi_agent_ide.log`
+**Known log file paths** (documented in the skill, sourced from deploy_restart.py and SKILL.md):
+- Build/Gradle: `<project-root>/build-log.log`
 - Runtime: `<project-root>/multi-agent-ide.log`
 - ACP errors: `<project-root>/multi_agent_ide_java_parent/multi_agent_ide/claude-agent-acp-errs.log`
 

@@ -16,7 +16,7 @@ Refactor the monolithic `multi_agent_test_supervisor` skill into four focused sk
 **Project Type**: Mixed — Java submodule (controller changes) + root skills directory (skill files) + scripts directory (Python scripts)
 **Performance Goals**: Swagger filter script completes in <5s; deploy/health-check completes in <3 minutes
 **Constraints**: Scripts must run without Docker or Gradle; skill files must be self-contained markdown loadable by AI agents; no new persistent storage introduced
-**Scale/Scope**: 4 skill files (2 with scripts, 2 instructional), 2 new Python scripts (clone/pull deploy, OpenAPI filter), ~10 controller classes receiving annotations
+**Scale/Scope**: 4 skill files (2 with scripts, 2 instructional), 2 new Python scripts (clone/pull deploy, OpenAPI progressive disclosure), ~10 controller classes receiving annotations
 
 ## Constitution Check
 

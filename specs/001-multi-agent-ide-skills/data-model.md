@@ -30,7 +30,7 @@ These are the canonical Java record types that controllers will share after sche
 **Fields**:
 - `runId: String` — unique run identifier
 
-**Current duplicates to remove**: local record in `LlmDebugRunsController`
+**Current duplicates to remove**: local record in `LlmDebugRunsController` (line 94). No duplicate exists in `OrchestrationController`.
 
 ---
 

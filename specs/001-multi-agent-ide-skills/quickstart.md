@@ -37,11 +37,12 @@ Rationalize controller `@RequestMapping` paths so the first segment after `/api/
 - Add log file locations section, triage checklist, and empty "Tips & Learnings" section
 - Reference `multi_agent_ide_api` endpoints for runtime state inspection
 
-### 6. Create `multi_agent_ide_controller` skill (reference guide)
+### 6. Create `multi_agent_ide_controller` skill (executable workflow)
 
 - Create `skills/multi_agent_ide_controller/SKILL.md` — migrate Typical loop, Polling pattern, Program context, Embabel routing, Goal tagging
+- Structure as executable workflow: step-by-step loop, testing matrix, polling dynamics, status evaluation
 - Add references to the other three skills
-- Add empty "Tips & Best Practices" section
+- Add self-improvement instruction: agent flags workflow issues to user
 
 ### 7. Remove `multi_agent_test_supervisor`
 
