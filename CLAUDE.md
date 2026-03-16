@@ -76,4 +76,17 @@ public ResponseEntity<?> byLayer(@RequestBody LayerIdRequest request) { ... }
 ```
 
 This rule applies to all controllers in this codebase. The same applies to any other identifier that may contain slashes or special characters.
+## Schema Changes: Always Update the Liquibase Changelog
+
+**NEVER** add, remove, or modify a JPA entity field that maps to a database column without also adding a new changeSet to `db.changelog-master.yaml`.
+
+Rules:
+- Every column addition → `addColumn` changeSet
+- Every column removal → `dropColumn` changeSet
+- Every type or constraint change → `modifyDataType` or `dropNotNullConstraint` / `addNotNullConstraint` changeSet
+- Every new index → `createIndex` changeSet inside the relevant changeSet
+- **Increment the changeSet id** sequentially (e.g. `016-...`, `017-...`)
+- Changelog file: `multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/db/changelog/db.changelog-master.yaml`
+
+Do not rely on `spring.jpa.hibernate.ddl-auto=update` — the changelog is the source of truth for schema state.
 <!-- MANUAL ADDITIONS END -->
