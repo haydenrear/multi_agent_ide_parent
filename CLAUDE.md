@@ -56,4 +56,24 @@ Java 21: Follow standard conventions
 ## Agent Usage
 
 Do not use parallel sub-agents. Do not spawn parallel sub-agents. They are too expensive to run.
+
+## API Design Rule: No Path Variables for layerId
+
+**NEVER** use `@PathVariable` to capture a `layerId` in Spring MVC controllers. Layer IDs may contain slashes (e.g. `workflow-agent/coordinateWorkflow`), which Tomcat rejects in URL paths even when percent-encoded.
+
+**Always** use `@RequestBody` with a JSON payload containing `layerId` instead.
+
+Bad:
+```java
+@GetMapping("/layers/{layerId}/registrations")
+public ResponseEntity<?> byLayer(@PathVariable String layerId) { ... }
+```
+
+Good:
+```java
+@PostMapping("/registrations/by-layer")
+public ResponseEntity<?> byLayer(@RequestBody LayerIdRequest request) { ... }
+```
+
+This rule applies to all controllers in this codebase. The same applies to any other identifier that may contain slashes or special characters.
 <!-- MANUAL ADDITIONS END -->

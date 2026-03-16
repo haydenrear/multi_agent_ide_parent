@@ -99,6 +99,13 @@ While an agent is RUNNING, users can send text messages via the UI. Messages are
 
 **Rationale**: Interactive context allows users to guide agents mid-execution without halting workflow, provide real-time corrective feedback, and adapt strategy based on emerging insights from code inspection.
 
+## API Design Constraints
+
+### No Path Variables for Slash-Containing Identifiers
+Layer IDs and similar identifiers may contain slashes (e.g. `workflow-agent/coordinateWorkflow`). Tomcat rejects encoded slashes in URL path segments, causing 400 errors. **All controller endpoints that accept a `layerId` or any other identifier that may contain slashes MUST use `@RequestBody` with a JSON payload** — never `@PathVariable`. This constraint applies to all Spring MVC controllers in the project. Endpoint paths must be restructured to reflect this (e.g. `/registrations/by-layer` instead of `/layers/{layerId}/registrations`).
+
+**Rationale**: Path variables cannot safely carry slash-containing identifiers. Using request body ensures the identifier reaches the server unambiguously regardless of content.
+
 ## Architecture & Technology Stack
 
 ### Required Technologies
