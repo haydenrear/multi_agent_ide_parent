@@ -35,3 +35,20 @@ One way we might try - we can experiment a few with different models, and captur
 Basically it's just doing a git reset --soft some k chunks, then asking it to produce t commits per chunk, where max episodes produced is k * t. And with each next t commit, next t episode, all previous episodes can be reviewed and mental models updated accordingly - remember all we're looking for is a set of mental models encoding an episodic memory, updated through the parsing of the history.
 
 So this is serial. Because we have to have previous episodes for new episodes - and make sure to prod it to update previous - we don't want any garbage from prev deprecated...
+
+---
+
+One other note is a "diff" over previous.
+
+So when we do the onboarding, and we save the memories and do the tickets, we'll need to save the last onboard pointer. 
+And then we compare the last onboard pointer to the last update, and we'll get a diff. And we'll ask the AI to, starting
+with the diff, split it into different commits. After which, we'll do an onboarding step starting from there. 
+
+Because we need to keep it in sync, make sure that every episode is included in the memory, and sometimes the user will
+perform some actions that need to get encoded in the memory outside of the process.
+
+So then in the orchestrator collector, or the commit, when we update the memory (see mem), we include that diff that 
+got encoded into what has been onboarded.
+
+We'll probably want a time stamp of last record, along with a commit ref - and we'll just choose merge over rebase so 
+as to keep the commit hashes stable.
