@@ -60,3 +60,6 @@ Thumbs.db
 *.swp
 
 .kotlin
+
+### Claude Code ###
+.claude/settings.local.json
