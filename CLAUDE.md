@@ -28,6 +28,8 @@ Auto-generated from all feature plans. Last updated: 2025-12-20
 - Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson (001-unified-interrupt-handler)
 - Java 21 + Spring Boot 3.x, Jackson, LangChain4j-Agentic, Embabel agent framework (001-data-layer-policy-filter)
 - Existing persistence layer (PostgreSQL in production, H2/Postgres test profiles) for policy definitions, activation state, and filter decision history (001-data-layer-policy-filter)
+- Java 21 (primary), Kotlin (ACP/permission modules), Python (controller skill scripts) + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner), Lombok, Jackson, victools JSON schema generator (001-agent-topology)
+- In-memory BlackboardHistory (per session), existing GraphRepository (persistent), existing WorktreeRepository (001-agent-topology)
 
 - Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Mockito, AssertJ (001-multi-agent-ide-specs)
 
@@ -47,8 +49,8 @@ tests/
 Java 21: Follow standard conventions
 
 ## Recent Changes
+- 001-agent-topology: Added Java 21 (primary), Kotlin (ACP/permission modules), Python (controller skill scripts) + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner), Lombok, Jackson, victools JSON schema generator
 - 001-data-layer-policy-filter: Added Java 21 + Spring Boot 3.x, Jackson, LangChain4j-Agentic, Embabel agent framework
-- 001-unified-interrupt-handler: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson
 - 001-unified-interrupt-handler: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson
 
 

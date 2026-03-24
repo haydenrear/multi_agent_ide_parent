@@ -1,4 +1,3 @@
-
 So we have our DegenerateLoopDetector. And this can be extracted into a single RoutingPolicy. Then, we can add more
 of these RoutingPolicy-s. We look in the blackboard, and this helps translate into a PlanAdvice from the RoutingPolicy. 
 
@@ -8,3 +7,19 @@ for the next Plan.
 We can then match over them to augment the prompt. For instance, in the PromptContext, then we have the PlanAbstraction.
 This helps us cancel out some terms in the prompts, and create a comprehensive algebra for our dynamic prompts.
 
+The planner, if it returns null, should call the controller, await for the result. The controller can decide what to do. 
+
+We can even add 
+
+RoutingPolicy 
+
+@Beans
+
+with 
+
+@Ordered
+
+And they match and produce a Plan.
+
+So then we inject a List<RoutingPolicy> iterate over them (sorted by ordered), find the first one that's ordered that
+produces a plan ?
