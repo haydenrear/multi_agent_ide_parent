@@ -1,0 +1,1 @@
+Add a filter algebra like the filter algebra for RAG. 

@@ -1,0 +1,1 @@
+Rewrite so planner factory, planner are bean, add planner type CUSTOM.
