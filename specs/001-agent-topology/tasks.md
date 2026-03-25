@@ -80,11 +80,11 @@
 
 ### Route-Back Simplification via Controller Conference
 
-- [ ] T022a [P] [US9] Delete `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/contributor/RouteBackInterruptPromptContributorFactory.java` (FR-026 — replaced by controller conference + AddMessage route-back schema injection)
-- [ ] T022b [US9] Remove `CollectorDecision` enum and `collectorDecision` field from all `*CollectorResult` types (`PlanningCollectorResult`, `DiscoveryCollectorResult`, `TicketCollectorResult`, `OrchestratorCollectorResult`) in `AgentModels.java` — collectors always route forward; route-back handled by controller (FR-032g). Keep collector action fields.
-- [ ] T022c [US9] Remove `CollectorDecision` switch/match cases from all result decorators and branch handlers that inspect `collectorDecision` — grep `CollectorDecision` across `multi_agent_ide_java_parent/` and remove all usages
-- [ ] T022d [US9] Add `@SkipPropertyFilter` annotation to all route-back request fields on collector routing objects in `AgentModels.java` (FR-032f): `PlanningOrchestratorRequest planningRequest` on `PlanningCollectorRouting`, `DiscoveryOrchestratorRequest discoveryRequest` on `DiscoveryCollectorRouting`, etc. — LLM must not see route-back fields during normal operation
-- [ ] T022e [US9] Add `@SkipPropertyFilter` annotation to all `interruptRequest` fields on all routing objects in `AgentModels.java` (FR-028) — LLM must not see interrupt fields during normal operation
+- [x] T022a [P] [US9] Delete `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/contributor/RouteBackInterruptPromptContributorFactory.java` (FR-026 — replaced by controller conference + AddMessage route-back schema injection)
+- [x] T022b [US9] Remove `CollectorDecision` enum and `collectorDecision` field from all `*CollectorResult` types (`PlanningCollectorResult`, `DiscoveryCollectorResult`, `TicketCollectorResult`, `OrchestratorCollectorResult`) in `AgentModels.java` — collectors always route forward; route-back handled by controller (FR-032g). Also removed `HasRouteBack`, `HasOrchestratorRequestRouteBack` marker interfaces (no consumers after RouteBackInterruptPromptContributorFactory deletion).
+- [x] T022c [US9] Remove `CollectorDecision` switch/match cases from all result decorators and branch handlers — simplified `BlackboardRoutingPlanner` (OrchestratorCollectorResult always routes to finalCollectorResult), removed `wrapCollectorDecision` from `RequestEnrichment`, simplified all 4 collector branch handlers in `AgentInterfaces` to always advance forward, removed `CollectorDecision` from `AgentModelMixin`, `ConsolidationTemplate`, `CliEventFormatter`, collector node types, and all test files.
+- [x] T022d [US9] Add `@SkipPropertyFilter` annotation to all route-back request fields on collector routing objects in `AgentModels.java` (FR-032f): added to `orchestratorRequest` on `DiscoveryCollectorRouting`, `PlanningCollectorRouting`, `TicketCollectorRouting` (others already had it).
+- [x] T022e [US9] Add `@SkipPropertyFilter` annotation to all `interruptRequest` fields on all routing objects in `AgentModels.java` (FR-028) — added to all 16 routing types (OrchestratorRouting, OrchestratorCollectorRouting, DiscoveryOrchestratorRouting, DiscoveryAgentRouting, DiscoveryCollectorRouting, DiscoveryAgentDispatchRouting, PlanningOrchestratorRouting, PlanningAgentRouting, PlanningCollectorRouting, PlanningAgentDispatchRouting, TicketOrchestratorRouting, TicketAgentRouting, TicketCollectorRouting, TicketAgentDispatchRouting, ContextManagerResultRouting). `agentInterruptRequest` fields on dispatch types already had it.
 - [x] T022f [US9] Updated `InterruptController.InterruptRequest`: changed `rerouteToAgentType` from optional String to required `AgentType` enum. Removed `routeBack` — route-back belongs on the conversational topology controller endpoint (Story 7), not on the interrupt endpoint.
 - [ ] T022g [US7] Implement `routeBack` on the conversational topology controller endpoint (Story 7) — when the controller sets `routeBack=true` during a conference with a collector agent, resolve the collector's routing object via `NodeMappings`, generate victools schema for only the route-back request field (e.g., `Routing(PlanningOrchestratorRequest)`), inject via AddMessage (FR-032h, FR-032i, FR-032j). Return error if agent is not a collector (FR-032k). Depends on Phase 3+ conversational topology infrastructure.
 - [x] T022h [US9] Extend `InterruptSchemaGenerator` to support route-back schemas via `generateRouteBackSchema(routingClass, routeBackFieldType)` — same victools field-filter mechanism, different predicate (FR-032i). Static metadata (`AGENT_TYPE_TO_ROUTING`, `agentTypeFromNode`) moved to `NodeMappings` in lib module.
@@ -96,7 +96,7 @@
 - [x] T025 [US9] Grep entire `multi_agent_ide_java_parent/` for remaining `ReviewRequest`, `MergerRequest`, `ReviewRouting`, `MergerRouting`, `ReviewRoute`, `MergerRoute`, `performReview`, `performMerge` references and remove all remaining occurrences
 - [x] T026 [US9] Verify compilation passes — run `./gradlew compileJava` from `multi_agent_ide_java_parent/`
 
-**Checkpoint**: Interrupt simplification in progress. `performReview`/`performMerge` removed. `rerouteToAgentType` (required `AgentType`) added to interrupt REST payload. `InterruptRequestEvent` published from controller with `rerouteToAgentType` and `sourceAgentType` resolved from graph. AddMessage interrupt injection implemented: `InterruptRequestEventListener` composes filtered Routing schema + reason + context + instructions. `InterruptSchemaGenerator` generates filtered Routing schemas via victools (interrupt-only fields or route-back fields). Static metadata (`AGENT_TYPE_TO_ROUTING`, `agentTypeFromNode`) centralized in `NodeMappings`. Route-back (`routeBack`) moved to conversational topology endpoint (Story 7), NOT on interrupt endpoint. Remaining: T022a-e (prompt contributor cleanup, CollectorDecision removal, @SkipPropertyFilter annotations), T022g (route-back wiring deferred to Story 7).
+**Checkpoint**: Phase 2 (Interrupt Simplification) COMPLETE. All review/merger code removed. Interrupt simplified to controller-initiated rerouting only with required `AgentType`. `CollectorDecision` removed — collectors always route forward. Route-back deferred to conversational topology (T022g, Story 7). All `interruptRequest` and route-back fields annotated with `@SkipPropertyFilter`. Schema generation via victools working. Ready for Phase 3+.
 
 ---
 
@@ -108,35 +108,35 @@
 
 ### Communication AgentRequest Subtypes
 
-- [ ] T027 [P] [US1] Add `AgentToAgentRequest` record implementing `AgentRequest` in `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/AgentModels.java` with fields: `sourceAgentKey`, `sourceAgentType`, `targetAgentKey`, `targetAgentType`, `message`, `callChain`, `goal`, `key` (child of sourceAgentKey)
-- [ ] T028 [P] [US7] Add `AgentToControllerRequest` record implementing `AgentRequest` in `AgentModels.java` with fields: `sourceAgentKey`, `sourceAgentType`, `justificationMessage`, `goal`, `key` (child of sourceAgentKey)
-- [ ] T029 [P] [US7] Add `ControllerToAgentRequest` record implementing `AgentRequest` in `AgentModels.java` with fields: `sourceKey`, `targetAgentKey`, `targetAgentType`, `message`, `checklistAction`, `goal`, `key` (child of sourceKey)
-- [ ] T030 [P] [US7] Add `ChecklistAction` record to `AgentModels.java` with fields: `actionType`, `completedStep`, `stepDescription`
-- [ ] T031 [P] [US7] Add `Artifact.ControllerChecklistTurn` record to `AgentModels.java` with fields: `targetAgentKey`, `targetAgentType`, `checklistAction`, `controllerMessage`, `conversationKey`, `timestamp`
+- [x] T027 [P] [US1] Add `AgentToAgentRequest` record implementing `AgentRequest` in `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/AgentModels.java` with fields: `sourceAgentKey`, `sourceAgentType`, `targetAgentKey`, `targetAgentType`, `message`, `callChain`, `goal`, `key` (child of sourceAgentKey)
+- [x] T028 [P] [US7] Add `AgentToControllerRequest` record implementing `AgentRequest` in `AgentModels.java` with fields: `sourceAgentKey`, `sourceAgentType`, `justificationMessage`, `goal`, `key` (child of sourceAgentKey)
+- [x] T029 [P] [US7] Add `ControllerToAgentRequest` record implementing `AgentRequest` in `AgentModels.java` with fields: `sourceKey`, `targetAgentKey`, `targetAgentType`, `message`, `checklistAction`, `goal`, `key` (child of sourceKey)
+- [x] T030 [P] [US7] Add `ChecklistAction` record to `AgentModels.java` with fields: `actionType`, `completedStep`, `stepDescription`
+- [x] T031 [P] [US7] Add `Artifact.ControllerChecklistTurn` record to `AgentModels.java` with fields: `targetAgentKey`, `targetAgentType`, `checklistAction`, `controllerMessage`, `conversationKey`, `timestamp`
 
 ### Graph Node Types
 
-- [ ] T032 [P] [US1] Add `AgentToAgentConversationNode` record to sealed permits list in `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/model/nodes/GraphNode.java` with proper fields: `sourceAgentKey`, `sourceAgentType`, `targetAgentKey`, `targetAgentType`
-- [ ] T033 [P] [US7] Add `AgentToControllerConversationNode` record to sealed permits list in `GraphNode.java` with proper fields: `sourceAgentKey`, `sourceAgentType`
-- [ ] T034 [P] [US7] Add `ControllerToAgentConversationNode` record to sealed permits list in `GraphNode.java` with proper fields: `targetAgentKey`, `targetAgentType`
+- [x] T032 [P] [US1] Add `AgentToAgentConversationNode` record to sealed permits list in `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/model/nodes/GraphNode.java` with proper fields: `sourceAgentKey`, `sourceAgentType`, `targetAgentKey`, `targetAgentType`
+- [x] T033 [P] [US7] Add `AgentToControllerConversationNode` record to sealed permits list in `GraphNode.java` with proper fields: `sourceAgentKey`, `sourceAgentType`
+- [x] T034 [P] [US7] Add `ControllerToAgentConversationNode` record to sealed permits list in `GraphNode.java` with proper fields: `targetAgentKey`, `targetAgentType`
 
 ### NodeType & NodeStatus Extensions
 
-- [ ] T035 [US1] Add `AGENT_TO_AGENT_CONVERSATION`, `AGENT_TO_CONTROLLER_CONVERSATION`, `CONTROLLER_TO_AGENT_CONVERSATION` to `Events.NodeType` enum in `multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/Events.java`
+- [x] T035 [US1] Add `AGENT_TO_AGENT_CONVERSATION`, `AGENT_TO_CONTROLLER_CONVERSATION`, `CONTROLLER_TO_AGENT_CONVERSATION` to `Events.NodeType` enum in `multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/Events.java`
 
 ### PromptContext Update
 
-- [ ] T036 [US1] Add `chatId()` cases for `AgentToAgentRequest` → `targetAgentKey`, `AgentToControllerRequest` → controller per-target key, `ControllerToAgentRequest` → `targetAgentKey` in `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/prompt/PromptContext.java`
+- [x] T036 [US1] Add `chatId()` cases for `AgentToAgentRequest` → `targetAgentKey`, `AgentToControllerRequest` → controller per-target key, `ControllerToAgentRequest` → `targetAgentKey` in `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/prompt/PromptContext.java`
 
 ### Decorator Audit
 
-- [ ] T037 [US1] Add cases for all three new request types to `FilterPropertiesDecorator.mapRequestToRoute()` → return null in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/decorator/prompt/FilterPropertiesDecorator.java`
-- [ ] T038 [US1] Add cases for all three new request types to `InterruptLoopBreakerPromptContributorFactory.resolveMapping()` → return null in `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/prompt/contributor/InterruptLoopBreakerPromptContributorFactory.java`
-- [ ] T039 [US1] Add cases for all three new request types to `WeAreHerePromptContributor` → "you are in a conversation with [agent/controller]" context
-- [ ] T040 [US1] Add cases for all three new request types to `CurationHistoryContextContributorFactory` → include conversation history
-- [ ] T041 [US1] Audit all `RequestDecorator` implementations — add cases to handle or pass through the three new `AgentRequest` subtypes
-- [ ] T042 [US1] Audit all `ResultDecorator` implementations — add cases to handle or pass through (result is `String`, not routing record)
-- [ ] T043 [US1] Verify compilation passes with all new types and decorator cases — run `./gradlew compileJava`
+- [x] T037 [US1] Add cases for all three new request types to `FilterPropertiesDecorator.mapRequestToRoute()` → return null in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/decorator/prompt/FilterPropertiesDecorator.java`
+- [x] T038 [US1] Add cases for all three new request types to `InterruptLoopBreakerPromptContributorFactory.resolveMapping()` → return null in `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/prompt/contributor/InterruptLoopBreakerPromptContributorFactory.java`
+- [x] T039 [US1] Add cases for all three new request types to `WeAreHerePromptContributor` → "you are in a conversation with [agent/controller]" context
+- [x] T040 [US1] Add cases for all three new request types to `CurationHistoryContextContributorFactory` → include conversation history
+- [x] T041 [US1] Audit all `RequestDecorator` implementations — add cases to handle or pass through the three new `AgentRequest` subtypes
+- [x] T042 [US1] Audit all `ResultDecorator` implementations — add cases to handle or pass through (result is `String`, not routing record)
+- [x] T043 [US1] Verify compilation passes with all new types and decorator cases — run `./gradlew compileJava`
 
 **Checkpoint**: Communication type system complete. All three AgentRequest subtypes, three GraphNode types, and decorator audit in place. Ready for tool implementation.
 
