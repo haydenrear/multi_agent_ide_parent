@@ -148,9 +148,9 @@
 
 **Independent Test**: Send an interrupt request from the human, verify the agent receives `SomeOf(InterruptRequest)` override via AddMessage, returns InterruptRequest, and system routes via `rerouteToAgentType`.
 
-- [ ] T044 [US9] Implement interrupt AddMessage decorators that compose the injected payload: override schema + reason + context + "structured response type has changed" verbiage. Create decorator class(es) in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/decorator/` (FR-028d, FR-030)
-- [ ] T045 [US9] Wire the AddMessage interrupt injection in `InterruptController.java` to use the new decorators and the existing ACP AddMessage infrastructure — no new LLM call, no new session (FR-028c)
-- [ ] T046 [US9] Verify end-to-end interrupt flow: REST `rerouteToAgentType` → `InterruptRequestEvent` → AddMessage injection → agent returns `InterruptRequest` → `FilterPropertiesDecorator.resolveTargetRoute()` routes correctly
+- [x] T044 [US9] Implement interrupt AddMessage decorators that compose the injected payload: override schema + reason + context + "structured response type has changed" verbiage. Create decorator class(es) in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/decorator/` (FR-028d, FR-030)
+- [x] T045 [US9] Wire the AddMessage interrupt injection in `InterruptController.java` to use the new decorators and the existing ACP AddMessage infrastructure — no new LLM call, no new session (FR-028c)
+- [x] T046 [US9] Verify end-to-end interrupt flow: REST `rerouteToAgentType` → `InterruptRequestEvent` → AddMessage injection → agent returns `InterruptRequest` → `FilterPropertiesDecorator.resolveTargetRoute()` routes correctly
 
 **Checkpoint**: Full interrupt simplification complete — human-only routing via AddMessage injection.
 
