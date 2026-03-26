@@ -52,3 +52,6 @@
 [submodule "multi_agent_ide_java_parent"]
 	path = multi_agent_ide_java_parent
 	url = git@github.com:haydenrear/multi_agent_ide_java_parent.git
+[submodule "hindsight"]
+	path = hindsight
+	url = git@github.com:haydenrear/hindsight-openapi.git
