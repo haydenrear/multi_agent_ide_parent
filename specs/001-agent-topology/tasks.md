@@ -164,23 +164,23 @@
 
 ### Topology Configuration
 
-- [ ] T047 [P] [US1] Create `CommunicationTopologyConfig` record with `@ConfigurationProperties(prefix = "multi-agent-ide.topology")` in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/topology/CommunicationTopologyConfig.java` — fields: `maxCallChainDepth` (default 5), `messageBudget` (default 3), `allowedCommunications` Map
-- [ ] T048 [P] [US1] Add default topology to `multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/application.yml` — include all agent types: workflow agents, COMMIT_AGENT, MERGE_CONFLICT_AGENT, AI_FILTER, AI_PROPAGATOR, AI_TRANSFORMER per `contracts/topology-configuration.md`
+- [x] T047 [P] [US1] Create `CommunicationTopologyConfig` record with `@ConfigurationProperties(prefix = "multi-agent-ide.topology")` in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/topology/CommunicationTopologyConfig.java` — fields: `maxCallChainDepth` (default 5), `messageBudget` (default 3), `allowedCommunications` Map
+- [x] T048 [P] [US1] Add default topology to `multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/application.yml` — include all agent types: workflow agents, COMMIT_AGENT, MERGE_CONFLICT_AGENT, AI_FILTER, AI_PROPAGATOR, AI_TRANSFORMER per `contracts/topology-configuration.md`
 
 ### SessionKeyResolutionService
 
-- [ ] T049 [US1] Create `SessionKeyResolutionService` in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/SessionKeyResolutionService.java` — absorb session key resolution logic from `AiFilterSessionResolver` (FR-013a): scope-based resolution for all SessionMode values, SessionScopeKey cache, lifecycle eviction on GoalCompletedEvent/ActionCompletedEvent
-- [ ] T050 [US1] Add `resolveSessionForMessage(MessageOutputChannelEvent)` method to `SessionKeyResolutionService` — absorb message-to-session routing from `MultiAgentEmbabelConfig.llmOutputChannel()` lines 208-260 (FR-013b)
-- [ ] T051 [US1] Add `filterSelfCalls(callingKey, candidateKeys)` method to `SessionKeyResolutionService` — ArtifactKey ancestry check: equals, isAncestorOf, isDescendantOf (FR-013c)
-- [ ] T052 [US1] Add event enrichment to `SessionKeyResolutionService` — include source node, agent type, session mode, and `FromMessageChannelEvent` provenance marker on all published session events (FR-013d)
-- [ ] T053 [US1] Update `AiFilterSessionResolver` to delegate to `SessionKeyResolutionService` instead of owning the resolution logic — keep `AiFilterSessionResolver` as a thin wrapper for backward compatibility in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/filter/service/AiFilterSessionResolver.java`
-- [ ] T054 [US1] Update `MultiAgentEmbabelConfig.llmOutputChannel()` to delegate to `SessionKeyResolutionService.resolveSessionForMessage()` instead of inline lambda in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/MultiAgentEmbabelConfig.java`
+- [x] T049 [US1] Create `SessionKeyResolutionService` in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/SessionKeyResolutionService.java` — absorb session key resolution logic from `AiFilterSessionResolver` (FR-013a): scope-based resolution for all SessionMode values, SessionScopeKey cache, lifecycle eviction on GoalCompletedEvent/ActionCompletedEvent
+- [x] T050 [US1] Add `resolveSessionForMessage(MessageOutputChannelEvent)` method to `SessionKeyResolutionService` — absorb message-to-session routing from `MultiAgentEmbabelConfig.llmOutputChannel()` lines 208-260 (FR-013b)
+- [x] T051 [US1] Add `filterSelfCalls(callingKey, candidateKeys)` method to `SessionKeyResolutionService` — filters candidates that share an actively operating chat session with the caller to prevent session contention (multiple agents can resolve to the same chatId via `PromptContext.chatId()` → `AiFilterSessionResolver` → `resolveSessionKey()`; calling into a busy session would interrupt the active thread and corrupt the structured response). Uses `resolveOwningNodeId()` to map session keys via `ChatSessionCreatedEvent` and detect overlap. Also filters active call-chain cycles via `isInActiveCallChain()` BFS, with `registerCall()`/`unregisterCall()` helpers. NOTE: cycle detection depends on `AgentCallStartedEvent`/`AgentCallCompletedEvent` being emitted from `call_agent` (T059) and `call_controller` (T069) — events are defined but not yet emitted (FR-013c)
+- [x] T052 [US1] Add event enrichment to `SessionKeyResolutionService` — include source node, agent type, session mode, and `FromMessageChannelEvent` provenance marker on all published session events (FR-013d)
+- [x] T053 [US1] Update `AiFilterSessionResolver` to delegate to `SessionKeyResolutionService` instead of owning the resolution logic — keep `AiFilterSessionResolver` as a thin wrapper for backward compatibility in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/filter/service/AiFilterSessionResolver.java`
+- [x] T054 [US1] Update `MultiAgentEmbabelConfig.llmOutputChannel()` to delegate to `SessionKeyResolutionService.resolveSessionForMessage()` instead of inline lambda in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/MultiAgentEmbabelConfig.java`
 
 ### AgentCommunicationService & list_agents Tool
 
-- [ ] T055 [US1] Create `AgentCommunicationService` in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/AgentCommunicationService.java` — session queries via `AcpSessionManager`, topology enforcement via `CommunicationTopologyConfig`, delegates to `SessionKeyResolutionService.filterSelfCalls()` for self-call filtering
-- [ ] T056 [US1] Add `listAvailableAgents(callingKey, callingAgentType)` method to `AgentCommunicationService` — return `List<AgentAvailabilityEntry>` filtered by (topology-permitted) AND (session-open) AND (not self)
-- [ ] T057 [US1] Add `list_agents` `@Tool`-annotated method to `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AcpTooling.java` with `@SetFromHeader(MCP_SESSION_HEADER)` — delegates to `AgentCommunicationService.listAvailableAgents()`
+- [x] T055 [US1] Create `AgentCommunicationService` in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/AgentCommunicationService.java` — session queries via `AcpSessionManager`, topology enforcement via `CommunicationTopologyConfig`, delegates to `SessionKeyResolutionService.filterSelfCalls()` for self-call filtering
+- [x] T056 [US1] Add `listAvailableAgents(callingKey, callingAgentType)` method to `AgentCommunicationService` — return `List<AgentAvailabilityEntry>` filtered by (topology-permitted) AND (session-open) AND (not self)
+- [x] T057 [US1] Add `list_agents` `@Tool`-annotated method to `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AcpTooling.java` with `@SetFromHeader(MCP_SESSION_HEADER)` — delegates to `AgentCommunicationService.listAvailableAgents()`
 
 **Checkpoint**: `list_agents` tool functional — returns open, non-dispatched, topology-permitted agents with self-call filtering.
 
@@ -193,8 +193,8 @@
 **Independent Test**: Open two agent sessions, call from one to the other, verify message delivery and response return. Error cases: call unavailable agent, call topology-violating target.
 
 - [ ] T058 [US2] Add `validateCall(callingKey, callingType, targetKey, targetType, callChain)` method to `AgentCommunicationService` — checks topology, busy, self-call, loop detection, max depth
-- [ ] T059 [US2] Add `call_agent` `@Tool`-annotated method to `AcpTooling.java` with `@SetFromHeader(MCP_SESSION_HEADER)` — parameters: targetAgentKey, message, callChain (serialized JSON). Builds `AgentToAgentRequest`, persists `AgentToAgentConversationNode`, builds `PromptContext`, runs through decorator pipeline + `DefaultLlmRunner` with `String.class` response type
-- [ ] T060 [US2] Implement error handling in `call_agent`: topology violation, busy, unavailable, loop detected, max depth — return descriptive error strings per contracts/agent-communication-tools.md
+- [ ] T059 [US2] Add `call_agent` `@Tool`-annotated method to `AcpTooling.java` with `@SetFromHeader(MCP_SESSION_HEADER)` — parameters: targetAgentKey, message, callChain (serialized JSON). Builds `AgentToAgentRequest`, persists `AgentToAgentConversationNode`, builds `PromptContext`, runs through decorator pipeline + `DefaultLlmRunner` with `String.class` response type. **Must emit `AgentCallStartedEvent` before sending and `AgentCallCompletedEvent` after response/error** to feed `SessionKeyResolutionService.registerCall()`/`unregisterCall()` cycle detection.
+- [ ] T060 [US2] Implement error handling in `call_agent`: topology violation, busy, unavailable, loop detected, max depth — return descriptive error strings per contracts/agent-communication-tools.md. Ensure `AgentCallCompletedEvent` is emitted even on error paths.
 
 **Checkpoint**: `call_agent` tool functional — delivers messages, returns responses, rejects invalid calls with clear errors.
 
@@ -219,8 +219,8 @@
 
 **Independent Test**: Set up circular topology, attempt A→B→C→A loop, verify detection and rejection with full chain in error.
 
-- [ ] T063 [US4] Create `CallChainTracker` in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/topology/CallChainTracker.java` — provides `checkLoop(callChain, targetKey)` returning boolean, `appendEntry(callChain, agentKey, agentType)` returning updated chain
-- [ ] T064 [US4] Integrate `CallChainTracker` into `AgentCommunicationService.validateCall()` — reject calls that would create loops, include full chain in error message
+- [ ] T063 [US4] Verify/extend call-chain cycle detection already in `SessionKeyResolutionService` (`registerCall`, `unregisterCall`, `isInActiveCallChain` BFS) — add `appendEntry(callChain, agentKey, agentType)` returning serialized chain string for call_agent's callChain parameter. NOTE: core `activeCallChain` map and BFS cycle detection are already implemented; this task adds serialization and the `checkLoop` convenience wrapper if needed. Consider whether a separate `CallChainTracker` class is still warranted or if `SessionKeyResolutionService` suffices.
+- [ ] T064 [US4] Integrate call-chain cycle detection into `AgentCommunicationService.validateCall()` — reject calls that would create loops, include full chain in error message. Delegates to `SessionKeyResolutionService.isInActiveCallChain()`.
 
 **Checkpoint**: Loop detection functional — direct recursion and indirect loops both caught.
 
@@ -260,9 +260,9 @@
 
 ### call_controller Tool
 
-- [ ] T069 [US7] Add `call_controller` `@Tool`-annotated method to `AcpTooling.java` with `@SetFromHeader(MCP_SESSION_HEADER)` — parameters: justificationMessage. Builds `AgentToControllerRequest`, persists `AgentToControllerConversationNode`, resolves controller conversation key (create via `root.createChild()` if not found), builds `PromptContext`, runs through decorators + `DefaultLlmRunner`, publishes `HUMAN_REVIEW` interrupt via `PermissionGate.publishInterrupt()`, blocks until resolved, returns response with conversation key
+- [ ] T069 [US7] Add `call_controller` `@Tool`-annotated method to `AcpTooling.java` with `@SetFromHeader(MCP_SESSION_HEADER)` — parameters: justificationMessage. Builds `AgentToControllerRequest`, persists `AgentToControllerConversationNode`, resolves controller conversation key (create via `root.createChild()` if not found), builds `PromptContext`, runs through decorators + `DefaultLlmRunner`, publishes `HUMAN_REVIEW` interrupt via `PermissionGate.publishInterrupt()`, blocks until resolved, returns response with conversation key. **Must emit `AgentCallStartedEvent` before sending and `AgentCallCompletedEvent` after response/error** to feed `SessionKeyResolutionService.registerCall()`/`unregisterCall()` cycle detection.
 - [ ] T070 [US7] Add message budget tracking to `call_controller` in `AcpTooling.java` — count messages per conversation key, escalate to user when budget exceeded (FR-017)
-- [ ] T071 [US7] Add event emission to `call_controller` — emit `AgentCallEvent` INITIATED on send, RETURNED on controller response (FR-006)
+- [ ] T071 [US7] Add event emission to `call_controller` — emit `AgentCallEvent` INITIATED on send, RETURNED on controller response (FR-006). Ensure `AgentCallCompletedEvent` is emitted even on error paths.
 
 ### AgentConversationController (REST)
 
