@@ -297,8 +297,8 @@
 
 **Independent Test**: Advance workflow to justification point, verify correct prompt contributor fires with right template.
 
-- [ ] T074 [US8] Create `JustificationPromptContributorFactory` in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/contributor/JustificationPromptContributorFactory.java` — matches on `AgentToControllerRequest`/`ControllerToAgentRequest` types + blackboard history. Inspects: current request type (agent role), blackboard approval status, workflow phase. Injects role-specific justification template: discovery (interpretation + findings mapping), planning (ticket-to-requirement traceability), ticket (change justification + verification summary) (FR-018, FR-019)
-- [ ] T075 [US8] Add justification templates — discovery, planning, ticket agent templates as prompt resources in `multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/`
+- [x] T074 [US8] Create `JustificationPromptContributorFactory` in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/contributor/JustificationPromptContributorFactory.java` — matches on `AgentToControllerRequest`/`ControllerToAgentRequest` types + blackboard history. Inspects: current request type (agent role), blackboard approval status, workflow phase. Injects role-specific justification template: discovery (interpretation + findings mapping), planning (ticket-to-requirement traceability), ticket (change justification + verification summary) (FR-018, FR-019)
+- [x] T075 [US8] Add justification templates — discovery, planning, ticket agent templates as prompt resources in `multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/`
 
 **Checkpoint**: Justification conversations activated by prompt contributors at correct workflow points.
 
