@@ -334,14 +334,14 @@
 
 **Independent Test**: Controller skill loads, reads `reference.md`, finds all checklist documents.
 
-- [ ] T081 [P] [US10] Create `skills/multi_agent_ide_skills/multi_agent_ide_controller/conversational-topology/checklist.md` — general phase-gate review instructions (extract requirements, map to outputs, flag gaps, escalate to user)
-- [ ] T082 [P] [US10] Create `skills/multi_agent_ide_skills/multi_agent_ide_controller/conversational-topology/checklist-discovery-agent.md` — discovery agent review criteria with ACTION rows (Step/ACTION/Description/Gate columns)
-- [ ] T083 [P] [US10] Create `skills/multi_agent_ide_skills/multi_agent_ide_controller/conversational-topology/checklist-planning-agent.md` — planning agent review criteria with ACTION rows
-- [ ] T084 [P] [US10] Create `skills/multi_agent_ide_skills/multi_agent_ide_controller/conversational-topology/checklist-ticket-agent.md` — ticket agent review criteria with ACTION rows
-- [ ] T085 [P] [US10] Create `skills/multi_agent_ide_skills/multi_agent_ide_controller/conversational-topology/reference.md` — index of all topology documents with descriptions and change history
-- [ ] T086 [P] [US10] Create `skills/multi_agent_ide_skills/multi_agent_ide_controller/conversational-topology-history/reference.md` — chronological change log (empty initial state)
-- [ ] T087 [US10] Update `skills/multi_agent_ide_skills/multi_agent_ide_controller/SKILL.md` with full conversational topology instructions (when to consult, how to update, how to register changes)
-- [ ] T088 [US10] Update `skills/multi_agent_ide_skills/SKILL_PARENT.md` with brief reference to `conversational-topology/` and `conversational-topology-history/` directories
+- [x] T081 [P] [US10] Create `skills/multi_agent_ide_skills/multi_agent_ide_controller/conversational-topology/checklist.md` — general phase-gate review instructions (extract requirements, map to outputs, flag gaps, escalate to user)
+- [x] T082 [P] [US10] Create `skills/multi_agent_ide_skills/multi_agent_ide_controller/conversational-topology/checklist-discovery-agent.md` — discovery agent review criteria with ACTION rows (Step/ACTION/Description/Gate columns)
+- [x] T083 [P] [US10] Create `skills/multi_agent_ide_skills/multi_agent_ide_controller/conversational-topology/checklist-planning-agent.md` — planning agent review criteria with ACTION rows
+- [x] T084 [P] [US10] Create `skills/multi_agent_ide_skills/multi_agent_ide_controller/conversational-topology/checklist-ticket-agent.md` — ticket agent review criteria with ACTION rows
+- [x] T085 [P] [US10] Create `skills/multi_agent_ide_skills/multi_agent_ide_controller/conversational-topology/reference.md` — index of all topology documents with descriptions and change history
+- [x] T086 [P] [US10] Create `skills/multi_agent_ide_skills/multi_agent_ide_controller/conversational-topology-history/reference.md` — chronological change log (empty initial state)
+- [x] T087 [US10] Update `skills/multi_agent_ide_skills/multi_agent_ide_controller/SKILL.md` with full conversational topology instructions (when to consult, how to update, how to register changes)
+- [x] T088 [US10] Update `skills/multi_agent_ide_skills/SKILL_PARENT.md` with brief reference to `conversational-topology/` and `conversational-topology-history/` directories
 
 **Checkpoint**: Conversational topology documents in place — controller can follow review criteria at phase gates.
 
@@ -351,12 +351,12 @@
 
 **Purpose**: Verification, cleanup, and integration validation across all stories
 
-- [ ] T089 Verify full compilation — run `./gradlew compileJava` from `multi_agent_ide_java_parent/`
-- [ ] T090 Run existing unit tests — `./gradlew test` from `multi_agent_ide_java_parent/`
-- [ ] T091 Verify `ReviewRequest`/`MergerRequest` completely removed — grep returns 0 hits across codebase
-- [ ] T092 Verify no agent can self-initiate interrupts — grep for interrupt prompt contributors returns only retained one (`InterruptLoopBreakerPromptContributorFactory`). Verify `RouteBackInterruptPromptContributorFactory` is deleted. Verify `CollectorDecision` has 0 grep hits.
-- [ ] T093 Verify topology reconfigurable without restart (SC-008) — update `application.yml` topology, confirm next `list_agents` reflects change
-- [ ] T094 Run quickstart.md verification checklist — validate all items pass
+- [x] T089 Verify full compilation — run `./gradlew compileJava` from `multi_agent_ide_java_parent/`
+- [x] T090 Run existing unit tests — `./gradlew test` from `multi_agent_ide_java_parent/`
+- [x] T091 Verify `ReviewRequest`/`MergerRequest` completely removed — grep returns 0 hits across codebase
+- [x] T092 Verify no agent can self-initiate interrupts — grep for interrupt prompt contributors returns only retained one (`InterruptLoopBreakerPromptContributorFactory`). Verify `RouteBackInterruptPromptContributorFactory` is deleted. Verify `CollectorDecision` has 0 grep hits.
+- [x] T093 Verify topology reconfigurable without restart (SC-008) — update `application.yml` topology, confirm next `list_agents` reflects change
+- [x] T094 Run quickstart.md verification checklist — validate all items pass
 
 ---
 
