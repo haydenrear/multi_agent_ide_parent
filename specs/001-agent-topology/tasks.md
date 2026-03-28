@@ -360,6 +360,73 @@
 
 ---
 
+## Phase 16: Live Integration Testing (claude profile)
+
+**Purpose**: Deploy to tmp repo with claude profile, run real goals, and verify each user story's acceptance scenarios against live agent behavior.
+
+**Pre-requisites**: All previous phases complete. Deploy via `clone_or_pull.py` + `deploy_restart.py --profile claude`. Use `poll.py --subscribe 600` for all monitoring.
+
+### Group A: US9 — Simplified Interrupts (P0)
+
+**Goal**: Submit a small goal, let agents reach RUNNING, then test interrupt behavior.
+
+- [ ] T095 Deploy to tmp repo with claude profile — `clone_or_pull.py` + `deploy_restart.py --profile claude`
+- [ ] T096 Submit a simple goal and confirm workflow starts (orchestrator READY, discovery agents dispatched)
+- [ ] T097 [US9] 9.3/9.4 — Passive verification: monitor event stream during discovery phase, confirm no `ReviewRequest`/`MergerRequest` in any routing object serialization and no agent self-initiates an interrupt
+- [ ] T098 [US9] 9.1/9.5 — Send HUMAN_REVIEW interrupt to a running agent with `rerouteToAgentType`, verify the agent receives a filtered schema with only the interrupt request field and prompt contributors are injected
+- [ ] T099 [US9] 9.2 — After interrupt injection, verify agent returns result with only interrupt field populated and system routes to the correct agent type
+- [ ] T100 [US9] 9.8 — Observe collector returning normal result during workflow, verify only forward-routing fields populated and workflow advances (no `CollectorDecision`)
+- [ ] T101 [US9] EC.5 — Send HUMAN_REVIEW interrupt with null `rerouteToAgentType` via direct API call, verify 400 error response
+
+### Group B: US1-3 — Agent Discovery & Topology (P1)
+
+**Goal**: During a running workflow, observe agents using list_agents and call_agent tools.
+
+- [ ] T102 [US1] 1.1 — During running workflow, observe an agent using `list_agents` tool in event stream, verify it returns open sessions with roles and reachability
+- [ ] T103 [US1] 1.2 — After a dispatched agent (discovery/ticket) completes, verify it no longer appears in `list_agents` results
+- [ ] T104 [US1] 1.3 — Verify topology filtering: worker agents see only topology-permitted targets in `list_agents`
+- [ ] T105 [US2] 2.1 — Observe a successful `call_agent` interaction between two agents in the event stream, verify message delivered and response returned
+- [ ] T106 [US2] 2.3/2.4 — Observe or provoke a topology violation or failed call, verify error returned with AgentCallErrorEvent emitted
+- [ ] T107 [US3] 3.1 — Verify default topology enforced at runtime: workers can call orchestrator/collector, orchestrators can call any agent at or below their level
+
+### Group C: US7-8 — Call Controller & Justification (P1)
+
+**Goal**: Watch for agents calling callController at phase gates, respond via conversations.py.
+
+- [ ] T108 [US7] 7.1 — Observe an agent calling `callController` with a justification message, verify conversation appears in `conversations.py --pending`, respond via `--respond --message "..."`
+- [ ] T109 [US7] 7.3 — Observe message budget enforcement: after k messages without alignment, system escalates to user (HUMAN_REVIEW interrupt published)
+- [ ] T110 [US8] 8.1 — At discovery→planning gate, verify `JustificationPromptContributorFactory` fires and injects justification template into discovery agent context
+- [ ] T111 [US8] 8.2 — At planning→tickets gate, verify justification prompt fires with traceability template
+- [ ] T112 [US8] 8.3 — At tickets→completion gate, verify justification prompt fires with diff review template
+- [ ] T113 [US8] 8.4 — After controller approves justification, verify prompt contributor does not fire again on next agent call
+
+### Group D: US4-6 — Loop Detection, Events, Prompt Contributor (P2)
+
+**Goal**: Observe event emission and prompt enrichment during agent-to-agent calls.
+
+- [ ] T114 [US5] 5.1 — During a `call_agent` interaction, verify `AgentCallEvent` with `INITIATED` and `RETURNED` types emitted in event stream with call chain
+- [ ] T115 [US5] 5.2 — On a failed call, verify `AgentCallErrorEvent` emitted with route, chain, and error details
+- [ ] T116 [US4] 4.1/4.2 — If a loop scenario arises (or can be provoked via corrective message), verify system detects and rejects with full chain in error
+- [ ] T117 [US6] 6.1 — Inspect agent prompt context (via propagation payload or log) for topology information injected by `AgentTopologyPromptContributorFactory`
+
+### Group E: US9 — Route-Back via Controller Conference (P0, advanced)
+
+**Goal**: Test the route-back mechanism through controller conferences. Requires workflow to reach a collector phase gate.
+
+- [ ] T118 [US9] 9.6 — At a collector conference, respond with `routeBack=true` via `AgentConversationController`, verify route-back schema injected via AddMessage and collector routes back to target orchestrator
+- [ ] T119 [US9] 9.7 — Attempt `routeBack=true` on a non-collector agent conference, verify error returned indicating route-back not supported for that agent type
+
+### Group F: Edge Cases (test opportunistically)
+
+- [ ] T120 EC.1 — Verify self-call rejected via `SessionKeyResolutionService.filterSelfCalls()` (observe in logs or provoke via corrective message)
+- [ ] T121 EC.2 — Target session closes between list_agents and call_agent — verify graceful error
+- [ ] T122 EC.3 — Empty/missing topology config — verify safe default (no communication allowed) and warning logged
+- [ ] T123 EC.4 — Call chain exceeds max depth — verify rejection
+
+**Checkpoint**: All live integration tests pass — feature is validated end-to-end with real LLM agents.
+
+---
+
 ## Dependencies & Execution Order
 
 ### Phase Dependencies
