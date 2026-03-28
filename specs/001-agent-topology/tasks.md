@@ -312,17 +312,17 @@
 
 ### Activity Check Endpoint
 
-- [ ] T076 [P] [US7] Create `ActivityCheckController` in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/ActivityCheckController.java` — `POST /api/ui/activity-check` with `@RequestBody { "nodeId": "..." }`. Returns `{ pendingPermissions, pendingInterrupts, pendingConversations, hasActivity }`. Fast — no graph traversal, no propagation queries (FR-041)
+- [x] T076 [P] [US7] Create `ActivityCheckController` in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/ActivityCheckController.java` — `POST /api/ui/activity-check` with `@RequestBody { "nodeId": "..." }`. Returns `{ pendingPermissions, pendingInterrupts, pendingConversations, hasActivity }`. Fast — no graph traversal, no propagation queries (FR-041)
 
 ### poll.py Updates
 
-- [ ] T077 [US7] Add `--subscribe` and `--tick` arguments to `skills/multi_agent_ide_skills/multi_agent_ide_controller/executables/poll.py` — `--subscribe <seconds>` sets max wait duration, `--tick <seconds>` sets activity-check interval (FR-042)
-- [ ] T078 [US7] Implement subscribe loop in `poll.py` — calls `POST /api/ui/activity-check` every tick interval, calls full `poll_once()` on activity detected or timeout (FR-042, FR-043)
-- [ ] T079 [US7] Extend `poll_once()` in `poll.py` with `═══ CONVERSATIONS ═══` section showing pending agent-to-controller requests and recent controller-to-agent responses (FR-044)
+- [x] T077 [US7] Add `--subscribe` and `--tick` arguments to `skills/multi_agent_ide_skills/multi_agent_ide_controller/executables/poll.py` — `--subscribe <seconds>` sets max wait duration, `--tick <seconds>` sets activity-check interval (FR-042)
+- [x] T078 [US7] Implement subscribe loop in `poll.py` — calls `POST /api/ui/activity-check` every tick interval, calls full `poll_once()` on activity detected or timeout (FR-042, FR-043)
+- [x] T079 [US7] Extend `poll_once()` in `poll.py` with `═══ CONVERSATIONS ═══` section showing pending agent-to-controller requests and recent controller-to-agent responses (FR-044)
 
 ### conversations.py Script
 
-- [ ] T080 [P] [US7] Create `skills/multi_agent_ide_skills/multi_agent_ide_controller/executables/conversations.py` — ergonomic CLI per contracts/agent-communication-tools.md: `<nodeId>` lists active conversations (tree-walk), `--last <N>` retrieves last N messages, `--respond --message "..."` responds to pending request, `--pending` shows only unresponded requests (FR-045)
+- [x] T080 [P] [US7] Create `skills/multi_agent_ide_skills/multi_agent_ide_controller/executables/conversations.py` — ergonomic CLI per contracts/agent-communication-tools.md: `<nodeId>` lists active conversations (tree-walk), `--last <N>` retrieves last N messages, `--respond --message "..."` responds to pending request, `--pending` shows only unresponded requests (FR-045)
 
 **Checkpoint**: Controller can poll for conversation activity and manage conversations ergonomically.
 
