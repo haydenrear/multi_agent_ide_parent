@@ -140,6 +140,14 @@
 
 **Checkpoint**: Communication type system complete. All three AgentRequest subtypes, three GraphNode types, and decorator audit in place. Ready for tool implementation.
 
+### Communication Routing & Result Types (FR-014a, FR-014b, FR-014c)
+
+- [x] T043a [P] [US2] Add `AgentCallRouting` record to `AgentModels.java` implementing `AgentRouting` — field: `response` (String). Add `AgentCallResult` record implementing `AgentResult` — fields: `contextId`, `response`, `worktreeContext`. Add `AGENT_CALL` to `AgentType`, add constants to `AgentInterfaces` (`agent-call`, `callAgent`, `communication/agent_call`). Create prompt template `prompts/communication/agent_call.jinja`. Update all exhaustive switches on `AgentRouting` and `AgentResult`.
+- [ ] T043b [P] [US7] Add `ControllerCallRouting` record to `AgentModels.java` implementing `AgentRouting` — fields: `response` (String), `controllerConversationKey` (String). Add `ControllerCallResult` record implementing `AgentResult` — fields: `contextId`, `response`, `controllerConversationKey`, `worktreeContext`. Add `CONTROLLER_CALL` to `AgentType`, add constants to `AgentInterfaces` (`controller-call`, `callController`, `communication/controller_call`). Create prompt template `prompts/communication/controller_call.jinja`. Update all exhaustive switches.
+- [ ] T043c [P] [US7] Add `ControllerResponseRouting` record to `AgentModels.java` implementing `AgentRouting` — fields: `response` (String), `controllerConversationKey` (String). Add `ControllerResponseResult` record implementing `AgentResult` — fields: `contextId`, `response`, `controllerConversationKey`, `worktreeContext`. Add `CONTROLLER_RESPONSE` to `AgentType`, add constants to `AgentInterfaces` (`controller-response`, `respondToAgent`, `communication/controller_response`). Create prompt template `prompts/communication/controller_response.jinja`. Update all exhaustive switches.
+
+**Checkpoint (extended)**: Communication routing/result type system complete for all three communication paths (agent→agent, agent→controller, controller→agent).
+
 ---
 
 ## Phase 4: User Story 9 Support — Interrupt AddMessage Infrastructure (Story 9)
@@ -192,9 +200,9 @@
 
 **Independent Test**: Open two agent sessions, call from one to the other, verify message delivery and response return. Error cases: call unavailable agent, call topology-violating target.
 
-- [ ] T058 [US2] Add `validateCall(callingKey, callingType, targetKey, targetType, callChain)` method to `AgentCommunicationService` — checks topology, busy, self-call, loop detection, max depth
-- [ ] T059 [US2] Add `call_agent` `@Tool`-annotated method to `AcpTooling.java` with `@SetFromHeader(MCP_SESSION_HEADER)` — parameters: targetAgentKey, message, callChain (serialized JSON). Builds `AgentToAgentRequest`, persists `AgentToAgentConversationNode`, builds `PromptContext`, runs through decorator pipeline + `DefaultLlmRunner` with `String.class` response type. **Must emit `AgentCallStartedEvent` before sending and `AgentCallCompletedEvent` after response/error** to feed `SessionKeyResolutionService.registerCall()`/`unregisterCall()` cycle detection.
-- [ ] T060 [US2] Implement error handling in `call_agent`: topology violation, busy, unavailable, loop detected, max depth — return descriptive error strings per contracts/agent-communication-tools.md. Ensure `AgentCallCompletedEvent` is emitted even on error paths.
+- [x] T058 [US2] Add `validateCall(callingKey, callingType, targetKey, targetType, callChain)` method to `AgentCommunicationService` — checks topology, busy, self-call, loop detection, max depth
+- [x] T059 [US2] Add `call_agent` `@Tool`-annotated method to `AgentTopologyTools.java` with `@SetFromHeader(MCP_SESSION_HEADER)` — parameters: targetAgentKey, message. Builds `AgentToAgentRequest`, persists `AgentToAgentConversationNode` via StartWorkflowRequestDecorator, builds `PromptContext`, runs through decorator pipeline + `LlmRunner` with `AgentCallRouting.class` response type. `AgentCallStartedEvent` emitted by StartWorkflowRequestDecorator, `AgentCallCompletedEvent` emitted by WorkflowGraphResultDecorator.
+- [x] T060 [US2] Implement error handling in `call_agent`: topology violation, busy, unavailable, loop detected, max depth — return descriptive error strings per contracts/agent-communication-tools.md. `AgentCallCompletedEvent` emitted via WorkflowGraphResultDecorator on all paths.
 
 **Checkpoint**: `call_agent` tool functional — delivers messages, returns responses, rejects invalid calls with clear errors.
 
@@ -206,8 +214,8 @@
 
 **Independent Test**: Define different topology configs, verify `call_agent` enforces correctly.
 
-- [ ] T061 [US3] Add `@RefreshScope` support to `CommunicationTopologyConfig` for runtime reconfiguration in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/topology/CommunicationTopologyConfig.java` (SC-008)
-- [ ] T062 [US3] Add topology validation on startup in `AgentCommunicationService` — if topology config is empty or missing, fall back to no communication allowed and log warning
+- [x] T061 [US3] Add runtime reconfiguration support via `CommunicationTopologyProvider` wrapping `CommunicationTopologyConfig` — uses `Binder.get(environment)` for refresh since Spring Cloud `@RefreshScope` is not on the classpath. Provider delegates `isCommunicationAllowed()`, `maxCallChainDepth()`, `messageBudget()` and supports `refresh()` for SC-008. `AgentCommunicationService` updated to use provider instead of config directly.
+- [x] T062 [US3] Add topology validation on startup via `@PostConstruct` in `CommunicationTopologyProvider` — logs warning if `allowedCommunications` is empty (no inter-agent communication allowed), logs info with config summary otherwise. Safe default: empty topology = no communication.
 
 **Checkpoint**: Topology configurable, refreshable, and enforced with safe defaults.
 
@@ -219,10 +227,20 @@
 
 **Independent Test**: Set up circular topology, attempt A→B→C→A loop, verify detection and rejection with full chain in error.
 
-- [ ] T063 [US4] Verify/extend call-chain cycle detection already in `SessionKeyResolutionService` (`registerCall`, `unregisterCall`, `isInActiveCallChain` BFS) — add `appendEntry(callChain, agentKey, agentType)` returning serialized chain string for call_agent's callChain parameter. NOTE: core `activeCallChain` map and BFS cycle detection are already implemented; this task adds serialization and the `checkLoop` convenience wrapper if needed. Consider whether a separate `CallChainTracker` class is still warranted or if `SessionKeyResolutionService` suffices.
-- [ ] T064 [US4] Integrate call-chain cycle detection into `AgentCommunicationService.validateCall()` — reject calls that would create loops, include full chain in error message. Delegates to `SessionKeyResolutionService.isInActiveCallChain()`.
+- [x] T063 [US4] Cycle detection uses graph-based approach instead of event-based `registerCall`/`unregisterCall`. `SessionKeyResolutionService.buildCallChainFromGraph()` walks `AgentToAgentConversationNode` ancestors. `filterSelfCalls()` uses this chain for cycle detection. No separate `CallChainTracker` needed — `SessionKeyResolutionService` suffices. `AgentTopologyTools.callAgent()` derives the chain from the graph automatically.
+- [x] T064 [US4] Loop detection already integrated in `AgentCommunicationService.validateCall()`: (1) `filterSelfCalls(callingKey, Set.of(targetKey), callChain)` for shared-session and graph-derived cycle detection, (2) explicit call chain loop check with `formatCallChain()` for descriptive error message including full chain.
 
 **Checkpoint**: Loop detection functional — direct recursion and indirect loops both caught.
+
+---
+
+## Phase 8b: Call Chain Entry Enrichment (Loop Detection support)
+
+**Goal**: Enrich `CallChainEntry` with target agent info so every hop captures both source and target. Persist the full chain in `AgentToAgentConversationNode` (already has the field — ensure `buildCallChainFromGraph` also reads target info when constructing entries).
+
+- [x] T064a [US4] Add `targetAgentKey` (ArtifactKey) and `targetAgentType` (AgentType) fields to `AgentModels.CallChainEntry` — each hop now records source→target. Update `SessionKeyResolutionService.buildCallChainFromGraph()` to populate the new fields from `AgentToAgentConversationNode.targetAgentKey()`/`targetAgentType()`. Update `AgentCommunicationService.validateCall()` loop detection to also check `targetAgentKey` in the chain. Update `AgentTopologyTools.emitCallEvent()` chain serialization to include target info.
+
+**Checkpoint**: Call chain entries capture both source and target for each hop, improving loop detection accuracy and observability.
 
 ---
 
@@ -232,9 +250,9 @@
 
 **Independent Test**: Perform agent calls, verify correct events emitted with call chains and available agent lists.
 
-- [ ] T065 [P] [US5] Add `AgentCallEvent` record and `AgentCallEventType` enum to `multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/Events.java` — fields per contracts/communication-events.md including `checklistAction` string field
-- [ ] T066 [US5] Add event emission to `call_agent` in `AcpTooling.java` — emit INITIATED on send, RETURNED on success, ERROR on failure. Include full call chain and available agents list.
-- [ ] T067 [US5] Add `AgentCallEvent` case to `BlackboardHistory` event handling in `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/BlackboardHistory.java` (if not auto-handled by existing `GraphEvent` subscription)
+- [x] T065 [P] [US5] Add `AgentCallEvent` record and `AgentCallEventType` enum to `multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/Events.java` — fields per contracts/communication-events.md including `checklistAction` string field
+- [x] T066 [US5] Add event emission to `call_agent` in `AcpTooling.java` — emit INITIATED on send, RETURNED on success, ERROR on failure. Include full call chain and available agents list.
+- [x] T067 [US5] Add `AgentCallEvent` case to `BlackboardHistory` event handling in `multi_agent_ide_java_parent/multi_agent_ide_lib/src/main/java/com/hayden/multiagentidelib/agent/BlackboardHistory.java` (if not auto-handled by existing `GraphEvent` subscription)
 
 **Checkpoint**: Communication events flowing — all call_agent actions produce observable events.
 
@@ -260,13 +278,13 @@
 
 ### call_controller Tool
 
-- [ ] T069 [US7] Add `call_controller` `@Tool`-annotated method to `AcpTooling.java` with `@SetFromHeader(MCP_SESSION_HEADER)` — parameters: justificationMessage. Builds `AgentToControllerRequest`, persists `AgentToControllerConversationNode`, resolves controller conversation key (create via `root.createChild()` if not found), builds `PromptContext`, runs through decorators + `DefaultLlmRunner`, publishes `HUMAN_REVIEW` interrupt via `PermissionGate.publishInterrupt()`, blocks until resolved, returns response with conversation key. **Must emit `AgentCallStartedEvent` before sending and `AgentCallCompletedEvent` after response/error** to feed `SessionKeyResolutionService.registerCall()`/`unregisterCall()` cycle detection.
+- [ ] T069 [US7] Add `call_controller` `@Tool`-annotated method to `AgentTopologyTools.java` with `@SetFromHeader(MCP_SESSION_HEADER)` — parameters: justificationMessage. Builds `AgentToControllerRequest`, persists `AgentToControllerConversationNode`, resolves controller conversation key (create via `root.createChild()` if not found), builds `PromptContext`, runs through decorators + `LlmRunner` with `ControllerCallRouting.class` response type (FR-014a), publishes `HUMAN_REVIEW` interrupt via `PermissionGate.publishInterrupt()`, blocks until resolved, returns response with conversation key. `AgentCallStartedEvent` emitted by `StartWorkflowRequestDecorator`, `AgentCallCompletedEvent` emitted by `WorkflowGraphResultDecorator`.
 - [ ] T070 [US7] Add message budget tracking to `call_controller` in `AcpTooling.java` — count messages per conversation key, escalate to user when budget exceeded (FR-017)
 - [ ] T071 [US7] Add event emission to `call_controller` — emit `AgentCallEvent` INITIATED on send, RETURNED on controller response (FR-006). Ensure `AgentCallCompletedEvent` is emitted even on error paths.
 
 ### AgentConversationController (REST)
 
-- [ ] T072 [US7] Create `AgentConversationController` in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/AgentConversationController.java` — `POST /api/agent-conversations/respond` endpoint. Uses `@RequestBody` only (GC-001). Implements controller conversation key resolution algorithm: validate if provided, lookup by targetAgentKey, create if not found. Builds `ControllerToAgentRequest`, persists `ControllerToAgentConversationNode`, emits `Artifact.ControllerChecklistTurn` if `checklistAction` present, runs through decorator pipeline, delivers to agent session, resolves pending interrupt
+- [ ] T072 [US7] Create `AgentConversationController` in `multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/AgentConversationController.java` — `POST /api/agent-conversations/respond` endpoint. Uses `@RequestBody` only (GC-001). Implements controller conversation key resolution algorithm: validate if provided, lookup by targetAgentKey, create if not found. Builds `ControllerToAgentRequest`, persists `ControllerToAgentConversationNode`, emits `Artifact.ControllerChecklistTurn` if `checklistAction` present, runs through decorator pipeline with `ControllerResponseRouting.class` response type (FR-014a), delivers to agent session, resolves pending interrupt
 - [ ] T073 [US7] Add `POST /api/agent-conversations/list` endpoint to `AgentConversationController` — accepts `{ "nodeId": "..." }`, walks ArtifactKey child hierarchy from given nodeId, returns conversation summaries (target key, agent type, message count, last message preview, pending status)
 
 **Checkpoint**: Full controller conversation flow functional — agent calls controller, controller responds, conversation key lifecycle works.

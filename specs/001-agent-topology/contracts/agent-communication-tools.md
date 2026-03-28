@@ -156,6 +156,106 @@ Response: array of conversation summaries (target agent key, agent type, message
 
 **Response**: Returns the resolved controller conversation key (for the controller to include in future calls to this same agent) and standard interrupt resolution status. The key is always returned regardless of whether the controller provided one — this is how the controller learns the key on first use and recovers from dropped keys.
 
+## AgentRouting & AgentResult Subtypes for Communication
+
+Each communication path flows through the decorator pipeline (`DecorateRequestResults` → `PromptContext` → `LlmRunner` → result decoration) and needs its own routing and result types permitted by the `AgentRouting` and `AgentResult` sealed interfaces.
+
+### AgentCallRouting (agent-to-agent)
+
+```java
+@Builder(toBuilder = true)
+@JsonClassDescription("Routing result from an inter-agent call. Contains the target agent's response.")
+record AgentCallRouting(
+    @JsonPropertyDescription("The target agent's response text.")
+    String response
+) implements AgentRouting {}
+```
+
+### AgentCallResult (agent-to-agent)
+
+```java
+@Builder(toBuilder = true) @With
+@JsonClassDescription("Result of an inter-agent call.")
+record AgentCallResult(
+    @SkipPropertyFilter ArtifactKey contextId,
+    String response,
+    @SkipPropertyFilter WorktreeSandboxContext worktreeContext
+) implements AgentResult {}
+```
+
+### ControllerCallRouting (agent-to-controller)
+
+```java
+@Builder(toBuilder = true)
+@JsonClassDescription("Routing result from an agent-to-controller call. Contains the controller's response.")
+record ControllerCallRouting(
+    @JsonPropertyDescription("The controller's response text.")
+    String response,
+    @JsonPropertyDescription("The resolved controller conversation key for future calls.")
+    String controllerConversationKey
+) implements AgentRouting {}
+```
+
+### ControllerCallResult (agent-to-controller)
+
+```java
+@Builder(toBuilder = true) @With
+@JsonClassDescription("Result of an agent-to-controller call.")
+record ControllerCallResult(
+    @SkipPropertyFilter ArtifactKey contextId,
+    String response,
+    String controllerConversationKey,
+    @SkipPropertyFilter WorktreeSandboxContext worktreeContext
+) implements AgentResult {}
+```
+
+### ControllerResponseRouting (controller-to-agent)
+
+```java
+@Builder(toBuilder = true)
+@JsonClassDescription("Routing result from a controller-to-agent response. Contains the enriched response after decorator pipeline.")
+record ControllerResponseRouting(
+    @JsonPropertyDescription("The enriched response text.")
+    String response,
+    @JsonPropertyDescription("The controller conversation key used.")
+    String controllerConversationKey
+) implements AgentRouting {}
+```
+
+### ControllerResponseResult (controller-to-agent)
+
+```java
+@Builder(toBuilder = true) @With
+@JsonClassDescription("Result of a controller-to-agent response.")
+record ControllerResponseResult(
+    @SkipPropertyFilter ArtifactKey contextId,
+    String response,
+    String controllerConversationKey,
+    @SkipPropertyFilter WorktreeSandboxContext worktreeContext
+) implements AgentResult {}
+```
+
+### AgentInterfaces Constants
+
+Each communication path registers constants in `AgentInterfaces`:
+
+| Path | AgentType | Agent Name | Action | Method | Template |
+|------|-----------|------------|--------|--------|----------|
+| Agent→Agent | `AGENT_CALL` | `agent-call` | `agent-call` | `callAgent` | `communication/agent_call` |
+| Agent→Controller | `CONTROLLER_CALL` | `controller-call` | `controller-call` | `callController` | `communication/controller_call` |
+| Controller→Agent | `CONTROLLER_RESPONSE` | `controller-response` | `controller-response` | `respondToAgent` | `communication/controller_response` |
+
+### Exhaustive Switch Requirements
+
+All switches on `AgentRouting` and `AgentResult` in the following locations MUST handle the new types:
+- `WorkflowGraphResultDecorator` — complete the conversation node and emit `AgentCallCompletedEvent`
+- `StartWorkflowRequestDecorator` — create the conversation node and emit `AgentCallStartedEvent`
+- `CliEventFormatter` — format the routing/result for CLI display
+- `FilterPropertiesDecorator` — return null (no routing filter needed for communication)
+- All other `RequestDecorator` and `ResultDecorator` implementations — handle or pass through
+
+---
+
 ## AgentRequest Subtypes for Communication
 
 Three new `AgentRequest` implementations added to `AgentModels.java`. These flow through `PromptContext` as `currentRequest`, enabling all existing decorator infrastructure to match on them.
