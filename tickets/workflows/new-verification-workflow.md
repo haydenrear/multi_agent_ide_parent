@@ -1,9 +1,9 @@
 Instead of waiting for the tests to complete, we do the following:
 
-1. commit, and push under a temp branch
-2. clone and pull that branch to a separate, tmp repo
-3. run the full test suite from that tmp repo, then move forward with the next phase
+1. commit, and push under a feature branch
+2. push to github and do the runner (tests.sh) 
+3. run the full test suite from that feature branch
+4. once it's finished, we ask the model to review the outputs (the markdown files, for our new data intelligence testing).
+5. based on what it finds, it pushes up specific changes to that one, and it may actually cancel runs to pull in that change for the next phase before it runs those tests 
 
-So then as we move from phase to phase, we'll go back to the previous branch, merging into main once that one's test is passing, creating the branch in tmp, running it.
-
-We could do it as a github runner with pull requests as well, but they usually stop the currently running one, and cost money. So we just encapsulate it.
+so for this we use github mcp server and runners.

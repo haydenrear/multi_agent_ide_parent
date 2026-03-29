@@ -11,3 +11,6 @@ Add to our skill for data intelligence testing:
 6. review our exploratory entrypoints, for each one of those, to our exploratory -> find any issues, if necessary this may lead back to 1.
 
 Probably we should have a whole separate skill for testing, so we can just reference that skill.md. And then reference that from our agents.md and claude.md.
+
+
+- We need to add prompt contributor stuff, prompt context stuff, that slipped through last time, which request decorators, result decorators, etc. ran.

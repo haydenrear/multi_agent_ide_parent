@@ -57,7 +57,7 @@ Java 21: Follow standard conventions
 <!-- MANUAL ADDITIONS START -->
 ## Agent Usage
 
-Do not use parallel sub-agents. Do not spawn parallel sub-agents. They are too expensive to run.
+Do not use parallel sub-agents. Do not spawn parallel sub-agents. Do not run any background tasks. They are too expensive to run.
 
 ## API Design Rule: No Path Variables for layerId
 

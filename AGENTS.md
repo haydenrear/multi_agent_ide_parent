@@ -2,7 +2,7 @@
 
 # Claude Code
 
-Please do not use parallel sub-agents. Please do not spawn a parallel sub-agent.
+Please do not use parallel sub-agents. Please do not spawn a parallel sub-agent. Do not run any background tasks.
 
 Auto-generated from all feature plans. Last updated: 2025-12-26
 
