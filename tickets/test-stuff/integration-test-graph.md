@@ -35,3 +35,15 @@ state and then once we find that state transition, produce an effect to then cha
 etc - and we can make this sort of reusable and everything, and then the controller running the tests acts as a poller,
 and then we've got them written down somewhere, so they can just run, and then once we've got the patterns down, we can
 capture them, clone it over to test graph, perhaps using mountebank for when it solidifies.
+
+---
+
+I've also been thinking of adding to this a jbang interface for test graph so that we can iterate more quickly.
+
+Starting out with pulling out a library that provides java sources as a graph, being able to add them in the executables
+the reason being that it should be able to load the exact source code it's testing, for example to save to database, 
+for test prep, calling it easily, etc. Having it in Java provides a mechanism for the code to not have to be rewritten,
+for the code that is in Java.
+
+So in this case, it's like using gradle to run jbang, python nodes - exposing metadata, AI running them, gherkin reports
+to view.
