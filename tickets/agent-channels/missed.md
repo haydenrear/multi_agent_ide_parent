@@ -15,5 +15,4 @@ Add check-list for agent -> controller and controller -> agent for all other age
 
 ---
 
-Add tests for MCP tools (and probably for our MCP client),
-IdeMcpAsyncServer, IdeMcpServer
+Add tests for MCP tools (and probably for our MCP client), IdeMcpAsyncServer, IdeMcpServer, also want to add for LazyToolObjectRegistration, and also our invariants and surface for these ones (including MCP versions).
