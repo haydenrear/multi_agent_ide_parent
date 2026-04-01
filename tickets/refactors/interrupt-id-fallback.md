@@ -1,0 +1,1 @@
+IN the event that there is an interrupt resolution, the origin node id is provided, and there is one interrupt available underneatu, but the interrupt id not provided, then we can fallback to resolving that interrupt.
