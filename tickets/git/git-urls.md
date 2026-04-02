@@ -1,1 +1,1 @@
-Should be able to clone, merge to (push), to URL.
+Should be able to clone from URL for worktree, goal.
