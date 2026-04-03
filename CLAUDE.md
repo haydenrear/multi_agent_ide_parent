@@ -19,19 +19,33 @@ Auto-generated from all feature plans. Last updated: 2025-12-20
 - GraphRepository + WorktreeRepository (existing) (009-worktree-sandbox)
 - Java 21 (with existing Kotlin interoperability in the Java parent modules) + Spring Boot 3.x, LangChain4j-Agentic, Embabel agent framework, Lombok, Jackson, existing parser operations (`SetEmbedding`, `AddEpisodicMemory`, `RewriteHistory`, `GitParser`), existing embedding client (`ModelServerEmbeddingClient`) (001-repo-onboarding-pipeline)
 - Existing commit-diff persistence repositories for commit artifacts, minimal onboarding run metadata store, Hindsight as external memory system of record (001-repo-onboarding-pipeline)
-- Java 21 (primary app), Kotlin (existing modules), Markdown/YAML (skill package and contracts) + Spring Boot 3.x, LangChain4j-Agentic, Embabel agent framework, Jackson, Lombok, existing ACP event model (`Events.*`) (001-multi-agent-test-supervisor)
+- Java 21 (primary app), Kotlin (existing modules), Markdown/YAML (skill package and contracts) + Spring Boot 3.x, Embabel agent framework, Jackson, Lombok, existing ACP event model (`Events.*`) (001-multi-agent-test-supervisor)
 - PostgreSQL-backed persistence for execution artifacts and run metadata; existing event repository for event stream access (001-multi-agent-test-supervisor)
-- Java 21 (app), Kotlin (existing modules), Python 3.x (skill scripts), Markdown/YAML (skill docs + contracts) + Spring Boot 3.x, LangChain4j-Agentic, Embabel framework, Jackson/Lombok, existing ACP events and TUI reducers (001-multi-agent-test-supervisor)
+- Java 21 (app), Kotlin (existing modules), Python 3.x (skill scripts), Markdown/YAML (skill docs + contracts) + Spring Boot 3.x, Embabel framework, Jackson/Lombok, existing ACP events and TUI reducers (001-multi-agent-test-supervisor)
 - Existing run/event persistence mechanisms; no new multi-tenant profile/version stores required in this ticke (001-multi-agent-test-supervisor)
-- Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withPropertyFilter), Lombok, Jackson (001-unified-interrupt-handler)
+- Java 21 + Spring Boot 3.x, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withPropertyFilter), Lombok, Jackson (001-unified-interrupt-handler)
 - N/A (in-memory BlackboardHistory, existing GraphRepository) (001-unified-interrupt-handler)
-- Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson (001-unified-interrupt-handler)
-- Java 21 + Spring Boot 3.x, Jackson, LangChain4j-Agentic, Embabel agent framework (001-data-layer-policy-filter)
+- Java 21 + Spring Boot 3.x, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson (001-unified-interrupt-handler)
+- Java 21 + Spring Boot 3.x, Jackson, Embabel agent framework (001-data-layer-policy-filter)
 - Existing persistence layer (PostgreSQL in production, H2/Postgres test profiles) for policy definitions, activation state, and filter decision history (001-data-layer-policy-filter)
-- Java 21 (primary), Kotlin (ACP/permission modules), Python (controller skill scripts) + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner), Lombok, Jackson, victools JSON schema generator (001-agent-topology)
+- Java 21 (primary), Kotlin (ACP/permission modules), Python (controller skill scripts) + Spring Boot 3.x, Embabel Agent Framework (@Agent, @Action, PromptRunner), Lombok, Jackson, victools JSON schema generator (001-agent-topology)
 - In-memory BlackboardHistory (per session), existing GraphRepository (persistent), existing WorktreeRepository (001-agent-topology)
+- Java 21 (primary), Kotlin (ACP module, embabel-agent framework) + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (`ActionRetryListener`, `AgentProcess`, `Blackboard`, `ActionQos`), Lombok, Jackson (001-agent-executor-retry)
+- N/A (in-memory `BlackboardHistory` per session, existing `GraphRepository`) (001-agent-executor-retry)
 
-- Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Mockito, AssertJ (001-multi-agent-ide-specs)
+- Java 21 + Spring Boot 3.x, Mockito, AssertJ (001-multi-agent-ide-specs), Embabel Agents
+
+## Frameworks
+
+You can find in libs/embabel-agent the framework we're using, checked out to the branch. It, however, is loaded from the .m2 maven repository. Therefore, if you need to make changes, you make changes there, and then from that directory, run 
+
+```shell
+cd [project root]/libs/embabel-agent
+mvn clean install
+```
+
+Then your changes will be loaded from the maven repository. Do not mount this library from directory. If you make changes to the framework, you must build it and install it to the mvn local repo.
+
 
 ## Project Structure
 
@@ -49,9 +63,9 @@ tests/
 Java 21: Follow standard conventions
 
 ## Recent Changes
+- 001-agent-executor-retry: Added Java 21 (primary), Kotlin (ACP module, embabel-agent framework) + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (`ActionRetryListener`, `AgentProcess`, `Blackboard`, `ActionQos`), Lombok, Jackson
 - 001-agent-topology: Added Java 21 (primary), Kotlin (ACP/permission modules), Python (controller skill scripts) + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner), Lombok, Jackson, victools JSON schema generator
 - 001-data-layer-policy-filter: Added Java 21 + Spring Boot 3.x, Jackson, LangChain4j-Agentic, Embabel agent framework
-- 001-unified-interrupt-handler: Added Java 21 + Spring Boot 3.x, LangChain4j-Agentic, Embabel Agent Framework (@Agent, @Action, PromptRunner.Creating, withAnnotationFilter), Lombok, Jackson
 
 
 <!-- MANUAL ADDITIONS START -->
