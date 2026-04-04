@@ -29,3 +29,10 @@ After that we'll want to:
 3. For each of those items, check to see if we want to insert any exploration points in for our data. We use exploration as points that we check in our markdown dump, to check to see "what we don't know we don't know". Based on this, you may go back to step 1.
 4. Then analyze the three files. Go to our markdown files and our logs. Check to see if our surface and invariants are being held. Then, for each of our exploration points, check to see if there's anything wrong.
 5. Produce a report and we'll reconvene with your findings.
+
+
+So when we do this, let's follow this:
+
+So now I'd like to do the integration test flow, with the [@test-matrix.md](file:///Users/hayde/IdeaProjects/multi_agent_ide_parent/.claude/commands/test-matrix.md) - identify changes to surface, changes to invariants, and exploration. Then identify changes to the integration test classes, mostly the two [@WorkflowAgentQueuedTest.java](file:///Users/hayde/IdeaProjects/multi_agent_ide_parent/multi_agent_ide_java_parent/multi_agent_ide/src/test/java/com/hayden/multiagentide/integration/WorkflowAgentQueuedTest.java) , and [@WorkflowAgentWorktreeMergeIntTest.java](file:///Users/hayde/IdeaProjects/multi_agent_ide_parent/multi_agent_ide_java_parent/multi_agent_ide/src/test/java/com/hayden/multiagentide/integration/WorkflowAgentWorktreeMergeIntTest.java) , add test cases there, identify where we need to add more trace data for our invariants. 
+
+After that, we run the tests, using the [@tests-multi-agent-ide-validation.sh](file:///Users/hayde/IdeaProjects/multi_agent_ide_parent/multi_agent_ide_java_parent/tests-multi-agent-ide-validation.sh) , make sure they pass, add any changes, and analyze the data within the context of the invariants and exploration to find what we don't know we don't know.
