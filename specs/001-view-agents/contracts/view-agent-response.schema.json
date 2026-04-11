@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ViewAgentResponse",
+  "description": "Structured JSON output from a view-agent query invocation.",
+  "type": "object",
+  "required": ["view_name", "mode", "query", "response", "mental_model_updated", "stale_sections_refreshed", "metadata_files_created", "error"],
+  "additionalProperties": false,
+  "properties": {
+    "view_name": {
+      "type": "string",
+      "description": "Name of the view that was processed"
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["view", "root"],
+      "description": "Operating mode"
+    },
+    "query": {
+      "type": "string",
+      "description": "The original query"
+    },
+    "response": {
+      "type": "string",
+      "description": "The agent's answer"
+    },
+    "mental_model_updated": {
+      "type": "boolean",
+      "description": "Whether the mental model was modified during this invocation"
+    },
+    "stale_sections_refreshed": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Section paths that were refreshed during the staleness check step"
+    },
+    "metadata_files_created": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "IDs of new MetadataFiles created during this invocation"
+    },
+    "error": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "null" }
+      ],
+      "description": "Error message if the invocation failed, null otherwise"
+    }
+  }
+}

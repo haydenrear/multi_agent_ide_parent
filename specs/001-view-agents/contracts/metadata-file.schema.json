@@ -1,0 +1,251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MetadataFile",
+  "description": "Immutable metadata file recording the provenance of a mental model snapshot. Never modified after creation.",
+  "type": "object",
+  "required": [
+    "id",
+    "created_at",
+    "mental_model",
+    "scope",
+    "owner_name",
+    "view_script_hash",
+    "diff_entries",
+    "snapshot_dir"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier: <ISO-timestamp>-<content-sha256-prefix-8>",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}-\\d{2}-\\d{2}-[a-f0-9]{8}$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of creation"
+    },
+    "mental_model": {
+      "type": "string",
+      "const": "mental-models.md",
+      "description": "Always 'mental-models.md' — the single mental model per scope owner"
+    },
+    "scope": {
+      "type": "string",
+      "enum": ["view", "root"],
+      "description": "Metadata scope"
+    },
+    "owner_name": {
+      "type": "string",
+      "description": "View name for scope=view, or 'root' for scope=root"
+    },
+    "view_script_hash": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Git blob hash of the owning view's regen.py for scope=view; null for scope=root because the root has no script."
+    },
+    "diff_entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          { "$ref": "#/$defs/ViewDiffEntry" },
+          { "$ref": "#/$defs/RootDiffEntry" }
+        ]
+      },
+      "description": "One entry per mental-model section, keyed by section_path"
+    },
+    "snapshot_dir": {
+      "type": "string",
+      "description": "Relative path to the associated .snapshots/ directory"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "scope": { "const": "view" }
+        }
+      },
+      "then": {
+        "properties": {
+          "view_script_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "diff_entries": {
+            "items": { "$ref": "#/$defs/ViewDiffEntry" }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "scope": { "const": "root" }
+        }
+      },
+      "then": {
+        "properties": {
+          "owner_name": { "const": "root" },
+          "view_script_hash": { "type": "null" },
+          "diff_entries": {
+            "items": { "$ref": "#/$defs/RootDiffEntry" }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "ViewDiffEntry": {
+      "type": "object",
+      "required": ["section_path", "offset", "source_files", "supersedes"],
+      "additionalProperties": false,
+      "properties": {
+        "section_path": {
+          "type": "string",
+          "description": "Unique heading path (e.g. 'Architecture Overview > Data Flow')"
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Section ordinal position in the document"
+        },
+        "source_files": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/SourceFileRef" }
+        },
+        "child_models": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "supersedes": {
+          "oneOf": [
+            { "$ref": "#/$defs/SupersedesRef" },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
+    "RootDiffEntry": {
+      "type": "object",
+      "required": ["section_path", "offset", "child_models", "supersedes"],
+      "additionalProperties": false,
+      "properties": {
+        "section_path": {
+          "type": "string",
+          "description": "Unique heading path (e.g. 'Architecture Overview > Data Flow')"
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Section ordinal position in the document"
+        },
+        "source_files": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "child_models": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/ChildModelRef" }
+        },
+        "supersedes": {
+          "oneOf": [
+            { "$ref": "#/$defs/SupersedesRef" },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
+    "SourceFileRef": {
+      "type": "object",
+      "required": ["repo_path", "content_hash", "snapshot_path"],
+      "additionalProperties": false,
+      "properties": {
+        "repo_path": {
+          "type": "string",
+          "description": "Relative path from repo root"
+        },
+        "content_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$",
+          "description": "Git blob hash of the file's working-tree content"
+        },
+        "snapshot_path": {
+          "type": "string",
+          "description": "Relative path inside the snapshot directory"
+        },
+        "line_span": {
+          "oneOf": [
+            { "$ref": "#/$defs/LineSpan" },
+            { "type": "null" }
+          ],
+          "description": "Optional specific source-file span using start_line + line_count"
+        }
+      }
+    },
+    "ChildModelRef": {
+      "type": "object",
+      "required": [
+        "view_name",
+        "child_head_metadata_id",
+        "child_section_paths",
+        "snapshot_path"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "view_name": {
+          "type": "string",
+          "description": "Name of the child view (e.g. 'api-module')"
+        },
+        "child_head_metadata_id": {
+          "type": "string",
+          "description": "ID of the child view's head MetadataFile at time of root metadata creation"
+        },
+        "child_section_paths": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" },
+          "description": "Specific child section paths referenced by this root diff entry"
+        },
+        "snapshot_path": {
+          "type": "string",
+          "description": "Relative path inside the snapshot directory (copy of the child mental-models.md)"
+        }
+      }
+    },
+    "LineSpan": {
+      "type": "object",
+      "required": ["start_line", "line_count"],
+      "additionalProperties": false,
+      "properties": {
+        "start_line": { "type": "integer", "minimum": 1 },
+        "line_count": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "SupersedesRef": {
+      "type": "object",
+      "required": ["metadata_file_id", "section_path"],
+      "additionalProperties": false,
+      "properties": {
+        "metadata_file_id": {
+          "type": "string",
+          "description": "ID of the previous MetadataFile"
+        },
+        "section_path": {
+          "type": "string",
+          "description": "Section path of the DiffEntry being superseded"
+        }
+      }
+    }
+  }
+}
