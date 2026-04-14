@@ -11,19 +11,19 @@
 
 ## 1. Build the Docker Images
 
+Gradle handles the full dependency chain: `jdk → python → python-with-docker → view-agent-exec`, and `view-agents-utils` independently. Use the Gradle properties to enable the builds:
+
 ```bash
-cd multi_agent_ide_python_parent/packages
-
-# Build the utils image (metadata, custody, helper scripts)
-cd view_agents_utils
-docker build -t view-agents-utils:latest -f docker/Dockerfile .
-cd ..
-
-# Build the exec image (Ollama query execution)
-cd view_agent_exec
-docker build -t view-agent-exec:latest -f docker/Dockerfile .
-cd ..
+# Build all view-agent Docker images (handles base image dependencies automatically)
+./gradlew :multi_agent_ide_python_parent:packages:view_agents_utils:buildDocker \
+          :multi_agent_ide_python_parent:packages:view_agent_exec:buildDocker \
+          -Penable-docker=true \
+          -Pbuild-view-agent-utils=true \
+          -Pbuild-view-agent-exec=true \
+          -Pbuild-runner-code=true
 ```
+
+The exec image is built on `python-with-docker` (from `runner_code`), which includes the Docker CLI so the agent can invoke `view-agents-utils` containers as tools.
 
 ## 2. Generate Views for a Repository
 
@@ -146,9 +146,10 @@ python skills/multi_agent_ide_skills/multi_agent_ide_view_agent_exec/scripts/que
 ```
 
 The agent will:
-1. Check if the mental model is stale (including the view script hash for view-level models) and refresh if needed
-2. Query Ollama with the view context
-3. Output a JSON response to stdout
+1. Receive a prompt with the view directory, repo root, and skill script references
+2. Use `view-model status` to check staleness, `view-model show` to read the mental model, and `view-model update` to refresh stale sections — all as part of its natural reasoning
+3. Query Ollama with the view context and the user's query
+4. Output a JSON response to stdout
 
 ## 5. Run the Root Agent (Cross-View Synthesis)
 

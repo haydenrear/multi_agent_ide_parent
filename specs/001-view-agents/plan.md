@@ -183,19 +183,15 @@ multi_agent_ide_parent/
 │           │       ├── cli.py                  # Click CLI: view-agent query entrypoint
 │           │       ├── agent/
 │           │       │   ├── __init__.py
-│           │       │   ├── runner.py           # Load view, construct prompt, call Ollama
+│           │       │   ├── runner.py           # Construct skill-based prompt, call Ollama
 │           │       │   └── root_runner.py      # --mode root: synthesize across views
-│           │       └── refresh/
-│           │           ├── __init__.py
-│           │           └── staleness_refresh.py # Staleness check + Ollama-driven refresh
 │           ├── tests/
 │           │   ├── conftest.py
 │           │   ├── test_runner.py
 │           │   ├── test_root_runner.py
-│           │   ├── test_staleness_refresh.py
 │           │   └── test_cli.py
 │           └── docker/
-│               ├── Dockerfile                  # Image: view-agent-exec:latest
+│               ├── Dockerfile                  # Image: view-agent-exec:latest (FROM python-with-docker)
 │               └── build.sh
 │
 ├── skills/multi_agent_ide_skills/              # Existing skills (GIT SUBMODULE)

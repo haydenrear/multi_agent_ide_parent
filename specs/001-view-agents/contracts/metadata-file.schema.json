@@ -53,14 +53,14 @@
     },
     "diff_entries": {
       "type": "array",
-      "minItems": 1,
+      "minItems": 0,
       "items": {
         "oneOf": [
           { "$ref": "#/$defs/ViewDiffEntry" },
           { "$ref": "#/$defs/RootDiffEntry" }
         ]
       },
-      "description": "One entry per mental-model section, keyed by section_path"
+      "description": "One entry per mental-model section (empty for bootstrap HEAD)"
     },
     "snapshot_dir": {
       "type": "string",
