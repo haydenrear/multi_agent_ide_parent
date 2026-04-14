@@ -1,0 +1,12 @@
+Reconstruct or clarify context for the workflow.
+
+Reason: {{ reason }}
+Goal: {{ goal }}
+
+{% include "workflow/_context_manager_body.jinja" %}
+
+## Guidance
+
+- Route to Context Manager only when a requesting agent needs specific missing context from another agent chat/history.
+- Use the reconstructed context to route back to the requesting/return agent so it can continue its own work.
+- Do not use Context Manager as a general rerouting mechanism.

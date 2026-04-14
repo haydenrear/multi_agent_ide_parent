@@ -1,0 +1,235 @@
+{
+  "id": "2026-04-13T19-39-03-1ffeb25b",
+  "created_at": "2026-04-13T19:39:03.984759Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "graph-nodes",
+  "view_script_hash": "ed618a05b373d52c7c471bd58540e3f7585d4598",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-03-1ffeb25b",
+        "section_path": "$.sections[\"Overview\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"The Sealed Type Hierarchy and Capability Composition\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/GraphNode.java",
+          "content_hash": "5dd443f61d327b8f0fe34e82db341ddcf624d510",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/GraphNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/GraphNodeBuilderHelper.java",
+          "content_hash": "2ccda4eaa7bff5b9a1d1856c9a8e16ac2388287a",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/GraphNodeBuilderHelper.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/ExecutionNode.java",
+          "content_hash": "d30bb8d7b6aad4d13d885ed8050321feb246c959",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/ExecutionNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/Orchestrator.java",
+          "content_hash": "4ea0aedfb4e449e09e5b4756bfc1b25df3f33fb6",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/Orchestrator.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/Collector.java",
+          "content_hash": "9a9cff05af74c92526256efda5d2c277890ef799",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/Collector.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/CollectorNode.java",
+          "content_hash": "eae4127a6a9435f7ff2afa8c53abdfb4c4e8647f",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/CollectorNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/Interruptible.java",
+          "content_hash": "607cab09711d1757c5d404b794f33babd902d98d",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/Interruptible.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/HasWorkflowContext.java",
+          "content_hash": "24300d03f869f6758d7fd0736c4ca016dfbe8802",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/HasWorkflowContext.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/HasChatId.java",
+          "content_hash": "2c2a0e940edc64c3827a91f65db87fee052fb454",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/HasChatId.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/Viewable.java",
+          "content_hash": "f6d54ce0744013e88503352b0d706731db6b3c0e",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/Viewable.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-03-1ffeb25b",
+        "section_path": "$.sections[\"The Sealed Type Hierarchy and Capability Composition\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"The Three-Phase Fan-Out Pattern\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/OrchestratorNode.java",
+          "content_hash": "5eae72d19a7724f2ccce1f3f948b183e90d9d986",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/OrchestratorNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/DiscoveryOrchestratorNode.java",
+          "content_hash": "6625435136b43d3c4482b90a9cadd812db9f0d9b",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/DiscoveryOrchestratorNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/DiscoveryDispatchAgentNode.java",
+          "content_hash": "05f292240e0c37a1c0c4bceb4c48e3053a541fc6",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/DiscoveryDispatchAgentNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/DiscoveryNode.java",
+          "content_hash": "87ec8699689119b07d37e10bcb0cfa0cae6f9ba6",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/DiscoveryNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/DiscoveryCollectorNode.java",
+          "content_hash": "f4d4fc517be1e6d85f7ff69fa7cbca67aad2c8db",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/DiscoveryCollectorNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/PlanningOrchestratorNode.java",
+          "content_hash": "932427a404d25e3b6f246cfbc79c2c5eaff29086",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/PlanningOrchestratorNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/PlanningDispatchAgentNode.java",
+          "content_hash": "9bf3e4a2e58385be2f7cff4b3c3b7f758a6bbbd4",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/PlanningDispatchAgentNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/PlanningNode.java",
+          "content_hash": "40c195a63e47dac68748905f404c65015aa6aef9",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/PlanningNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/PlanningCollectorNode.java",
+          "content_hash": "ec06ce41bfd679b04a0e4242ab0fb3adac7bb027",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/PlanningCollectorNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/TicketOrchestratorNode.java",
+          "content_hash": "f12e1e0d357aad02e2df02f1d94e43f52c3c35d9",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/TicketOrchestratorNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/TicketDispatchAgentNode.java",
+          "content_hash": "4ffb4db16881881d15b1f3efea7e61204170cc00",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/TicketDispatchAgentNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/TicketNode.java",
+          "content_hash": "5d93bac98f84e53850eca8cb70ef851063b9a8a1",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/TicketNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/TicketCollectorNode.java",
+          "content_hash": "b65e80a4d8589878c89a850ca4383886d6289060",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/TicketCollectorNode.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-03-1ffeb25b",
+        "section_path": "$.sections[\"The Three-Phase Fan-Out Pattern\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Node Lifecycle and Status Transitions\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/CollectedNodeStatus.java",
+          "content_hash": "04d572089ade2ecf2435a02b7a1da970eadcd70b",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/CollectedNodeStatus.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-03-1ffeb25b",
+        "section_path": "$.sections[\"Node Lifecycle and Status Transitions\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"The Interrupt Flow\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/Interrupt.java",
+          "content_hash": "73ca64e5992bf5386bb17ad7c03702b52c50b346",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/Interrupt.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-03-1ffeb25b",
+        "section_path": "$.sections[\"The Interrupt Flow\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"WorkflowGraphState: The Routing Table\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-03-1ffeb25b",
+        "section_path": "$.sections[\"WorkflowGraphState: The Routing Table\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Side-Channel Nodes\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/DataLayerOperationNode.java",
+          "content_hash": "c849c16b57286c7471ac3afb615f6d9f7b122685",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/DataLayerOperationNode.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-03-1ffeb25b",
+        "section_path": "$.sections[\"Side-Channel Nodes\"]"
+      }
+    }
+  ],
+  "snapshot_dir": "2026-04-13T19-39-03-1ffeb25b.snapshots"
+}

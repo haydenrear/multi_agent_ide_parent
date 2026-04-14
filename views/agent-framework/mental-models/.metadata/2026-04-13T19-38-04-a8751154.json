@@ -1,0 +1,310 @@
+{
+  "id": "2026-04-13T19-38-04-a8751154",
+  "created_at": "2026-04-13T19:38:04.996847Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "agent-framework",
+  "view_script_hash": "88612fdbd6009524f0bc022f08df8306a230ec5c",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-04-a8751154",
+        "section_path": "$.sections[\"Overview\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Embabel Integration\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/embabel/EmbabelUtil.java",
+          "content_hash": "4043a1921225bd30c37ae4b6304653c862029b49",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/embabel/EmbabelUtil.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentLifecycleHandler.java",
+          "content_hash": "910fca049ced19c1f37cfa8f138e671649f0f566",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentLifecycleHandler.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentContext.java",
+          "content_hash": "f97da92852aa4d92ffddf453724d2df1d6a61280",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentContext.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/MultiAgentEmbabelConfig.java",
+          "content_hash": "f262d2fad18c7ae0e677f04b1fb9b486e262d481",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/MultiAgentEmbabelConfig.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/kotlin/com/hayden/acp_cdc_ai/acp/AcpChatModel.kt",
+          "content_hash": "ccb648e8c3433959bc4eeebf758c02247301ff0c",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/kotlin/com/hayden/acp_cdc_ai/acp/AcpChatModel.kt",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/kotlin/com/hayden/acp_cdc_ai/acp/AcpSessionManager.kt",
+          "content_hash": "04fc5676bca64dc1354155a7b9c662fadd741d6a",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/kotlin/com/hayden/acp_cdc_ai/acp/AcpSessionManager.kt",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/config/AcpModelProperties.java",
+          "content_hash": "acb2d4a4854a83b9a04562b2cc436c4e3e0f7ccb",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/config/AcpModelProperties.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-04-a8751154",
+        "section_path": "$.sections[\"Embabel Integration\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Agent Type System\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentType.java",
+          "content_hash": "de0cdd4c04582457061edcacc4770e28e4f23ee6",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentType.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentInterfaces.java",
+          "content_hash": "83c266ec7a42893718956b2abeefb794f552a995",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentInterfaces.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentModels.java",
+          "content_hash": "21f8b9539ca6e13377b74b532387e852f3770716",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentModels.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentPretty.java",
+          "content_hash": "17750915f0fe07abcaed02a52455ee4d9bcda8b9",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentPretty.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/DecoratorContext.java",
+          "content_hash": "95bf72a241c8a56b96bf65ea0bdcd839b1799c0b",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/DecoratorContext.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/UpstreamContext.java",
+          "content_hash": "e97b0b222e60ffa193f382b99dcbf39a27295f6f",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/UpstreamContext.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/ErrorDescriptor.java",
+          "content_hash": "f3680a6e9315dbefc6e68f33c54d45852ecae255",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/ErrorDescriptor.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/ErrorTemplates.java",
+          "content_hash": "ec1718353103d3c365973068265bf1b437407868",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/ErrorTemplates.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/ResolvedTemplate.java",
+          "content_hash": "89da04fa8eac64335c3b14dd146ea3610e3889a6",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/ResolvedTemplate.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/DefaultDegenerateLoopPolicy.java",
+          "content_hash": "9a698c4b089798e44a541f4bf2155b01bb415c07",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/DefaultDegenerateLoopPolicy.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/DegenerateLoopPolicy.java",
+          "content_hash": "6fcc7fe3e6d42483fc7c87f0480c3386569e48fb",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/DegenerateLoopPolicy.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/SkipPropertyFilter.java",
+          "content_hash": "8dd41594d62a50b2fd23d5961743f981a5472296",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/SkipPropertyFilter.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/GraphNodeFactory.java",
+          "content_hash": "824785badc64c86c1ebf18d7d6d1c92b7dd7f359",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/GraphNodeFactory.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-04-a8751154",
+        "section_path": "$.sections[\"Agent Type System\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Tool System\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tool/ToolAbstraction.java",
+          "content_hash": "b317fdd1e92fd7147848756410f7e0de4846629a",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tool/ToolAbstraction.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tool/ToolContext.java",
+          "content_hash": "a6e7b507f51487212944a6769c68c2a24ef0625f",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tool/ToolContext.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tool/EmbabelToolObjectProvider.java",
+          "content_hash": "b2161348e226338f80b36d85304403240c98e181",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tool/EmbabelToolObjectProvider.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tool/EmbabelToolObjectRegistry.java",
+          "content_hash": "f07cf9dcc514d6cf883ec0f95c34badcdaad2247",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tool/EmbabelToolObjectRegistry.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tool/LazyToolObjectRegistration.java",
+          "content_hash": "6fd8c57f0508628d370bd3255138e2e040f581e9",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tool/LazyToolObjectRegistration.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tool/McpToolObjectRegistrar.java",
+          "content_hash": "6255c6fa7a6a4e406184e33268ff7c698223f5a5",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tool/McpToolObjectRegistrar.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentTools.java",
+          "content_hash": "81171cdec9994c6d98869600b1b4f42fc69af5e9",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentTools.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentTopologyTools.java",
+          "content_hash": "08253444ff7f78543a72ff4ff373fe29781b59dc",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentTopologyTools.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AcpTooling.java",
+          "content_hash": "7b8b3baa4638756e4dabb67619d8c732b217cf3f",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AcpTooling.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AskUserQuestionTool.java",
+          "content_hash": "838334c100e8f243154fdac5b0e64fb88517b60d",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AskUserQuestionTool.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AskUserQuestionToolAdapter.java",
+          "content_hash": "9fa674bbd3ced3926ada15701230cf229517f75a",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AskUserQuestionToolAdapter.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentQuestionAnswerFunction.java",
+          "content_hash": "712de20cbab6854c98a27c353c6147d3e93208da",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentQuestionAnswerFunction.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-04-a8751154",
+        "section_path": "$.sections[\"Tool System\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"ToolAbstraction: The Unified Wrapper\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-04-a8751154",
+        "section_path": "$.sections[\"ToolAbstraction: The Unified Wrapper\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Three Tool Carrier Beans\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-04-a8751154",
+        "section_path": "$.sections[\"Three Tool Carrier Beans\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"EmbabelToolObjectRegistry\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-04-a8751154",
+        "section_path": "$.sections[\"EmbabelToolObjectRegistry\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"LLM Runner: Template to ACP Call\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/llm/AgentLlmExecutor.java",
+          "content_hash": "31ce69e0867224c2f1c44a7046fb43d4277cc116",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/llm/AgentLlmExecutor.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-04-a8751154",
+        "section_path": "$.sections[\"LLM Runner: Template to ACP Call\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Skill System\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/skills/SkillFinder.java",
+          "content_hash": "19fc302d072dcf859bdf3df98b08904edb751604",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/skills/SkillFinder.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-04-a8751154",
+        "section_path": "$.sections[\"Skill System\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Episodic Memory\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-04-a8751154",
+        "section_path": "$.sections[\"Episodic Memory\"]"
+      }
+    }
+  ],
+  "snapshot_dir": "2026-04-13T19-38-04-a8751154.snapshots"
+}

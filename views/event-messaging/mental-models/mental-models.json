@@ -1,0 +1,45 @@
+{
+  "view_name": "event-messaging",
+  "sections": {
+    "Overview": {
+      "package": "overview",
+      "content": "The event system is a synchronous, in-process multicast pub/sub bus. Every significant occurrence \u2014 node lifecycle, LLM call start/complete, interrupts, artifacts, streaming tokens, worktree changes \u2014 is published as a typed `Events.GraphEvent` subtype. All listeners receive every event in `order()` priority sequence. There is no asynchronous dispatch, no queue, and no separate thread; the thread that calls `eventBus.publish()` executes each listener's `onEvent()` call sequentially before `publish()` returns.",
+      "subsections": {}
+    },
+    "DefaultEventBus: The Synchronous Fan-Out": {
+      "package": "defaulteventbus-the-synchronous-fan-out",
+      "content": "`DefaultEventBus` is a Spring `@Service`. All `EventListener` beans are auto-injected via `@Autowired @Lazy List<EventListener>` \u2014 no explicit registration needed. The subscriber list is sorted by `order()` on each `subscribe()` call.\n\n`publish(GraphEvent)` iterates a snapshot copy of the subscriber list, filters by `listener.isInterestedIn(event)`, and calls `onEvent(event)`. Per-listener exceptions are caught and logged \u2014 other listeners always receive the event even if one throws.\n\n`EventBus.Process` is an `InheritableThreadLocal<AgentNodeKey>` that carries the current executing node's ID into nested threads, enabling event correlation without explicit parameter passing.",
+      "subsections": {}
+    },
+    "The Subscriber Table": {
+      "package": "subscriber-table",
+      "content": "| Listener | Order | Interest | Purpose |\n|---|---|---|---|\n| `SaveGraphEventToGraphRepositoryListener` | `MIN_VALUE` | NODE_ADDED, ADD_CHILD_NODE, NODE_UPDATED, NODE_DELETED, NODE_STATUS_CHANGED | Persists node state to `GraphRepository` **first**, before anything reads it |\n| `InterruptRequestEventListener` | 0 | INTERRUPT_REQUEST_EVENT only | Validates target node is RUNNING, composes interrupt message, re-publishes ADD_MESSAGE_EVENT + INTERRUPT_STATUS |\n| `AgentEventListener` | 0 | all | Orchestration brain: routes NodeAdded \u2192 AgentRunner to start agents; AddMessage \u2192 inject into live agent; NodeStatusChanged, ReviewRequested, Stop, Pause \u2192 agent lifecycle control |\n| `ArtifactEventListener` | 0 | most (except TUI/mode/status-changed) | Builds and persists the artifact tree from emitted artifacts, stream deltas, and semantic graph events |\n| `SaveEventToEventRepositoryListener` | 0 | all | Appends every event to `EventStreamRepository` (enables SSE catch-up replay) |\n| `SseEventAdapter` | 0 | all | Serializes events via `AgUiSerdes`, applies controller/path filters per emitter, pushes to all SSE connections |\n| `WebSocketEventAdapter` | 0 | all | Serializes events, pushes to all open WebSocket sessions |\n| `BlackboardHistory` (per-agent, dynamic) | variable | agent-scoped | Per-agent-process event history; subscribed on first ActionStartedEvent, unsubscribed on terminal routing |",
+      "subsections": {}
+    },
+    "Event Type Taxonomy": {
+      "package": "event-type-taxonomy",
+      "content": "The complete `Events.GraphEvent` sealed hierarchy:\n\n**Node lifecycle**: NODE_ADDED, ADD_CHILD_NODE, NODE_UPDATED, NODE_DELETED, NODE_STATUS_CHANGED, NODE_BRANCHED, NODE_PRUNED, NODE_ERROR, NODE_STREAM_DELTA, NODE_THOUGHT_DELTA, NODE_REVIEW_REQUESTED, NODE_BRANCH_REQUESTED\n\n**Goal lifecycle**: GOAL_STARTED, GOAL_COMPLETED\n\n**Worktree lifecycle**: WORKTREE_CREATED, WORKTREE_BRANCHED, WORKTREE_MERGED, WORKTREE_DISCARDED\n\n**Merge lifecycle**: MERGE_PHASE_STARTED, MERGE_PHASE_COMPLETED\n\n**Agent execution**: ACTION_STARTED, ACTION_COMPLETED, AGENT_EXECUTOR_START, AGENT_EXECUTOR_COMPLETE, PROMPT_RECEIVED\n\n**Agent calls**: AGENT_CALL_STARTED, AGENT_CALL_COMPLETED, AGENT_CALL (RETURNED type for controller responses)\n\n**Retry/error observability**: NULL_RESULT, INCOMPLETE_JSON, UNPARSED_TOOL_CALL, TIMEOUT, PARSE_ERROR, COMPACTION\n\n**Interrupt/control**: INTERRUPT_REQUEST_EVENT, INTERRUPT_STATUS, RESOLVE_INTERRUPT, STOP_AGENT, PAUSE_EVENT, RESUME_EVENT, ADD_MESSAGE_EVENT\n\n**Chat sessions**: CHAT_SESSION_CREATED, CHAT_SESSION_CLOSED, CHAT_SESSION_RESET\n\n**UI/TUI**: GUI_RENDER, UI_DIFF_APPLIED, UI_DIFF_REJECTED, UI_DIFF_REVERTED, UI_FEEDBACK, USER_MESSAGE_CHUNK, CURRENT_MODE_UPDATE, AVAILABLE_COMMANDS_UPDATE, PLAN_UPDATE, TUI_INTERACTION, TUI_SYSTEM\n\n**Permissions**: PERMISSION_REQUESTED, PERMISSION_RESOLVED\n\n**Data layer**: AI_FILTER_SESSION, PROPAGATION, TRANSFORMATION, ARTIFACT_EMITTED",
+      "subsections": {}
+    },
+    "The Canonical Event Flow": {
+      "package": "the-canonical-event-flow",
+      "content": "```\nAgent code / REST controller / Embabel framework\n \u2502\n \u2502 eventBus.publish(event)\n \u25bc\nDefaultEventBus (synchronous, ordered fan-out)\n \u2502\n \u251c\u2500\u2500[MIN_VALUE] SaveGraphEventToGraphRepositoryListener\n \u2502                \u2192 GraphRepository (in-memory ConcurrentHashMap<nodeId, GraphNode>)\n \u2502\n \u251c\u2500\u2500[0] InterruptRequestEventListener\n \u2502        (only INTERRUPT_REQUEST_EVENT)\n \u2502        \u2192 validates node RUNNING, re-publishes ADD_MESSAGE_EVENT + INTERRUPT_STATUS\n \u2502\n \u251c\u2500\u2500[0] AgentEventListener\n \u2502        \u2192 AgentRunner \u2192 AgentLifecycleHandler \u2192 AgentPlatform (start/drive agents)\n \u2502\n \u251c\u2500\u2500[0] ArtifactEventListener\n \u2502        \u2192 ArtifactTreeBuilder \u2192 ArtifactService (persistent artifact trees)\n \u2502\n \u251c\u2500\u2500[0] SaveEventToEventRepositoryListener\n \u2502        \u2192 EventStreamRepository (in-memory replay store for SSE catch-up)\n \u2502\n \u251c\u2500\u2500[0] SseEventAdapter\n \u2502        \u2192 filter pipeline (object + JSON-path per emitter)\n \u2502        \u2192 all registered SseEmitter HTTP connections\n \u2502\n \u2514\u2500\u2500[0] WebSocketEventAdapter\n          \u2192 filter pipeline (object + JSON-path global)\n          \u2192 all connected WebSocket sessions\n```",
+      "subsections": {}
+    },
+    "AgentRunner: Event-to-Agent Bridge": {
+      "package": "agentrunner-event-to-agent-bridge",
+      "content": "`AgentRunner` is called exclusively from `AgentEventListener` \u2014 never from REST endpoints. It dispatches on event type:\n\n- **NodeAddedEvent** \u2192 `maybeRunWorkflow()`: only acts if node is `OrchestratorNode` in READY status. Checks the `AgentProcess` state and only launches if absent or non-RUNNING. Delegates to `AgentLifecycleHandler.runAgent()` \u2192 `agentPlatform.runAgentFrom()` (blocks until workflow completes).\n\n- **AddMessageEvent** \u2192 `addMessageToAgent()`: sends the message content to the live `AgentProcess` via `OutputChannel.send(MessageOutputChannelEvent)`. This injects interrupt responses, user messages, and resume content into an already-running agent's conversation.",
+      "subsections": {}
+    },
+    "SSE vs WebSocket": {
+      "package": "sse-vs-websocket",
+      "content": "| Dimension | SseEventAdapter | WebSocketEventAdapter |\n|---|---|---|\n| Transport | HTTP/1.1 SSE (`text/event-stream`) via `SseEmitter` | WebSocket full-duplex via `WebSocketSession` |\n| Per-client filtering | Each `RegisteredEmitter` carries a `Predicate<GraphEvent>` and `controllerId` | No per-client predicate; every session receives every event |\n| Catch-up replay | On registration, replays all events from `EventStreamRepository` | No catch-up; client only receives events after connection |\n| Event framing | SSE events named `\"ag-ui\"` | Raw `TextMessage` with JSON payload |",
+      "subsections": {}
+    },
+    "Read-Back Loops": {
+      "package": "read-back-loops",
+      "content": "The only circular dependencies:\n\n1. `InterruptRequestEventListener` receives INTERRUPT_REQUEST_EVENT and re-publishes ADD_MESSAGE_EVENT + INTERRUPT_STATUS \u2014 deliberate re-publish chain\n2. `AgentEventListener` receives NODE_ERROR from agent failure and may re-publish NODE_ERROR \u2014 error propagation\n3. `SseEventAdapter.registerEmitter()` reads from `EventStreamRepository` (populated by `SaveEventToEventRepositoryListener`) for catch-up replay\n\nNo listener produces events that trigger itself \u2014 the re-publish chains are always to different event types.",
+      "subsections": {}
+    }
+  }
+}

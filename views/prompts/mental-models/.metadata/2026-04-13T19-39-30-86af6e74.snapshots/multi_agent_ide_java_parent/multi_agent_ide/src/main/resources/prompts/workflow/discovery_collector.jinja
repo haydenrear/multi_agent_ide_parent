@@ -1,0 +1,28 @@
+{% include "workflow/_discovery_research_disclaimer.jinja" %}
+
+Goal: {{ goal }}
+Discovery Results: {{ discoveryResults }}
+
+Create a unified discovery document with:
+- Architecture overview
+- Key modules and components
+- Data flow and dependencies
+- Integration points
+- Technology stack summary
+- Test patterns and conventions
+- Critical files and entry points
+
+{% include "workflow/_review_justification.jinja" %}
+{% include "justification/discovery_collector.jinja" %}
+
+{% include "workflow/_interrupt_guidance.jinja" %}
+
+{% include "workflow/_collector_base.jinja" %}
+
+Happy path: return collectorResult with collectorDecision.decisionType = ADVANCE_PHASE and requestedPhase = "PLANNING".
+If you believe discovery is not enough, follow the Route-Back Review Protocol:
+in your structured JSON response, return a result with only `interruptRequest` populated, explaining the discovery gaps.
+After review, if approved: set collectorResult with ROUTE_BACK so discovery runs again.
+After review, if rejected: set collectorResult with ADVANCE_PHASE and requestedPhase = "PLANNING",
+filling in unifiedCodeMap, recommendations, and querySpecificFindings with the best available data.
+Only set contextManagerRequest when you need specific missing context from another agent chat/history.

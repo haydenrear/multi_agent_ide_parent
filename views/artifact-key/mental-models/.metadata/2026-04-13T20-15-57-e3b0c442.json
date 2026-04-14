@@ -1,0 +1,33 @@
+{
+  "id": "2026-04-13T20-15-57-e3b0c442",
+  "created_at": "2026-04-13T20:15:57.272660Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "artifact-key",
+  "view_script_hash": "0ee97fbe6b9467336092a2905c8d0a9f77b7f0f3",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"ArtifactKey Record\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/ArtifactKey.java",
+          "content_hash": "eb9de2dc9653cbd6c62192c47029c8ecb8284d81",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/ArtifactKey.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/HasContextId.java",
+          "content_hash": "e1796f2512b050625633bd5e6aa00d6e5d9d0adb",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/HasContextId.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T20-15-56-e3b0c442",
+        "section_path": "$.sections[\"ArtifactKey Record\"]"
+      }
+    }
+  ],
+  "snapshot_dir": "2026-04-13T20-15-57-e3b0c442.snapshots"
+}

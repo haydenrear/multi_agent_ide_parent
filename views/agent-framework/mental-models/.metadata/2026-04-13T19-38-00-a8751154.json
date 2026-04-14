@@ -1,0 +1,106 @@
+{
+  "id": "2026-04-13T19-38-00-a8751154",
+  "created_at": "2026-04-13T19:38:01.032763Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "agent-framework",
+  "view_script_hash": "88612fdbd6009524f0bc022f08df8306a230ec5c",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Embabel Integration\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/embabel/EmbabelUtil.java",
+          "content_hash": "4043a1921225bd30c37ae4b6304653c862029b49",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/embabel/EmbabelUtil.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Agent Type System\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentType.java",
+          "content_hash": "de0cdd4c04582457061edcacc4770e28e4f23ee6",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentType.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Tool System\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tool/ToolAbstraction.java",
+          "content_hash": "b317fdd1e92fd7147848756410f7e0de4846629a",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tool/ToolAbstraction.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"ToolAbstraction: The Unified Wrapper\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Three Tool Carrier Beans\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"EmbabelToolObjectRegistry\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"LLM Runner: Template to ACP Call\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/llm/AgentLlmExecutor.java",
+          "content_hash": "31ce69e0867224c2f1c44a7046fb43d4277cc116",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/llm/AgentLlmExecutor.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Skill System\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/skills/SkillFinder.java",
+          "content_hash": "19fc302d072dcf859bdf3df98b08904edb751604",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/skills/SkillFinder.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Episodic Memory\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": null
+    }
+  ],
+  "snapshot_dir": "2026-04-13T19-38-00-a8751154.snapshots"
+}

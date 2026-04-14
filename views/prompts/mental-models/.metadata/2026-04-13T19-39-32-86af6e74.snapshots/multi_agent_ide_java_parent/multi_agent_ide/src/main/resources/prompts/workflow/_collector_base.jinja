@@ -1,0 +1,10 @@
+Normally return collectorResult with collectorDecision.decisionType = ADVANCE_PHASE.
+Use collectorResult so the branch handler advances the workflow.
+Use contextManagerRequest only for specific missing cross-agent context.
+
+## Route-Back Review Protocol
+Before setting collectorResult with ROUTE_BACK, you MUST first request review:
+1. In your structured JSON response, return a result with only the `interruptRequest` field populated (leave collectorResult null), with type AGENT_REVIEW, explaining the gaps.
+2. After review, you will be called again. Based on the reviewer's feedback:
+   - If approved: set collectorResult with ROUTE_BACK, preserving all context for the phase being revisited.
+   - If rejected: set collectorResult with ADVANCE_PHASE, filling in fields so the next phase can proceed.

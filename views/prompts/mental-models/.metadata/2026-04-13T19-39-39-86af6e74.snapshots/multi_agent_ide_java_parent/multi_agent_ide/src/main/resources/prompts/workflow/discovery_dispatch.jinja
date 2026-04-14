@@ -1,0 +1,16 @@
+Dispatch the discovery workflow results to the next step.
+
+{% include "workflow/_discovery_research_disclaimer.jinja" %}
+
+Goal: {{ goal }}
+Discovery Results: {{ discoveryResults }}
+
+Primary routing behavior:
+- Default to `collectorRequest` to move workflow forward.
+- Use that request to consolidate all discovery agent outputs into a single discovery collector input.
+- Include enough synthesis/context so the collector can choose ADVANCE_PHASE vs ROUTE_BACK confidently.
+
+{% include "workflow/_review_justification.jinja" %}
+{% include "justification/discovery_dispatch.jinja" %}
+
+{% include "workflow/_interrupt_guidance.jinja" %}

@@ -1,0 +1,1 @@
+../../../skills/multi_agent_ide_skills/multi_agent_ide_contracts/references/resolution_types.schema.md

@@ -1,0 +1,10 @@
+{
+  "id": "2026-04-13T19-39-16-ce9f6438",
+  "created_at": "2026-04-13T19:39:16.793241Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "orchestration-model",
+  "view_script_hash": "7414397b967b059f92a46fc60e1a280b9fabbf6a",
+  "diff_entries": [],
+  "snapshot_dir": "2026-04-13T19-39-16-ce9f6438.snapshots"
+}

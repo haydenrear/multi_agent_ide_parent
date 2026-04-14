@@ -1,0 +1,505 @@
+{
+  "id": "2026-04-13T19-39-37-86af6e74",
+  "created_at": "2026-04-13T19:39:38.156066Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "prompts",
+  "view_script_hash": "fdab4f8f4c1d6d27f88881ed55d22ef795802b65",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-37-86af6e74",
+        "section_path": "$.sections[\"Overview\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Prompt Assembly Process\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptAssembly.java",
+          "content_hash": "545e3a81836b46e88168088c36f0e9fc327480a8",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptAssembly.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContext.java",
+          "content_hash": "7f3bc05b7171ba8ecbda324ad03944db7f53a704",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContext.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContextFactory.java",
+          "content_hash": "7d7315f089a982bb99dd00f803dcc4323fa56186",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContextFactory.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContributorService.java",
+          "content_hash": "76d48a84ebfd87134e68bb06c802f3f544d4122a",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContributorService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContributorRegistry.java",
+          "content_hash": "4752789aec4bfc3d7245e61187d901eb13e7746e",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContributorRegistry.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptTemplateLoader.java",
+          "content_hash": "319983a2dd8249dcfba4274ce3bbeeb6ffd140fa",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptTemplateLoader.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptTemplateStore.java",
+          "content_hash": "bfbb330116804dc907cffbfde8a95bec14cedb76",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptTemplateStore.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/ContextIdService.java",
+          "content_hash": "5e5d772a1a02b55bd61367934587d87f5b785660",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/ContextIdService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/references/prompt_architecture.md",
+          "content_hash": "d61f10f46b83280c0f862b870eceb370782c8976",
+          "snapshot_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/references/prompt_architecture.md",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-37-86af6e74",
+        "section_path": "$.sections[\"Prompt Assembly Process\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Jinja Template Organization\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/orchestrator.jinja",
+          "content_hash": "0074759364e9cb0a009adf5b80c871020f626188",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/orchestrator.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/orchestrator_collector.jinja",
+          "content_hash": "e8592e195e8f1625ee7467e00b7fae1a529484c5",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/orchestrator_collector.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/discovery_orchestrator.jinja",
+          "content_hash": "20a790f8ff32b29670c081755193c7bc1d616264",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/discovery_orchestrator.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/discovery_agent.jinja",
+          "content_hash": "3c446c452099876c08b8dc8f553932ee5e7df854",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/discovery_agent.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/discovery_dispatch.jinja",
+          "content_hash": "1e3aba0d47bc4828ce84cb83c14617cec9890172",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/discovery_dispatch.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/discovery_collector.jinja",
+          "content_hash": "31390bd6ff35f5ecbc8cbb87057d194b3cc03009",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/discovery_collector.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/planning_orchestrator.jinja",
+          "content_hash": "81835b561c4ab56a9a0b06b7562412f6a15912f7",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/planning_orchestrator.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/planning_agent.jinja",
+          "content_hash": "ac87f34adfe83a645491025eb51dbeae831c9cd3",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/planning_agent.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/planning_dispatch.jinja",
+          "content_hash": "da11e26091b823fa676056e1a1662d351f5e7368",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/planning_dispatch.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/planning_collector.jinja",
+          "content_hash": "26a7a021b0ef8fe473cac87034b7bd617bd9d2cd",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/planning_collector.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/ticket_orchestrator.jinja",
+          "content_hash": "8e509b7a3876a56fdd89d28f93c82d066711d7f8",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/ticket_orchestrator.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/ticket_agent.jinja",
+          "content_hash": "b83efc1e7b5b3715713e879f0ed4ed7f3b5ca546",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/ticket_agent.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/ticket_dispatch.jinja",
+          "content_hash": "d259db8091553d883eee7fc2709fc84087c41b82",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/ticket_dispatch.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/ticket_collector.jinja",
+          "content_hash": "391e76e9d068b6202c46cb867f0e2dee16e43ab9",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/ticket_collector.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/context_manager.jinja",
+          "content_hash": "517c04a1d5a7bec1190d55c5920066fef5323e7a",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/context_manager.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/context_manager_interrupt.jinja",
+          "content_hash": "1e674596d25b926a0368cdb3fed41b83eac6f324",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/context_manager_interrupt.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/review.jinja",
+          "content_hash": "956188e02ada959444bf1ba5874c64dd01fd6f22",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/review.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/review_resolution.jinja",
+          "content_hash": "30ce5fe74838081d976e1bb6fcb6b4a2b20107a1",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/review_resolution.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/merger.jinja",
+          "content_hash": "aa4dc83ce6601416ca5407f86e6c94b95909c245",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/merger.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/worktree_commit_agent.jinja",
+          "content_hash": "ece2f781fcd7a32b4b43241ebb7c3f98f5a48e91",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/worktree_commit_agent.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/worktree_merge_conflict_agent.jinja",
+          "content_hash": "1ad47eef07c0d61eacdef41a410ea2d5d9c7c954",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/worktree_merge_conflict_agent.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/_collector_base.jinja",
+          "content_hash": "ac6541d64db177d467a9cbb4305a76cb4b4393dd",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/_collector_base.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/_context_manager_body.jinja",
+          "content_hash": "f4e341dd1e79099865400451ef4207bb5dfde301",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/_context_manager_body.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/_interrupt_guidance.jinja",
+          "content_hash": "fb07bc79802f7bd659f3286990fd596c9a1a8c8b",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/_interrupt_guidance.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/_review_justification.jinja",
+          "content_hash": "93f9ad2bfec498e44417ad9b2f5fc8463ba37f2b",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/_review_justification.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/_discovery_research_disclaimer.jinja",
+          "content_hash": "b7760606ffc89d64202c7f7cc4fc993e3f626cf3",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/_discovery_research_disclaimer.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/_planning_disclaimer.jinja",
+          "content_hash": "d555b8cc88d4f4abecb297502b3d4bf4c8f81de9",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/workflow/_planning_disclaimer.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/orchestrator.jinja",
+          "content_hash": "8c1e757c5d7052e1f963c7128b6a29ba1b221bae",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/orchestrator.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/orchestrator_collector.jinja",
+          "content_hash": "aa51a49a662a4ccc6bbfe1a58bc1af04bf7ee3d0",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/orchestrator_collector.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/discovery.jinja",
+          "content_hash": "2e599ea665bc47f20936a69c950065c0fa1cc162",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/discovery.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/discovery_orchestrator.jinja",
+          "content_hash": "11612d483769e31922f4183cce3ec4602560b7c4",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/discovery_orchestrator.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/discovery_collector.jinja",
+          "content_hash": "07846c5f9d54c687e96e7b2f73243c7b13592c9a",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/discovery_collector.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/discovery_dispatch.jinja",
+          "content_hash": "7f94e656473e06e817e9ed9522b33fa6a2fbc5e3",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/discovery_dispatch.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/planning.jinja",
+          "content_hash": "ade2a925d094fac165c7976a7a147cadac1b9f94",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/planning.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/planning_orchestrator.jinja",
+          "content_hash": "b8011be341550b7e6c3533cd556b012a00c0f896",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/planning_orchestrator.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/planning_collector.jinja",
+          "content_hash": "6409a0cf86b23dc1bf6c9a71b76b53dc796d65e9",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/planning_collector.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/planning_dispatch.jinja",
+          "content_hash": "45ab2e1a32e3449ff3c1630e56aee699923a2df3",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/planning_dispatch.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/ticket.jinja",
+          "content_hash": "d719a0217c11d1515d7be04bbf8105746f001238",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/ticket.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/ticket_orchestrator.jinja",
+          "content_hash": "bb34619503148bf2d7c8fdfee3f1d66c5310aec9",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/ticket_orchestrator.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/ticket_collector.jinja",
+          "content_hash": "77f2de0a2e78a7437114bde3fd9b972f92af9708",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/ticket_collector.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/ticket_dispatch.jinja",
+          "content_hash": "76216ff6c09ac9d8ce14f026a6ac8d8a366b1888",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/ticket_dispatch.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/review.jinja",
+          "content_hash": "e20d54c989c26d5e89108e6101f8e0d5f0880d3d",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/review.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/merger.jinja",
+          "content_hash": "13cbe0e49e1d65cbf7599cf0a5e10b34f4ef76b9",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/justification/merger.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/communication/agent_call.jinja",
+          "content_hash": "e8ff509e81bdc2d576c4a79d9b7f34e797e96307",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/communication/agent_call.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/communication/controller_call.jinja",
+          "content_hash": "1b18d29195074620dab0b67bbeb8620c79154144",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/communication/controller_call.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/communication/controller_response.jinja",
+          "content_hash": "a9924535e5abf25b7629d74c1f54762ecd56a3b1",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/communication/controller_response.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/filter/ai_filter.jinja",
+          "content_hash": "41f140487bf9a18609a49307f394d2027ec5c9a0",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/filter/ai_filter.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/propagation/ai_propagator.jinja",
+          "content_hash": "b62a586e57785e45e13b27becd7c636dd11705db",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/propagation/ai_propagator.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/transformation/ai_transformer.jinja",
+          "content_hash": "11346d21d2f050f0496607d891fa693bff8566ad",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/transformation/ai_transformer.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/retry/compaction.jinja",
+          "content_hash": "522f42df5da4cd54d276b83e657e47b10eaba2ea",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/retry/compaction.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/retry/incomplete_json.jinja",
+          "content_hash": "4d15ac004ef72a6c55b84c815ac749d642fe6ca4",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/retry/incomplete_json.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/retry/null_result.jinja",
+          "content_hash": "934474c6ea72fbd1525f0a38feab80b71cc97265",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/retry/null_result.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/retry/parse_error.jinja",
+          "content_hash": "ee2b69c1d8cc29a9409f21a38ab3c933b88b9dd2",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/retry/parse_error.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/retry/timeout.jinja",
+          "content_hash": "46c4953ed0422043b198bedc2d14185103d04533",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/retry/timeout.jinja",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/retry/unparsed_tool_call.jinja",
+          "content_hash": "9b55a192e44b516c6d1a7c4c39f2376d986ec245",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/resources/prompts/retry/unparsed_tool_call.jinja",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-37-86af6e74",
+        "section_path": "$.sections[\"Jinja Template Organization\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Prompt Contributors: What Gets Injected\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContributor.java",
+          "content_hash": "a5332b67f4688e05992323ab583d5e3d2faf0d6e",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContributor.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContributorAdapter.java",
+          "content_hash": "e7297c44e4213ced35a617c598032ee190c7b64d",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContributorAdapter.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContributorAdapterFactory.java",
+          "content_hash": "608f61f1b9ffc18bd39d0070c66cf601f40f68ab",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContributorAdapterFactory.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContributorDescriptor.java",
+          "content_hash": "3fb254c96e07df5da6d0ac468a98518a05d1ae09",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContributorDescriptor.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContributorFactory.java",
+          "content_hash": "f7bdb2830a7e0e0edd5b8376ce992b996e41a54c",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContributorFactory.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-37-86af6e74",
+        "section_path": "$.sections[\"Prompt Contributors: What Gets Injected\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Retry-Aware Filtering\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/RetryAware.java",
+          "content_hash": "f3f838610698f9420ac9c78223634064e51bbd79",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/RetryAware.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-37-86af6e74",
+        "section_path": "$.sections[\"Retry-Aware Filtering\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"AgentPretty: Controlling What the LLM Sees\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-37-86af6e74",
+        "section_path": "$.sections[\"AgentPretty: Controlling What the LLM Sees\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Prompt Health Check\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/decorator/prompt/PromptHealthCheckLlmCallDecorator.java",
+          "content_hash": "2911a582689a5562be4bd4b86227efff47bdb79c",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/decorator/prompt/PromptHealthCheckLlmCallDecorator.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-37-86af6e74",
+        "section_path": "$.sections[\"Prompt Health Check\"]"
+      }
+    }
+  ],
+  "snapshot_dir": "2026-04-13T19-39-37-86af6e74.snapshots"
+}

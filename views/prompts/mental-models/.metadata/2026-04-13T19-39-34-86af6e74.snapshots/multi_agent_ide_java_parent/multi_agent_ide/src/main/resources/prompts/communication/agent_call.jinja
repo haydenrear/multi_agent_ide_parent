@@ -1,0 +1,9 @@
+## Inter-Agent Message
+
+**From**: {{ sourceAgentKey }}{% if sourceAgentType %} ({{ sourceAgentType }}){% endif %}
+
+{% if callChain %}**Call chain**: {% for entry in callChain %}{{ entry.agentKey.value }} -> {% endfor %}you
+
+{% endif %}### Message
+
+{{ message }}

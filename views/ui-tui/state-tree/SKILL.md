@@ -1,0 +1,1 @@
+../../../skills/multi_agent_ide_skills/multi_agent_ide_ui_test/SKILL.md

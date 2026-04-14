@@ -1,0 +1,24 @@
+{
+  "id": "2026-04-13T20-54-57-e3b0c442",
+  "created_at": "2026-04-13T20:54:58.014515Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "testing",
+  "view_script_hash": "5244ee481588721d51ceaa5d6749d4f2e766ed19",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Test Infrastructure\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/test/java/com/hayden/multiagentide/support/AgentTestBase.java",
+          "content_hash": "0240849259ceeb17c578c1ccd79919e692defde7",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/test/java/com/hayden/multiagentide/support/AgentTestBase.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    }
+  ],
+  "snapshot_dir": "2026-04-13T20-54-57-e3b0c442.snapshots"
+}

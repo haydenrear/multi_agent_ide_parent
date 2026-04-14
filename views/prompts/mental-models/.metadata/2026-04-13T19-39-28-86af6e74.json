@@ -1,0 +1,10 @@
+{
+  "id": "2026-04-13T19-39-28-86af6e74",
+  "created_at": "2026-04-13T19:39:28.760245Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "prompts",
+  "view_script_hash": "fdab4f8f4c1d6d27f88881ed55d22ef795802b65",
+  "diff_entries": [],
+  "snapshot_dir": "2026-04-13T19-39-28-86af6e74.snapshots"
+}

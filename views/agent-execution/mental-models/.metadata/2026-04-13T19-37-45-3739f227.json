@@ -1,0 +1,142 @@
+{
+  "id": "2026-04-13T19-37-45-3739f227",
+  "created_at": "2026-04-13T19:37:45.987165Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "agent-execution",
+  "view_script_hash": "ede6e9399e8e49c407d3add904b56b806e2a2fd1",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-37-45-3739f227",
+        "section_path": "$.sections[\"Overview\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"The Execution Pipeline\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/AgentExecutor.java",
+          "content_hash": "42564c2ce0d9ef2406175f8a8fe0c9fef03020a3",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/AgentExecutor.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/RequestEnrichment.java",
+          "content_hash": "38ddea567a2ffdbca780c2bfb1c68491b3b3d074",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/RequestEnrichment.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/llm/AgentLlmExecutor.java",
+          "content_hash": "31ce69e0867224c2f1c44a7046fb43d4277cc116",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/llm/AgentLlmExecutor.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/llm/LlmRunner.java",
+          "content_hash": "427deaa145d2a5880b963fdeec11d843470099e2",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/llm/LlmRunner.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/DefaultLlmRunner.java",
+          "content_hash": "701496e6d128b0dc98921b05a545e4e79895effd",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/DefaultLlmRunner.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-37-45-3739f227",
+        "section_path": "$.sections[\"The Execution Pipeline\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Request/Result Decorator Symmetry\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/decorator/request/RequestDecorator.java",
+          "content_hash": "ffb176e4e9ee36a85ab093571eff23167203212d",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/decorator/request/RequestDecorator.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-37-45-3739f227",
+        "section_path": "$.sections[\"Request/Result Decorator Symmetry\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"The Fan-Out Dispatch Process\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/DiscoveryRoute.java",
+          "content_hash": "978cb300878161034bc2354eac796710b0e539ad",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/DiscoveryRoute.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-37-45-3739f227",
+        "section_path": "$.sections[\"The Fan-Out Dispatch Process\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"BlackboardHistory: Session State and Loop Detection\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-37-45-3739f227",
+        "section_path": "$.sections[\"BlackboardHistory: Session State and Loop Detection\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Controller Conversation Pipeline\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentContext.java",
+          "content_hash": "f97da92852aa4d92ffddf453724d2df1d6a61280",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentContext.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-37-45-3739f227",
+        "section_path": "$.sections[\"Controller Conversation Pipeline\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Error Recovery and Retry\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/ActionRetryListenerImpl.java",
+          "content_hash": "fb2f5193fb37c05fb6c25a942e7f8b98f864ff60",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/ActionRetryListenerImpl.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-37-45-3739f227",
+        "section_path": "$.sections[\"Error Recovery and Retry\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"AgentInterfaces and Metadata Registry\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-37-45-3739f227",
+        "section_path": "$.sections[\"AgentInterfaces and Metadata Registry\"]"
+      }
+    }
+  ],
+  "snapshot_dir": "2026-04-13T19-37-45-3739f227.snapshots"
+}

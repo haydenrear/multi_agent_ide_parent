@@ -1,0 +1,30 @@
+{
+  "view_name": "utility-module",
+  "sections": {
+    "Overview": {
+      "package": "overview",
+      "content": "The utility module (`utilitymodule/`) provides shared abstractions used across all other modules. The two most architecturally significant are the `Result` type hierarchy (a monadic error-handling alternative to exceptions) and the `EventBus` contract (the publish/subscribe seam that all modules communicate through).",
+      "subsections": {}
+    },
+    "The Result Type Hierarchy": {
+      "package": "result-type-hierarchy",
+      "content": "`Result<T, E>` replaces Java's `Optional` and exception idioms with a monad-like type that explicitly carries both a value side (`Ok<T>`) and an error side (`Err<E>`). Unlike Rust's `Result` which is exclusive, this implementation allows both to be simultaneously present \u2014 used for \"soft errors\" (partial success with warnings).\n\n```\nResult<T, E>  (root interface)\n \u251c\u2500 OneResult<T, E>        (holds at most one T \u2014 the default case)\n \u2502    \u251c\u2500 One<T, E>         record(Ok<T> r, Err<E> e) \u2014 standard\n \u2502    \u251c\u2500 MutableOne<T, E>  \u2014 allows in-place mutation\n \u2502    \u251c\u2500 ClosableOne<T, E> \u2014 wraps AutoCloseable for try-with-resources\n \u2502    \u2514\u2500 ResponseEntityOne \u2014 for Spring HTTP responses\n \u251c\u2500 ManyResult<T, E>       (holds zero-to-many T values)\n \u2502    \u2514\u2500 StreamResult<T, E> \u2014 lazy, backed by Stream<Result<T,E>>\n \u2514\u2500 AsyncResult<T, E>      (Mono/Flux-backed, subscribe semantics)\n```\n\n**Key operations**: `map`, `flatMap`, `mapError`, `filterErr`, `peek`, `peekError`, `doOnError`, `onErrorMap`, `or`, `toList`, `streamResult`.\n\n**Lazy materialization**: `StreamResult` holds a `Stream<Result<T,E>>`. Operations return new `StreamResult` instances without consuming the stream. `collectCachedResults()` triggers one-time terminal consumption into `CachedCollectedResult` with `List<T>` and `List<E>`.\n\n**Error accumulation**: `Err.addError(Err<E>)` merges errors into a `ListResultItem`-backed many-error. `SingleError` has `isError()` \u2014 errors with `isError() = false` are \"soft\" and don't cause `hasErr()` to return true. `AggregateError` holds sub-errors; `isError()` is true if any sub-error `isError()`.",
+      "subsections": {}
+    },
+    "EventBus Contract": {
+      "package": "eventbus-contract",
+      "content": "`EventBus` (defined in `acp-cdc-ai` module, utility-level concern):\n\n```java\nvoid subscribe(EventListener listener)\nvoid unsubscribe(EventListener listener)\nvoid publish(Events.GraphEvent event)\n```\n\n`EventListener` contract:\n- `listenerId()` \u2014 unique string ID for deduplication\n- `isInterestedIn(GraphEvent)` \u2014 opt-out filter, defaults to accept all\n- `onEvent(GraphEvent)` \u2014 handler\n- `order()` \u2014 integer priority, lower = earlier\n- `onSubscribed()` / `onUnsubscribed()` \u2014 lifecycle hooks\n\n`DefaultEventBus` (Spring `@Service` in `infrastructure/`) auto-injects all `EventListener` beans, sorts by `order()`, and dispatches synchronously.",
+      "subsections": {}
+    },
+    "Concurrency Primitives": {
+      "package": "concurrency-primitives",
+      "content": "**OnceCell<T>**: Lazy-initialized, thread-safe single-value container using `AtomicReference.compareAndSet(null, supplier.get())`. The supplier may be called by multiple threads on first access (no lock prevents multiple calls), but only one result survives via CAS. Appropriate for idempotent, cheap-to-construct values.\n\n**StripedLock**: Annotation-driven per-key locking using Guava's `Striped<Lock>` (100 buckets). `@StripedLock(stringArg = 0)` on a method means calls with the same first argument value are mutually exclusive, but calls with different values run concurrently.",
+      "subsections": {}
+    },
+    "Other Notable Abstractions": {
+      "package": "other-abstractions",
+      "content": "- **`Either<L, R>`**: Disjoint union type used by `Result.toEntryStream()` for flat `Either<Ok<T>, Err<E>>` streams\n- **`StreamUtil`**: Stream helper methods (zip, distinctBy, windowed, etc.)\n- **`GraphSort`**: Topological sort for dependency graphs\n- **`RepoUtil` / `WildcardPathFilter`**: JGit integration utilities for glob-pattern file matching\n- **`Free<F, A>` / `Effect<A>` / `Interpreter`**: Basic free monad for deferred effect description (rarely used)\n- **`SchemaReplacer` / `SpecialJsonSchemaGenerator`**: JSON schema generation with custom type mappings for tool definitions",
+      "subsections": {}
+    }
+  }
+}

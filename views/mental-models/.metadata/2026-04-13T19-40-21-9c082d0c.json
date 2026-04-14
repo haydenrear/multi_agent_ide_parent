@@ -1,0 +1,53 @@
+{
+  "id": "2026-04-13T19-40-21-9c082d0c",
+  "created_at": "2026-04-13T19:40:21.774518Z",
+  "mental_model": "mental-models.md",
+  "scope": "root",
+  "owner_name": "root",
+  "view_script_hash": null,
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "child_models": [],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"The 14 Views\"]",
+      "offset": 0,
+      "child_models": [],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"How the Views Connect: The Request Lifecycle\"]",
+      "offset": 0,
+      "child_models": [],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Cross-Cutting Seam: The EventBus\"]",
+      "offset": 0,
+      "child_models": [],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Cross-Cutting Seam: The Decorator Chain\"]",
+      "offset": 0,
+      "child_models": [],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Cross-Cutting Seam: ArtifactKey Hierarchy\"]",
+      "offset": 0,
+      "child_models": [],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Cross-Cutting Seam: BlackboardHistory\"]",
+      "offset": 0,
+      "child_models": [],
+      "supersedes": null
+    }
+  ],
+  "snapshot_dir": "2026-04-13T19-40-21-9c082d0c.snapshots"
+}

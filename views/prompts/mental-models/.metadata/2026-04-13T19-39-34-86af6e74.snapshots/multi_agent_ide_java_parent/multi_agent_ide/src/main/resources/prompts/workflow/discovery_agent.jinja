@@ -1,0 +1,42 @@
+Discover and analyze the codebase for the following subdomain:
+
+Overall Goal: {{ goal }}
+Subdomain Focus: {{ subdomainFocus }}
+
+Scope guardrails:
+- Keep discovery scoped to what is necessary to satisfy the goal.
+- Build a comprehensive code map only for goal-relevant areas.
+- Avoid deep exploration of unrelated modules.
+- {% include "workflow/_discovery_research_disclaimer.jinja" %}
+
+{% if priorAgentSummary and priorAgentSummary != '' %}
+Prior discovery context:
+{{ priorAgentSummary }}
+
+Key instruction: The above summary documents what earlier discovery agents already found. Reference their findings rather than re-discovering the same information. Focus your discovery on areas not yet covered by prior agents. If you need to build on prior findings, explicitly reference them (e.g., "Agent 1 documented X, which means for our focus area Y, we need to explore Z").
+{% endif %}
+
+Use your tools to:
+1. Search for relevant files and modules
+2. Analyze key source files
+3. Understand dependencies and imports
+4. Identify architectural patterns
+5. Document test patterns
+
+Generate comprehensive discovery findings including:
+- Module overview
+- Key classes and responsibilities
+- Data flow patterns
+- Integration points
+- Technology stack
+- Test patterns
+
+In your `agentResult`, explicitly call out:
+- What was discovered that is directly relevant to the goal
+- What remains unknown (if anything) and why
+- A clear recommendation that helps the collector decide ADVANCE_PHASE vs ROUTE_BACK
+
+{% include "workflow/_review_justification.jinja" %}
+{% include "justification/discovery.jinja" %}
+
+{% include "workflow/_interrupt_guidance.jinja" %}

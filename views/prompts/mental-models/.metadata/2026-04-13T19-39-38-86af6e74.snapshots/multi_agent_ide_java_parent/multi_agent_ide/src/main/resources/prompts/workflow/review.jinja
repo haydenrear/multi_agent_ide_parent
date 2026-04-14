@@ -1,0 +1,18 @@
+Review the following content against these criteria:
+
+Content:
+{{ content }}
+
+Criteria: {{ criteria }}
+
+Return route: {{ returnRoute }}
+
+Provide evaluation with:
+- Overall assessment (APPROVED/NEEDS_REVISION)
+- Specific feedback on quality
+- Suggestions for improvement
+
+{% include "workflow/_review_justification.jinja" %}
+{% include "justification/review.jinja" %}
+
+{% include "workflow/_interrupt_guidance.jinja" %}

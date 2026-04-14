@@ -1,0 +1,226 @@
+{
+  "id": "2026-04-13T19-39-49-e46b57bb",
+  "created_at": "2026-04-13T19:39:49.727526Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "ui-tui",
+  "view_script_hash": "e5aaf0873bcee3424dd96c78cad6bdb57ba9906e",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-49-e46b57bb",
+        "section_path": "$.sections[\"Overview\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"The State Tree\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiState.java",
+          "content_hash": "3618c437128c0c19be63f00260c00954fc65548e",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiState.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiSessionState.java",
+          "content_hash": "491c4ca88782a45fb4888c247b4ec659eb460dcc",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiSessionState.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiFocus.java",
+          "content_hash": "58dbe7cd0f47f2c6a23a55515b222018df0b4bfb",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiFocus.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiViewport.java",
+          "content_hash": "1954011d26897bcad718fac1939274de2c88d29d",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiViewport.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiChatSearch.java",
+          "content_hash": "15cf9f3532b7ef9d9b5ebad217f7c014e5aef2db",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiChatSearch.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "skills/multi_agent_ide_skills/multi_agent_ide_ui_test/SKILL.md",
+          "content_hash": "4a9ad2dc97ea1a2e9c7c8bbeecf1a7f25431b336",
+          "snapshot_path": "skills/multi_agent_ide_skills/multi_agent_ide_ui_test/SKILL.md",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-49-e46b57bb",
+        "section_path": "$.sections[\"The State Tree\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"The Pure Reducer\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiStateReducer.java",
+          "content_hash": "c368ec02a495fbc8acfade6cb3a7341a4e04127e",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiStateReducer.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-49-e46b57bb",
+        "section_path": "$.sections[\"The Pure Reducer\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Two Independent Consumers\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/UiStateStore.java",
+          "content_hash": "c74739b4e5326c1385602b55d8e12317dabe8444",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/UiStateStore.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiSession.java",
+          "content_hash": "f0517ce220eed84122fe7514ce62b08e3c147294",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiSession.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/UiStateSnapshot.java",
+          "content_hash": "b14cf737939a4e9d9a87adb319355ce3c29a8f33",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/UiStateSnapshot.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/UiSessionSnapshot.java",
+          "content_hash": "b96bfa1900bd36f4e3757dbfca731db2116cd141",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/UiSessionSnapshot.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-49-e46b57bb",
+        "section_path": "$.sections[\"Two Independent Consumers\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"TuiSession (live terminal)\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-49-e46b57bb",
+        "section_path": "$.sections[\"TuiSession (live terminal)\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"UiStateStore (server-side)\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-49-e46b57bb",
+        "section_path": "$.sections[\"UiStateStore (server-side)\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Event Flow: Agent → UI\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/SharedUiInteractionService.java",
+          "content_hash": "74a58b40fbc44167db9bfc30045bce41880c5756",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/SharedUiInteractionService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/SharedUiInteractionServiceImpl.java",
+          "content_hash": "6d67057237d756bca7421858d66274006eecb969",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/SharedUiInteractionServiceImpl.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/UiActionCommand.java",
+          "content_hash": "d4fa89f8e2d74b7ca358ca2db42d03be7b85427f",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/UiActionCommand.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/UiActionMapper.java",
+          "content_hash": "e6cb03605dd5e125f0161b4bf9fa5d370338ab86",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/UiActionMapper.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-49-e46b57bb",
+        "section_path": "$.sections[\"Event Flow: Agent → UI\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"TUI View Hierarchy\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiChatView.java",
+          "content_hash": "0aefd15c6d47358050ea79baf2ba5a29f721dee0",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiChatView.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiDetailTextView.java",
+          "content_hash": "ae0a2d7bf116472d48d9267f0ce9f083754263e5",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiDetailTextView.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiHeaderView.java",
+          "content_hash": "59d438c5cb165478c4416e899e3b0c6bd4b234c3",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiHeaderView.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiMessageStreamView.java",
+          "content_hash": "60c9349e5d7c0eaddea85f581126a7445c6ba541",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiMessageStreamView.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiSessionMenuView.java",
+          "content_hash": "fe5102e06b6b41b990b1592ea002641214708e73",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiSessionMenuView.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiSessionView.java",
+          "content_hash": "34b63797d3f029ba51590a5f28a736795186c4b1",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiSessionView.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiTerminalView.java",
+          "content_hash": "9072f7fb94af00c092d32802a9f79bef851d615c",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiTerminalView.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiTextLayout.java",
+          "content_hash": "c9faf4edd0df4321f1f5954b04c04d1e9ab1bd2a",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiTextLayout.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-49-e46b57bb",
+        "section_path": "$.sections[\"TUI View Hierarchy\"]"
+      }
+    }
+  ],
+  "snapshot_dir": "2026-04-13T19-39-49-e46b57bb.snapshots"
+}

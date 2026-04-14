@@ -1,0 +1,133 @@
+{
+  "id": "2026-04-13T19-38-27-b74e3c2c",
+  "created_at": "2026-04-13T19:38:27.890929Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "event-messaging",
+  "view_script_hash": "720d0ce73e6b7e0a3624f7c32522bbaea7a19de5",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-27-b74e3c2c",
+        "section_path": "$.sections[\"Overview\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"DefaultEventBus: The Synchronous Fan-Out\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-27-b74e3c2c",
+        "section_path": "$.sections[\"DefaultEventBus: The Synchronous Fan-Out\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"The Subscriber Table\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/infrastructure/AgentEventListener.java",
+          "content_hash": "6a3f3763d43ed99da5f957f81500c79080bc974d",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/infrastructure/AgentEventListener.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/infrastructure/InterruptRequestEventListener.java",
+          "content_hash": "81c399f1be4ef1018c42edd04f6477ec7daa9235",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/infrastructure/InterruptRequestEventListener.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/adapter/SaveEventToEventRepositoryListener.java",
+          "content_hash": "47a01ab5918881d3c9c0cb844b32888885708cb6",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/adapter/SaveEventToEventRepositoryListener.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/adapter/SaveGraphEventToGraphRepositoryListener.java",
+          "content_hash": "7cb1f1699d5c06357e88d439c6ede0a4481e78d3",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/adapter/SaveGraphEventToGraphRepositoryListener.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactEventListener.java",
+          "content_hash": "d7bae0ad01e261596a7b128cc85e2fa86a5e9307",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactEventListener.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "skills/multi_agent_ide_skills/multi_agent_ide_debug/references/common-exceptions.md",
+          "content_hash": "41e2bdeb86a714cb952538238aa02eefda27d368",
+          "snapshot_path": "skills/multi_agent_ide_skills/multi_agent_ide_debug/references/common-exceptions.md",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-27-b74e3c2c",
+        "section_path": "$.sections[\"The Subscriber Table\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Event Type Taxonomy\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-27-b74e3c2c",
+        "section_path": "$.sections[\"Event Type Taxonomy\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"The Canonical Event Flow\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-27-b74e3c2c",
+        "section_path": "$.sections[\"The Canonical Event Flow\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"AgentRunner: Event-to-Agent Bridge\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-27-b74e3c2c",
+        "section_path": "$.sections[\"AgentRunner: Event-to-Agent Bridge\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"SSE vs WebSocket\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/adapter/SseEventAdapter.java",
+          "content_hash": "e123c36dfff9f2388c7e789996e1148751ef4a1c",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/adapter/SseEventAdapter.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/adapter/WebSocketEventAdapter.java",
+          "content_hash": "e3d2602c9aee432cb96901b8d107569d47b6b738",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/adapter/WebSocketEventAdapter.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-27-b74e3c2c",
+        "section_path": "$.sections[\"SSE vs WebSocket\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Read-Back Loops\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-27-b74e3c2c",
+        "section_path": "$.sections[\"Read-Back Loops\"]"
+      }
+    }
+  ],
+  "snapshot_dir": "2026-04-13T19-38-27-b74e3c2c.snapshots"
+}

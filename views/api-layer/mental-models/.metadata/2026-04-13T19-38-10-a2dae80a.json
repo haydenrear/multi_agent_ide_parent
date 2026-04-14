@@ -1,0 +1,95 @@
+{
+  "id": "2026-04-13T19-38-10-a2dae80a",
+  "created_at": "2026-04-13T19:38:10.963241Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "api-layer",
+  "view_script_hash": "7adefcb4b7c6a070e7147e2c795c972d22981a88",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Goal Execution Flow\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/LlmOrchestrationController.java",
+          "content_hash": "cfe77bd2e5594e82e39dbaf189e4a4ab7d9cf676",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/LlmOrchestrationController.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Controller Endpoint Map\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/EventStreamController.java",
+          "content_hash": "070e0aa7b8e2cf45ec7c6bf8806d7233391a2345",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/EventStreamController.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Agent Control: Fire-and-Forget via EventBus\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/AgentControlService.java",
+          "content_hash": "9a46c2a3012ac769c4b84d9fd081b1b4db198419",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/AgentControlService.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Agent-to-Controller Conversation Flow\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/AgentConversationController.java",
+          "content_hash": "e2c04aebee73325bb29836ebc4b6391801c35423",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/AgentConversationController.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"CLI: In-Process Controller Call\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/cli/ArtifactKeyFormatter.java",
+          "content_hash": "319b0a0458de3777cedcf5e6afe20521677dc46c",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/cli/ArtifactKeyFormatter.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Configuration\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/AgentModelMixin.java",
+          "content_hash": "c6f47889c3f4c3bac28a23874743dbee71af8c5f",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/AgentModelMixin.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    }
+  ],
+  "snapshot_dir": "2026-04-13T19-38-10-a2dae80a.snapshots"
+}

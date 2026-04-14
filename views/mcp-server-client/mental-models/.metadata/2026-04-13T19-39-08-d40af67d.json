@@ -1,0 +1,95 @@
+{
+  "id": "2026-04-13T19-39-08-d40af67d",
+  "created_at": "2026-04-13T19:39:09.010849Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "mcp-server-client",
+  "view_script_hash": "e5fb0be958edb29bdec737594f12b1b54e27cad4",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"The ACP Session Lifecycle\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/kotlin/com/hayden/acp_cdc_ai/acp/AcpChatModel.kt",
+          "content_hash": "ccb648e8c3433959bc4eeebf758c02247301ff0c",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/kotlin/com/hayden/acp_cdc_ai/acp/AcpChatModel.kt",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"MCP Server: Tool Registration and Routing\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/io/modelcontextprotocol/server/IdeMcpServer.java",
+          "content_hash": "00e598992d754733f6d1a296249d8ac29b90c742",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/io/modelcontextprotocol/server/IdeMcpServer.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"MCP Client: External Tool Servers\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/io/modelcontextprotocol/client/transport/DelegatingHttpClientStreamableHttpTransport.java",
+          "content_hash": "72fb51519079ef3dd1faf0526ddc776fa9574e81",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/io/modelcontextprotocol/client/transport/DelegatingHttpClientStreamableHttpTransport.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Sandbox Translation: Provider-Specific Isolation\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/sandbox/SandboxTranslationRegistry.java",
+          "content_hash": "197fa287011b1775393b298412edc1a4e77afa52",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/sandbox/SandboxTranslationRegistry.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Permission Gating\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/kotlin/com/hayden/acp_cdc_ai/permission/IPermissionGate.kt",
+          "content_hash": "c7d7b901246bb181b8ddc0a2228ae634c726d8ee",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/kotlin/com/hayden/acp_cdc_ai/permission/IPermissionGate.kt",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Streaming and Event Emission\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tool/EmbabelToolObjectProvider.java",
+          "content_hash": "b2161348e226338f80b36d85304403240c98e181",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tool/EmbabelToolObjectProvider.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    }
+  ],
+  "snapshot_dir": "2026-04-13T19-39-08-d40af67d.snapshots"
+}

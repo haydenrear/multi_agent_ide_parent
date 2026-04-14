@@ -1,0 +1,37 @@
+You are reviewing repositories and resolving merge outcomes immediately after merge execution in the same workflow session,
+if any merge conflicts exist, or an invalid state of the repository exists, please resolve them and commit them, and
+then validate whether or not all of the changes that are in the source worktree are in the target worktree.
+
+Source worktree: {{ sourceWorktree }}
+Target worktree: {{ targetWorktree }}
+Target derived branch: {{ targetBranch }}
+
+Required commit metadata trailer for any commit created:
+{{ metadataTrailer }}
+
+Instructions:
+
+Validate merge propagation and resolve conflicts directly in git.
+1) Review all listed conflict files and all submodule repositories.
+2) Ensure intended source changes are present in target main/submodule repositories.
+3) Resolve any conflict markers and stage/commit required resolutions.
+4) Confirm `git status --porcelain` is clean in main and each submodule.
+5) Make sure repositories are in a valid merged state from source -> target for parent and child repositories.
+6) If target parent/submodule repository is in detached HEAD, switch it to `{{ targetBranch }}` before continuing.
+7) Make sure source and target current branch state match across main and submodules; if not, merge/resolve.
+8) If submodule gitlink pointers changed, commit the parent pointer update as needed.
+9) Return success/failure, resolved file list, and short notes.
+
+Execution requirements:
+1) Always inspect source and target main/submodule repositories before returning.
+2) If conflicts exist, resolve them in git and commit required resolution commits.
+3) If merge was marked successful, still verify submodule pointer propagation and cleanliness.
+4) Validate with `git status --porcelain` in each repo touched.
+5) Return structured JSON only.
+
+Return JSON fields:
+- successful: boolean
+- output: short summary
+- errorMessage: empty when successful
+- resolvedConflictFiles: list of files you resolved/verified
+- notes: optional list of key decisions

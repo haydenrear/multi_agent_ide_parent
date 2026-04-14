@@ -1,0 +1,380 @@
+{
+  "id": "2026-04-13T21-56-48-7bd68a58",
+  "created_at": "2026-04-13T21:56:48.583348Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "orchestration-model",
+  "view_script_hash": "a7249b6f584f0f0f1f9c82205a6a1f2effb7ba69",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T21-56-48-7bd68a58",
+        "section_path": "$.sections[\"Overview\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Goal Lifecycle\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/LlmOrchestrationController.java",
+          "content_hash": "cfe77bd2e5594e82e39dbaf189e4a4ab7d9cf676",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/LlmOrchestrationController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/OrchestrationController.java",
+          "content_hash": "4144d66714c089fd1bafde44a14f28f5315aa54c",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/OrchestrationController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/GoalExecutor.java",
+          "content_hash": "a3c228dc1b14eff2585f4f4f6c8b71afb1e80f0a",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/GoalExecutor.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentLifecycleHandler.java",
+          "content_hash": "910fca049ced19c1f37cfa8f138e671649f0f566",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentLifecycleHandler.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/workflows/standard_workflow.md",
+          "content_hash": "0cbf86169ec1fcf0d5ad762e423af9ee1d4397c9",
+          "snapshot_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/workflows/standard_workflow.md",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T21-56-48-7bd68a58",
+        "section_path": "$.sections[\"Goal Lifecycle\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Workflow-Graph Polling (LlmDebugUiController)\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/LlmOrchestrationController.java",
+          "content_hash": "cfe77bd2e5594e82e39dbaf189e4a4ab7d9cf676",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/LlmOrchestrationController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/model/NodeIdRequest.java",
+          "content_hash": "ec9517396c09c445d42afa7afe7f9c2b4e469138",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/model/NodeIdRequest.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/cli/CliEventFormatter.java",
+          "content_hash": "997f4eb1d36a718f8c1dd3dcf03f9d80bfc9f314",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/cli/CliEventFormatter.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/UiStateStore.java",
+          "content_hash": "c74739b4e5326c1385602b55d8e12317dabe8444",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/UiStateStore.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/executables/poll.py",
+          "content_hash": "6395b80dbf4c2ccbd67b22ba57bb7b8e5c08624e",
+          "snapshot_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/executables/poll.py",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T21-56-48-7bd68a58",
+        "section_path": "$.sections[\"Workflow-Graph Polling (LlmDebugUiController)\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"How `workflowGraph()` builds the response\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T21-56-48-7bd68a58",
+        "section_path": "$.sections[\"How `workflowGraph()` builds the response\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Dependencies\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T21-56-48-7bd68a58",
+        "section_path": "$.sections[\"Dependencies\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Interrupt & Permission Handling\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/InterruptController.java",
+          "content_hash": "0d4546c9f25b4707b7b2a18798fde58fb8726eab",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/InterruptController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/PermissionController.java",
+          "content_hash": "a8eebdfc35cb71e14fb4369ed3cc7841653778fb",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/PermissionController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/InterruptService.java",
+          "content_hash": "6c4d3b38f998635eb5bf447faafc614f353799da",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/InterruptService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/PermissionGateService.java",
+          "content_hash": "91951bf15d6b6d238f1568831c74456e58241022",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/PermissionGateService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/kotlin/com/hayden/multiagentide/gate/PermissionGate.kt",
+          "content_hash": "a4ecd8a1ad1063a7c07160c365733a2bcd83a30b",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/kotlin/com/hayden/multiagentide/gate/PermissionGate.kt",
+          "line_span": null
+        },
+        {
+          "repo_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/executables/interrupts.py",
+          "content_hash": "ddf36054f55013e4b94774625e05c762fb55a303",
+          "snapshot_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/executables/interrupts.py",
+          "line_span": null
+        },
+        {
+          "repo_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/executables/permissions.py",
+          "content_hash": "6e52ec48c7cffcd08e150ae83ac0c86e524ec196",
+          "snapshot_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/executables/permissions.py",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T21-56-48-7bd68a58",
+        "section_path": "$.sections[\"Interrupt & Permission Handling\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Permissions (`/api/permissions`)\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T21-56-48-7bd68a58",
+        "section_path": "$.sections[\"Permissions (`/api/permissions`)\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Interrupts (`/api/interrupts`)\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T21-56-48-7bd68a58",
+        "section_path": "$.sections[\"Interrupts (`/api/interrupts`)\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Agent Conversations\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/AgentConversationController.java",
+          "content_hash": "e2c04aebee73325bb29836ebc4b6391801c35423",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/AgentConversationController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/ActivityCheckController.java",
+          "content_hash": "eae85fa147ebd89b210254240d0e4ec7e84d671c",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/ActivityCheckController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/kotlin/com/hayden/multiagentide/gate/PermissionGate.kt",
+          "content_hash": "a4ecd8a1ad1063a7c07160c365733a2bcd83a30b",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/kotlin/com/hayden/multiagentide/gate/PermissionGate.kt",
+          "line_span": null
+        },
+        {
+          "repo_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/executables/conversations.py",
+          "content_hash": "04080af91e25d493916cf67d781b35eb5e59f41c",
+          "snapshot_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/executables/conversations.py",
+          "line_span": null
+        },
+        {
+          "repo_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/conversational-topology/checklist.md",
+          "content_hash": "03fcc9ac6772037ee06119c7ecd0e05425b72d2b",
+          "snapshot_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/conversational-topology/checklist.md",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentTopologyTools.java",
+          "content_hash": "08253444ff7f78543a72ff4ff373fe29781b59dc",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentTopologyTools.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/AgentExecutor.java",
+          "content_hash": "42564c2ce0d9ef2406175f8a8fe0c9fef03020a3",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/AgentExecutor.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T21-56-48-7bd68a58",
+        "section_path": "$.sections[\"Agent Conversations\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Computation Graph Orchestrator\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/orchestration/ComputationGraphOrchestrator.java",
+          "content_hash": "1c038fc44d6d783fe7a7a79770ed4ee6982bbe1f",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/orchestration/ComputationGraphOrchestrator.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/WorkflowGraphService.java",
+          "content_hash": "d28636e8c97be557d3c1944127b6f7b38e07d1e8",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/WorkflowGraphService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/WorkflowGraphState.java",
+          "content_hash": "0a5ff2aad74ff83e3858cce56659c9b955e7c615",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/WorkflowGraphState.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/references/program_model.md",
+          "content_hash": "7d3a181bd31425991a6ab8b3507ceaf4b3a04556",
+          "snapshot_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/references/program_model.md",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T21-56-48-7bd68a58",
+        "section_path": "$.sections[\"Computation Graph Orchestrator\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Worktree Creation\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/WorktreeService.java",
+          "content_hash": "609f8cb78f93b2291f8e92c2d5b8025ece461993",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/WorktreeService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/GitWorktreeService.java",
+          "content_hash": "7da5930a273190ea2bf920e9b6292add37b7ac91",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/GitWorktreeService.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T21-56-48-7bd68a58",
+        "section_path": "$.sections[\"Worktree Creation\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Communication Topology\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/topology/CommunicationTopologyConfig.java",
+          "content_hash": "b86153527422980100492ab2a9e49c26cc8e26a1",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/topology/CommunicationTopologyConfig.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/topology/CommunicationTopologyProvider.java",
+          "content_hash": "a80d88e3e3e763cb976ba6901a65fbaa7a9fb55f",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/topology/CommunicationTopologyProvider.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/AgentCommunicationService.java",
+          "content_hash": "27c7650e72b343a24d681e3f8c89b565d12a2c8c",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/AgentCommunicationService.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T21-56-48-7bd68a58",
+        "section_path": "$.sections[\"Communication Topology\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Propagation Items\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/propagation/service/PropagationItemService.java",
+          "content_hash": "2e2f3bd37d2068aa3799c8803c6e3af0d6cf70ae",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/propagation/service/PropagationItemService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/propagation/controller/PropagationController.java",
+          "content_hash": "122cc8e21f56e271d35b1e74d1dbcc4044c132f5",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/propagation/controller/PropagationController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/executables/ack_propagations.py",
+          "content_hash": "b55c7f8b89416e987cc39745118531a4eff248a7",
+          "snapshot_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/executables/ack_propagations.py",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T21-56-48-7bd68a58",
+        "section_path": "$.sections[\"Propagation Items\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Session & Control\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/SessionKeyResolutionService.java",
+          "content_hash": "6e7c708e9d77e44fa0c6bf2b6facbd29d2203df3",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/SessionKeyResolutionService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/AgentControlService.java",
+          "content_hash": "9a46c2a3012ac769c4b84d9fd081b1b4db198419",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/AgentControlService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/references/session_identity_model.md",
+          "content_hash": "cd00050b805c55857b1cb0905fafe6b2275e60c1",
+          "snapshot_path": "skills/multi_agent_ide_skills/multi_agent_ide_controller/references/session_identity_model.md",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T21-56-48-7bd68a58",
+        "section_path": "$.sections[\"Session & Control\"]"
+      }
+    }
+  ],
+  "snapshot_dir": "2026-04-13T21-56-48-7bd68a58.snapshots"
+}

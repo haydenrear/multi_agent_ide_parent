@@ -1,0 +1,1 @@
+../../../multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/Artifact.java

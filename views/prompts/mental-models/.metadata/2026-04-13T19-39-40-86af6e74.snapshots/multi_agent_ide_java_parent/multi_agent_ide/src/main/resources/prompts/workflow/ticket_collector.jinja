@@ -1,0 +1,31 @@
+Goal: {{ goal }}
+Ticket Results: {{ ticketResults }}
+
+Produce a summary with:
+- Completed tickets
+- Failed tickets (with brief reasons)
+- Outstanding follow-ups
+
+{% include "workflow/_review_justification.jinja" %}
+{% include "justification/ticket_collector.jinja" %}
+
+{% include "workflow/_interrupt_guidance.jinja" %}
+
+{% include "workflow/_collector_base.jinja" %}
+
+Happy path: return collectorResult with collectorDecision.decisionType = ADVANCE_PHASE and requestedPhase = "COMPLETE".
+
+However, there are cases where the ticket agents and dispatcher agent did not complete the goal successfully. It is
+up to you to determine if this is one of the cases.
+
+Please review the commits that were added to the worktree and determine if they have completed the goal. If you believe
+that the commits to the worktree are insufficient for completing the goal, or you have other relevant feedback that
+needs to be addressed in order for the goal to be completed, then please follow the Route-Back Review Protocol:
+
+1. In your structured JSON response, return a result with only `interruptRequest` populated, explaining what tickets
+failed or are incomplete - make your argument for routing back so that we complete the goal successfully.
+2. After review, if approved: set collectorResult with ROUTE_BACK so ticket execution runs again. after review,
+if rejected: set collectorResult with ADVANCE_PHASE and requestedPhase = "COMPLETE", filling in completionStatus
+and followUps with what was accomplished and what remains.
+
+Only set contextManagerRequest when you need specific missing context from another agent chat/history.

@@ -1,0 +1,40 @@
+{
+  "view_name": "api-layer",
+  "sections": {
+    "Overview": {
+      "package": "overview",
+      "content": "The API layer is the external surface of the Multi-Agent IDE. REST controllers accept HTTP requests and translate them into EventBus publications, service calls, or direct agent pipeline invocations. The CLI bypasses HTTP entirely \u2014 it calls the same controller methods in-process. Every mutating endpoint follows a fire-and-forget pattern: publish an event, return an `actionId`, and let the event bus drive execution.",
+      "subsections": {}
+    },
+    "Goal Execution Flow": {
+      "package": "goal-execution-flow",
+      "content": "```\nPOST /api/orchestrator/start  (StartGoalRequest: goal, repositoryUrl, baseBranch, title, tags)\n \u2502\n \u251c\u2500 Creates root ArtifactKey (ak:ulid)\n \u251c\u2500 Returns nodeId immediately\n \u2502\n \u2514\u2500 @Async GoalExecutor.executeGoal()\n      \u251c\u2500 Validates repo path exists\n      \u251c\u2500 Normalizes repositoryUrl\n      \u251c\u2500 Publishes GoalStartedEvent\n      \u2514\u2500 AgentLifecycleHandler.initializeOrchestrator(...)\n           \u251c\u2500 Creates OrchestratorNode\n           \u251c\u2500 Emits NodeAddedEvent + WorktreeCreatedEvent\n           \u2514\u2500 AgentEventListener catches NodeAddedEvent \u2192 AgentRunner \u2192 blocks until workflow completes\n```\n\nThe client then polls via SSE (`GET /api/events/stream`) or checks activity (`POST /api/ui/activity-check`).",
+      "subsections": {}
+    },
+    "Controller Endpoint Map": {
+      "package": "controller-endpoint-map",
+      "content": "| Endpoint group | Key operations | Target service |\n|---|---|---|\n| `/api/orchestrator` | `POST /start` (goal), `GET /onboarding/runs` | `GoalExecutor`, `OnboardingOrchestrationService` |\n| `/api/agents` | `POST /pause`, `/stop`, `/resume`, `/prune`, `/branch`, `/review-request` | `AgentControlService` \u2192 EventBus |\n| `/api/interrupts` | `GET /pending`, `POST /` (request), `POST /resolve`, `POST /detail` | `PermissionGate`, `AgentControlService`, `EventStreamRepository` |\n| `/api/permissions` | `GET /pending`, `POST /resolve`, `GET /detail` | `PermissionGate` (ALLOW_ONCE/ALWAYS, REJECT_ONCE/ALWAYS) |\n| `/api/agent-conversations` | `POST /respond`, `POST /list` | `AgentExecutor.controllerResponseExecution()` |\n| `/api/ui` | `POST /feedback`, `POST /diff/revert`, `POST /message`, `POST /activity-check` | `UiStateService`, EventBus |\n| `/api/events` | `GET /stream` | `SseEventAdapter` (SSE registration + catch-up replay) |\n| `/api/runs` | `POST /start`, `GET /`, `POST /timeline`, `POST /actions`, `POST /persistence-validation` | `DebugRunQueryService`, `DebugRunPersistenceValidationService` |",
+      "subsections": {}
+    },
+    "Agent Control: Fire-and-Forget via EventBus": {
+      "package": "agent-control",
+      "content": "All agent control operations (`/api/agents/*`) follow the same pattern:\n\n```\nPOST /api/agents/pause  \u2192  AgentControlService.pauseAgent(nodeId)\n                              \u2192 eventBus.publish(PauseEvent(nodeId))\n                              \u2192 return { actionId: UUID, status: \"queued\" }\n```\n\nThe EventBus delivers the event to `AgentEventListener`, which routes it to `AgentRunner`. The REST call returns immediately \u2014 the caller monitors progress via SSE.",
+      "subsections": {}
+    },
+    "Agent-to-Controller Conversation Flow": {
+      "package": "agent-controller-conversation",
+      "content": "When an agent calls `call_controller`, it blocks on an interrupt. The controller responds via:\n\n```\nPOST /api/agent-conversations/respond  (interruptId, message, checklistAction?, expectResponse?)\n \u2502\n \u25bc\nAgentExecutor.controllerResponseExecution()\n \u251c\u2500 Derives key hierarchy from interruptId (itself a child ArtifactKey)\n \u251c\u2500 Resolves OperationContext from the agent's live execution state\n \u251c\u2500 Retrieves original AgentToControllerRequest from BlackboardHistory\n \u251c\u2500 Renders response through full decoration/template pipeline\n \u251c\u2500 permissionGate.resolveInterrupt() with rendered text\n \u2514\u2500 Emits AgentCallEvent(RETURNED)\n```",
+      "subsections": {}
+    },
+    "CLI: In-Process Controller Call": {
+      "package": "cli",
+      "content": "The CLI is Spring Shell, profile-gated to `@Profile(\"cli\")`. The `tui` command launches `TuiSession`. When the user submits a goal in TUI:\n\n```\nTuiSession.ChatInputSubmitted\n \u2192 CliTuiRunner.startGoal(repo, goal)\n   \u2192 OrchestrationController.startGoalAsync(new StartGoalRequest(...))\n```\n\nThis is a direct in-process method call \u2014 same code path as the REST layer, no HTTP involved.",
+      "subsections": {}
+    },
+    "Configuration": {
+      "package": "configuration",
+      "content": "**`LlmModelSelectionProperties`** (`prefix: llm.model-selection`): Resolution priority: `byTemplate` > `byAgentType` > `defaultModel`. Each entry is `{ model, provider }` where provider maps to an `AcpProvider` enum.\n\n**`ArtifactConfig`**: `@PostConstruct` subscribes `ArtifactEventListener` to the EventBus.\n\n**`MultiAgentIdeConfig`**: `@ComponentScan` pulls in `AgUiSerdes`, `McpProperties`, `AcpChatModel`, `EnvConfigProps`.",
+      "subsections": {}
+    }
+  }
+}

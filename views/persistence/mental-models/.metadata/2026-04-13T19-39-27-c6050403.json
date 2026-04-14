@@ -1,0 +1,182 @@
+{
+  "id": "2026-04-13T19-39-27-c6050403",
+  "created_at": "2026-04-13T19:39:27.903613Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "persistence",
+  "view_script_hash": "00e45be40ad8ad8453a9921cffd37e7baa0effd6",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-27-c6050403",
+        "section_path": "$.sections[\"Overview\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Two-Tier Architecture\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/GraphRepository.java",
+          "content_hash": "56783c5269fbb66e24e2e5967186207cc833a97b",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/GraphRepository.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/InMemoryGraphRepository.java",
+          "content_hash": "18d9374511fca116c560251fd688564ca90c5a45",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/InMemoryGraphRepository.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/EventStreamRepository.java",
+          "content_hash": "f420e91f4d11726a188abd8d93b320675b8dc712",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/EventStreamRepository.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/InMemoryEventStreamRepository.java",
+          "content_hash": "c6c8f135320297565a9efc49135469987244f6e0",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/InMemoryEventStreamRepository.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/WorktreeRepository.java",
+          "content_hash": "3c63146252f3004d51cfe305c400c4d3f21dce04",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/WorktreeRepository.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/InMemoryWorktreeRepository.java",
+          "content_hash": "60a21396700897de22a7fb42f4211dcad003814a",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/InMemoryWorktreeRepository.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/InMemoryRequestContextRepository.java",
+          "content_hash": "5d7e55f2baf3e96648952248992050580968d170",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/InMemoryRequestContextRepository.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/RunPersistenceCheckRepository.java",
+          "content_hash": "59ad00432b7f2a1cf30a44fd287dbccf37f519af",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/RunPersistenceCheckRepository.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/InMemoryRunPersistenceCheckRepository.java",
+          "content_hash": "9c15de220167733be1f09e91a8d8a85d3386bfa8",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/repository/InMemoryRunPersistenceCheckRepository.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "skills/multi_agent_ide_skills/multi_agent_ide_debug/SKILL.md",
+          "content_hash": "4232bcc7bc190ea917d2fbc2cd0a9f93a7113bcf",
+          "snapshot_path": "skills/multi_agent_ide_skills/multi_agent_ide_debug/SKILL.md",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-27-c6050403",
+        "section_path": "$.sections[\"Two-Tier Architecture\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Artifact Persistence Flow\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactEmissionService.java",
+          "content_hash": "88fc5d495cfe2230e8c6735267a305c2accceba2",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactEmissionService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactEventListener.java",
+          "content_hash": "d7bae0ad01e261596a7b128cc85e2fa86a5e9307",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactEventListener.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactService.java",
+          "content_hash": "4d34f16114cc9a858aba1527144b3505540da98f",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactTreeBuilder.java",
+          "content_hash": "dfea20840348e139418bd3acb74619a6a93b4328",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactTreeBuilder.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/EventArtifactMapper.java",
+          "content_hash": "f65a48a8f43ddc70f56177bf646db0d629576c59",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/EventArtifactMapper.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ExecutionScopeService.java",
+          "content_hash": "3c2c05a5fd6d826e504b7a5b0181d4eb8453debb",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ExecutionScopeService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactNode.java",
+          "content_hash": "c347da97400f4648143d2e92732706a63b48424a",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactNode.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-27-c6050403",
+        "section_path": "$.sections[\"Artifact Persistence Flow\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"ArtifactKey: The Hierarchical Identifier\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-27-c6050403",
+        "section_path": "$.sections[\"ArtifactKey: The Hierarchical Identifier\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"SemanticRepresentation: Post-Hoc Enrichment\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-27-c6050403",
+        "section_path": "$.sections[\"SemanticRepresentation: Post-Hoc Enrichment\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Direct Persistence Bypass\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/PolicyLifecycleArtifactService.java",
+          "content_hash": "569445c57dd1d4b83955f7148258b71f59b73618",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/PolicyLifecycleArtifactService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifact/PromptTemplateVersion.java",
+          "content_hash": "be3dd613dca874842983a74980632296325683c2",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifact/PromptTemplateVersion.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-27-c6050403",
+        "section_path": "$.sections[\"Direct Persistence Bypass\"]"
+      }
+    }
+  ],
+  "snapshot_dir": "2026-04-13T19-39-27-c6050403.snapshots"
+}

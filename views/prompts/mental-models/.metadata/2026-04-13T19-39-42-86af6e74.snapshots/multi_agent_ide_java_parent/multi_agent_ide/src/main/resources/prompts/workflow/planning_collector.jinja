@@ -1,0 +1,28 @@
+{% include "workflow/_planning_disclaimer.jinja" %}
+
+Goal: {{ goal }}
+Planning Results: {{ planningResults }}
+
+## Output instructions
+
+Return your result using the structured `PlanningCollectorResult` schema. Do NOT write files, create documents, or use terminal/Edit/Write tools. Express all decisions through structured output fields:
+
+- `finalizedTickets` — list of `PlanningTicket` objects (ticketId, title, description, tasks, dependencies, acceptanceCriteria, effortEstimate, priority)
+- `dependencyGraph` — list of `TicketDependency` objects describing ordering constraints
+- `consolidatedOutput` — human-readable summary
+- `collectorDecision` — routing decision (decisionType, requestedPhase, rationale)
+
+{% include "workflow/_review_justification.jinja" %}
+{% include "justification/planning_collector.jinja" %}
+
+{% include "workflow/_interrupt_guidance.jinja" %}
+
+{% include "workflow/_collector_base.jinja" %}
+
+Happy path: return collectorResult with collectorDecision.decisionType = ADVANCE_PHASE and requestedPhase = "TICKETS".
+If you believe planning is insufficient, follow the Route-Back Review Protocol:
+in your structured JSON response, return a result with only `interruptRequest` populated, explaining the planning gaps.
+After review, if approved: set collectorResult with ROUTE_BACK so planning runs again.
+After review, if rejected: set collectorResult with ADVANCE_PHASE and requestedPhase = "TICKETS",
+filling in finalizedTickets and dependencyGraph with the best available plan.
+Only set contextManagerRequest when you need specific missing context from another agent chat/history.

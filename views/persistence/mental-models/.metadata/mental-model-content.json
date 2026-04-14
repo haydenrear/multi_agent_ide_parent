@@ -1,0 +1,35 @@
+{
+  "view_name": "persistence",
+  "sections": {
+    "Overview": {
+      "package": "overview",
+      "content": "Persistence operates in two tiers: an in-memory tier (session-scoped, low-latency, used for live queries) and a JPA/PostgreSQL tier (durable, artifact-scoped, used for long-term storage and replay). The in-memory tier drives all real-time operations — SSE replay, interrupt lookups, graph traversal. The JPA tier kicks in only when an execution completes and the artifact tree is flushed.",
+      "subsections": {}
+    },
+    "Two-Tier Architecture": {
+      "package": "two-tier-architecture",
+      "content": "```\nIn-Memory Tier (session-scoped)                    JPA/PostgreSQL Tier (durable)\n─────────────────────────────────                   ────────────────────────────\nInMemoryGraphRepository                             ArtifactEntity (table: artifact)\n  ConcurrentHashMap<nodeId, GraphNode>                artifactKey, parentKey, executionKey\n  findSubtree(), findInterruptByOrigin()              contentHash (SHA-256), contentJson (TEXT)\n                                                      depth, templateStaticId, shared, childIds\nInMemoryEventStreamRepository\n  ConcurrentHashMap<nodeId, List<GraphEvent>>       SemanticRepresentationEntity\n  + byId map for direct lookup                        targetArtifactKey, embeddings (binary)\n  ArtifactKey.isDescendantOf() for scoped queries     summaries (JSON), classifications\n\nInMemoryWorktreeRepository                          ArtifactRepository (Spring Data JPA + QueryDSL)\nInMemoryRequestContextRepository                      findByContentHash(), findByKeyPrefix()\nInMemoryRunPersistenceCheckRepository                 findByExecutionKeyAndArtifactType()\n                                                      findAllExecutions(), findExecutionKeysBetween()\n```",
+      "subsections": {}
+    },
+    "Artifact Persistence Flow": {
+      "package": "artifact-persistence-flow",
+      "content": "```\nAgent emits artifact (ArtifactEmissionService)\n │\n ▼\nArtifactEventListener.onEvent()\n │\n ├─ ArtifactEvent → walks tree by depth, inserts into in-memory ArtifactTreeBuilder\n ├─ Semantic graph events → mapped to EventArtifact via EventArtifactMapper\n └─ Stream events → mapped to MessageStreamArtifact\n │\n │  (artifacts may arrive before their parent — queued in pendingArtifactsByExecution)\n │\n ▼\nExecutionScopeService.completeExecution(workflowRunId, status)\n │\n ▼\nArtifactEventListener.finishPersistRemove(executionKey)\n │\n ▼\nArtifactService.doPersist()\n ├─ Collects all artifacts from the tree\n ├─ Groups by ArtifactKey (handles key collisions by creating child keys)\n ├─ Groups by contentHash:\n │    ├─ Hash exists in DB → creates DbRef (reference artifact, no payload duplication)\n │    └─ Templated content → creates TemplateDbRef instead of ArtifactDbRef\n ├─ Saves via ArtifactRepository (JPA)\n └─ Errors publish NodeErrorEvent to EventBus\n```",
+      "subsections": {}
+    },
+    "ArtifactKey: The Hierarchical Identifier": {
+      "package": "artifactkey-the-hierarchical-identifier",
+      "content": "`ArtifactKey` is a hierarchical `ak:ulid/ulid/...` string. Parent-child relationships are encoded in the key structure itself — `ArtifactKey.isDescendantOf()` checks if one key is a prefix of another. This enables efficient scoped queries without joins: all events/interrupts/permissions under a workflow run share a common key prefix.",
+      "subsections": {}
+    },
+    "SemanticRepresentation: Post-Hoc Enrichment": {
+      "package": "semanticrepresentation-post-hoc-enrichment",
+      "content": "`SemanticRepresentationEntity` stores post-hoc semantic interpretations (embeddings, summaries, classifications, named entities) keyed by `targetArtifactKey`. It never mutates the source artifact — it's a separate table that enriches artifacts after the fact.",
+      "subsections": {}
+    },
+    "Direct Persistence Bypass": {
+      "package": "direct-persistence-bypass",
+      "content": "If no execution root is present in memory but the artifact's parent exists in the persistent store (`artifactService.existsByArtifactKey()`), the artifact is persisted directly without being added to the in-memory tree. This prevents stale in-memory state from blocking persistence of late-arriving artifacts.",
+      "subsections": {}
+    }
+  }
+}

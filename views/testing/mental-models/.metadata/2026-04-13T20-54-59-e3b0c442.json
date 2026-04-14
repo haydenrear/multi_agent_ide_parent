@@ -1,0 +1,84 @@
+{
+  "id": "2026-04-13T20-54-59-e3b0c442",
+  "created_at": "2026-04-13T20:54:59.428342Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "testing",
+  "view_script_hash": "5244ee481588721d51ceaa5d6749d4f2e766ed19",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Test Infrastructure\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/test/java/com/hayden/multiagentide/support/AgentTestBase.java",
+          "content_hash": "0240849259ceeb17c578c1ccd79919e692defde7",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/test/java/com/hayden/multiagentide/support/AgentTestBase.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/test/java/com/hayden/multiagentide/support/QueuedLlmRunner.java",
+          "content_hash": "5320c2f58c6827a8dbcf346b618ee85f31419aba",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/test/java/com/hayden/multiagentide/support/QueuedLlmRunner.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/test/java/com/hayden/multiagentide/support/TestEventListener.java",
+          "content_hash": "8d7382199ba9fbfbb7147281a93444c87ef18b31",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/test/java/com/hayden/multiagentide/support/TestEventListener.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T20-54-59-e3b0c442",
+        "section_path": "$.sections[\"Test Infrastructure\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Integration Tests: Queued Workflow\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/test/java/com/hayden/multiagentide/integration/WorkflowAgentQueuedTest.java",
+          "content_hash": "cb68dd0dcf7c1788ac252bfd9c2e06f624144758",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/test/java/com/hayden/multiagentide/integration/WorkflowAgentQueuedTest.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T20-54-59-e3b0c442",
+        "section_path": "$.sections[\"Integration Tests: Queued Workflow\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Integration Tests: Worktree Merge\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/test/java/com/hayden/multiagentide/integration/WorkflowAgentWorktreeMergeIntTest.java",
+          "content_hash": "226503d788968e994c15bdc57c4f4870eb0dc032",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/test/java/com/hayden/multiagentide/integration/WorkflowAgentWorktreeMergeIntTest.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T20-54-59-e3b0c442",
+        "section_path": "$.sections[\"Integration Tests: Worktree Merge\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"ACP End-to-End Tests\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/test/java/com/hayden/multiagentide/acp_tests/AcpChatModelCodexIntegrationTest.java",
+          "content_hash": "cdacf87ea3cfd9ce4ab6f91a3141b90bf4e8cfa4",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/test/java/com/hayden/multiagentide/acp_tests/AcpChatModelCodexIntegrationTest.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    }
+  ],
+  "snapshot_dir": "2026-04-13T20-54-59-e3b0c442.snapshots"
+}

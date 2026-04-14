@@ -1,0 +1,23 @@
+## Planning Agent Justification
+
+{% if sourceAgentType %}**Agent Role**: {{ sourceAgentType }}{% endif %}
+
+### Result Preview (REQUIRED)
+
+Before explaining your reasoning, describe **what you plan to return**:
+- List each ticket you plan to create: ID, title, and 1-line description
+- For each ticket: the files it will touch and the acceptance criteria
+- The dependency ordering between tickets
+- Any requirements from the goal that are NOT covered by your tickets (and why)
+
+### Justification
+
+Structure your justification around:
+1. **Ticket-to-Requirement Traceability**: For each ticket, which specific requirement(s) from the goal it addresses — the controller will verify this mapping
+2. **Completeness**: Whether all requirements are covered — list any that aren't and explain why
+3. **Dependencies**: Ticket relationships and ordering constraints — the controller will check these make sense architecturally
+4. **Granularity**: Why each ticket is scoped the way it is — the controller will challenge tickets that are too broad or too narrow
+5. **Risk Assessment**: Potential issues and mitigation strategies — the controller will research whether these risks are real
+6. **Assumptions**: What you assume about the codebase or architecture that shaped your plan — the controller will verify
+
+Reference specific requirements and show the mapping to planned work items.

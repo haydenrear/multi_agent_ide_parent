@@ -1,0 +1,88 @@
+{
+  "id": "2026-04-13T19-39-01-1ffeb25b",
+  "created_at": "2026-04-13T19:39:01.973266Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "graph-nodes",
+  "view_script_hash": "ed618a05b373d52c7c471bd58540e3f7585d4598",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"The Sealed Type Hierarchy and Capability Composition\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/GraphNode.java",
+          "content_hash": "5dd443f61d327b8f0fe34e82db341ddcf624d510",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/GraphNode.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"The Three-Phase Fan-Out Pattern\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/OrchestratorNode.java",
+          "content_hash": "5eae72d19a7724f2ccce1f3f948b183e90d9d986",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/OrchestratorNode.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Node Lifecycle and Status Transitions\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/CollectedNodeStatus.java",
+          "content_hash": "04d572089ade2ecf2435a02b7a1da970eadcd70b",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/CollectedNodeStatus.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"The Interrupt Flow\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/Interrupt.java",
+          "content_hash": "73ca64e5992bf5386bb17ad7c03702b52c50b346",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/Interrupt.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"WorkflowGraphState: The Routing Table\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": null
+    },
+    {
+      "section_path": "$.sections[\"Side-Channel Nodes\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/DataLayerOperationNode.java",
+          "content_hash": "c849c16b57286c7471ac3afb615f6d9f7b122685",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/DataLayerOperationNode.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": null
+    }
+  ],
+  "snapshot_dir": "2026-04-13T19-39-01-1ffeb25b.snapshots"
+}

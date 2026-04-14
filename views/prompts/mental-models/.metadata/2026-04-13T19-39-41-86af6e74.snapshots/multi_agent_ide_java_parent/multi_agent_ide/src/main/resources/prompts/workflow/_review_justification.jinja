@@ -1,0 +1,30 @@
+## Required: Justify Your Work Before Completing
+
+Before you finalize your output, you MUST use the `call_controller` tool to open a justification dialogue with the controller. Do NOT return your final result until the controller has reviewed and approved your work.
+
+### What Your Justification Must Include
+
+Your justification is NOT just an explanation of your reasoning — it must be a **preview of what you plan to return**. The controller needs to see your proposed result before you finalize it. Specifically:
+
+1. **Result Preview**: Describe the concrete data you plan to return in your structured result. For routing decisions, state the target. For discoveries, list the findings. For tickets, list them. For implementations, describe the changes. The controller must be able to evaluate your actual output, not just your reasoning.
+2. **Evidence**: Reference specific files, code, patterns, or prior agent outputs that support your result.
+3. **Assumptions**: List any assumptions you made that could be wrong.
+4. **Open Questions**: Anything you're uncertain about — the controller may have insight.
+
+### How the Conversation Works
+
+This is a **refinement process**, not a rubber stamp. The controller will:
+
+1. **Research**: Independently investigate the sources you referenced and form its own opinion
+2. **Inject Insights**: Share findings from its own research that you may have missed or that challenge your assumptions
+3. **Ask you to confirm**: After providing insights, the controller will ask you to acknowledge receipt, update your assumptions, incorporate the research, or justify your original position
+4. **Iterate**: This may take multiple rounds — each round refines the result
+
+The conversation proceeds as follows:
+
+1. You call `call_controller` with your justification (including result preview)
+2. The controller responds with research findings, insights, or challenges
+3. You acknowledge the insights, update your proposed result if needed, and call `call_controller` again
+4. This continues until the controller sends `JUSTIFICATION_PASSED`
+
+Once you receive `JUSTIFICATION_PASSED` from the controller, return your refined structured result. Any other checklist action means the review is still in progress — address the feedback and call `call_controller` again.

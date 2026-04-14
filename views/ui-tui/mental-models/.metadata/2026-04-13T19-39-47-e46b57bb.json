@@ -1,0 +1,124 @@
+{
+  "id": "2026-04-13T19-39-47-e46b57bb",
+  "created_at": "2026-04-13T19:39:48.032731Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "ui-tui",
+  "view_script_hash": "e5aaf0873bcee3424dd96c78cad6bdb57ba9906e",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-47-e46b57bb",
+        "section_path": "$.sections[\"Overview\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"The State Tree\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiState.java",
+          "content_hash": "3618c437128c0c19be63f00260c00954fc65548e",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiState.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiSessionState.java",
+          "content_hash": "491c4ca88782a45fb4888c247b4ec659eb460dcc",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiSessionState.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-47-e46b57bb",
+        "section_path": "$.sections[\"The State Tree\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"The Pure Reducer\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiStateReducer.java",
+          "content_hash": "c368ec02a495fbc8acfade6cb3a7341a4e04127e",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/state/UiStateReducer.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-47-e46b57bb",
+        "section_path": "$.sections[\"The Pure Reducer\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Two Independent Consumers\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/UiStateStore.java",
+          "content_hash": "c74739b4e5326c1385602b55d8e12317dabe8444",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/UiStateStore.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-47-e46b57bb",
+        "section_path": "$.sections[\"Two Independent Consumers\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"TuiSession (live terminal)\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-47-e46b57bb",
+        "section_path": "$.sections[\"TuiSession (live terminal)\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"UiStateStore (server-side)\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-47-e46b57bb",
+        "section_path": "$.sections[\"UiStateStore (server-side)\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Event Flow: Agent → UI\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/SharedUiInteractionService.java",
+          "content_hash": "74a58b40fbc44167db9bfc30045bce41880c5756",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/ui/shared/SharedUiInteractionService.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-47-e46b57bb",
+        "section_path": "$.sections[\"Event Flow: Agent → UI\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"TUI View Hierarchy\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiChatView.java",
+          "content_hash": "0aefd15c6d47358050ea79baf2ba5a29f721dee0",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/tui/TuiChatView.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-39-47-e46b57bb",
+        "section_path": "$.sections[\"TUI View Hierarchy\"]"
+      }
+    }
+  ],
+  "snapshot_dir": "2026-04-13T19-39-47-e46b57bb.snapshots"
+}

@@ -1,0 +1,308 @@
+{
+  "id": "2026-04-13T19-38-15-a2dae80a",
+  "created_at": "2026-04-13T19:38:15.958059Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "api-layer",
+  "view_script_hash": "7adefcb4b7c6a070e7147e2c795c972d22981a88",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-15-a2dae80a",
+        "section_path": "$.sections[\"Overview\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Goal Execution Flow\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/LlmOrchestrationController.java",
+          "content_hash": "cfe77bd2e5594e82e39dbaf189e4a4ab7d9cf676",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/LlmOrchestrationController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/OrchestrationController.java",
+          "content_hash": "4144d66714c089fd1bafde44a14f28f5315aa54c",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/OrchestrationController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/GoalExecutor.java",
+          "content_hash": "a3c228dc1b14eff2585f4f4f6c8b71afb1e80f0a",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/GoalExecutor.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-15-a2dae80a",
+        "section_path": "$.sections[\"Goal Execution Flow\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Controller Endpoint Map\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/EventStreamController.java",
+          "content_hash": "070e0aa7b8e2cf45ec7c6bf8806d7233391a2345",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/EventStreamController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/InterruptController.java",
+          "content_hash": "0d4546c9f25b4707b7b2a18798fde58fb8726eab",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/InterruptController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/PermissionController.java",
+          "content_hash": "a8eebdfc35cb71e14fb4369ed3cc7841653778fb",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/PermissionController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/AgentControlController.java",
+          "content_hash": "8e7bea0a45ac23117611524a5162833f0396e6ff",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/AgentControlController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/UiController.java",
+          "content_hash": "528f9cf8c6b8b9193c61b339bae211d85a31cc94",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/UiController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/model/NodeIdRequest.java",
+          "content_hash": "ec9517396c09c445d42afa7afe7f9c2b4e469138",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/model/NodeIdRequest.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/model/RunIdRequest.java",
+          "content_hash": "e34f5d84f26d7868abc5e171323123b0d83a9c75",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/model/RunIdRequest.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "skills/multi_agent_ide_skills/multi_agent_ide_api/scripts/api_schema.py",
+          "content_hash": "62a834aa2addb4243261bf802d710665442b8cb0",
+          "snapshot_path": "skills/multi_agent_ide_skills/multi_agent_ide_api/scripts/api_schema.py",
+          "line_span": null
+        },
+        {
+          "repo_path": "skills/multi_agent_ide_skills/multi_agent_ide_api/scripts/_client.py",
+          "content_hash": "df66a07eb65163eb74b2ee5209b88170aa2895f1",
+          "snapshot_path": "skills/multi_agent_ide_skills/multi_agent_ide_api/scripts/_client.py",
+          "line_span": null
+        },
+        {
+          "repo_path": "skills/multi_agent_ide_skills/multi_agent_ide_api/SKILL.md",
+          "content_hash": "1ac87ccb7557e1910d13c1e4a94a1e7452117828",
+          "snapshot_path": "skills/multi_agent_ide_skills/multi_agent_ide_api/SKILL.md",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-15-a2dae80a",
+        "section_path": "$.sections[\"Controller Endpoint Map\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Agent Control: Fire-and-Forget via EventBus\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/AgentControlService.java",
+          "content_hash": "9a46c2a3012ac769c4b84d9fd081b1b4db198419",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/AgentControlService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/InterruptService.java",
+          "content_hash": "6c4d3b38f998635eb5bf447faafc614f353799da",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/InterruptService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/InterruptSchemaGenerator.java",
+          "content_hash": "72d0e0e2b899d6233c778dd9a5c6d23b198b85c5",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/InterruptSchemaGenerator.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/PermissionGateService.java",
+          "content_hash": "91951bf15d6b6d238f1568831c74456e58241022",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/PermissionGateService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/SessionKeyResolutionService.java",
+          "content_hash": "6e7c708e9d77e44fa0c6bf2b6facbd29d2203df3",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/SessionKeyResolutionService.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-15-a2dae80a",
+        "section_path": "$.sections[\"Agent Control: Fire-and-Forget via EventBus\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Agent-to-Controller Conversation Flow\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/AgentConversationController.java",
+          "content_hash": "e2c04aebee73325bb29836ebc4b6391801c35423",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/AgentConversationController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/ActivityCheckController.java",
+          "content_hash": "eae85fa147ebd89b210254240d0e4ec7e84d671c",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/controller/ActivityCheckController.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/AgentCommunicationService.java",
+          "content_hash": "27c7650e72b343a24d681e3f8c89b565d12a2c8c",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/AgentCommunicationService.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-15-a2dae80a",
+        "section_path": "$.sections[\"Agent-to-Controller Conversation Flow\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"CLI: In-Process Controller Call\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/cli/ArtifactKeyFormatter.java",
+          "content_hash": "319b0a0458de3777cedcf5e6afe20521677dc46c",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/cli/ArtifactKeyFormatter.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/cli/CliEventFormatter.java",
+          "content_hash": "997f4eb1d36a718f8c1dd3dcf03f9d80bfc9f314",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/cli/CliEventFormatter.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/cli/CliTuiRunner.java",
+          "content_hash": "512caacdd99c059ab911de1b3ef623ff3b02f4a6",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/cli/CliTuiRunner.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/cli/ToolCallRenderer.java",
+          "content_hash": "4face63d6fb717eba6245f523e8a3107bfa3273e",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/cli/ToolCallRenderer.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/cli/ToolCallRendererFactory.java",
+          "content_hash": "5d3de625de4a22300681d07ad60a39947f2b1941",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/cli/ToolCallRendererFactory.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-15-a2dae80a",
+        "section_path": "$.sections[\"CLI: In-Process Controller Call\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Configuration\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/AgentModelMixin.java",
+          "content_hash": "c6f47889c3f4c3bac28a23874743dbee71af8c5f",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/AgentModelMixin.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/ArtifactConfig.java",
+          "content_hash": "aaf45c55b0299ac36da67bab3475ed497b081687",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/ArtifactConfig.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/ArtifactMixin.java",
+          "content_hash": "f9dd191b9e2f99d49887c0229c7207d113d8fe55",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/ArtifactMixin.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/BlackboardRoutingPlanner.java",
+          "content_hash": "bcb0bcbcc6ccfa3f90c5c4483426c70a666933dd",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/BlackboardRoutingPlanner.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/BlackboardRoutingPlannerFactory.java",
+          "content_hash": "589e3325b661548f13576f5dc6e31ed8d451cade",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/BlackboardRoutingPlannerFactory.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/CliModeConfig.java",
+          "content_hash": "3a5ef7aa50e0d4c3ff4a501c0730ef5b267b4890",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/CliModeConfig.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/LlmModelSelectionProperties.java",
+          "content_hash": "9508307692cc4d1d2766e38aea57882d87a17037",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/LlmModelSelectionProperties.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/MultiAgentEmbabelConfig.java",
+          "content_hash": "f262d2fad18c7ae0e677f04b1fb9b486e262d481",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/MultiAgentEmbabelConfig.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/MultiAgentIdeConfig.java",
+          "content_hash": "979308e4476288d635b23537bc5c41365b2141ca",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/MultiAgentIdeConfig.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/SerdesConfiguration.java",
+          "content_hash": "cc0d0697803a80e0bbb8683871f899d93e1e26e4",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/SerdesConfiguration.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/SpringMcpConfig.java",
+          "content_hash": "5e6577f9f2b0adba86eedd9de0fc78ec71ffd903",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/SpringMcpConfig.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/ValidationExceptionHandler.java",
+          "content_hash": "d0dbbec6cd3638ba4dd130410e94bd17e12e61ea",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/config/ValidationExceptionHandler.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-15-a2dae80a",
+        "section_path": "$.sections[\"Configuration\"]"
+      }
+    }
+  ],
+  "snapshot_dir": "2026-04-13T19-38-15-a2dae80a.snapshots"
+}

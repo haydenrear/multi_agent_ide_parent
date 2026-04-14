@@ -1,0 +1,115 @@
+{
+  "id": "2026-04-13T19-38-28-e4dd4d7e",
+  "created_at": "2026-04-13T19:38:28.947535Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "filter-propagation",
+  "view_script_hash": "b1170d6edbcb8538cc72bcbef3b90611c6d0b4ea",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-28-e4dd4d7e",
+        "section_path": "$.sections[\"Overview\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"The Three Pipelines at a Glance\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-28-e4dd4d7e",
+        "section_path": "$.sections[\"The Three Pipelines at a Glance\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Filter Evaluation End-to-End\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/filter/FilterFn.java",
+          "content_hash": "c9caa89353fa0776e01c18998ebace85bcdc6fcd",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/filter/FilterFn.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/filter/integration/ControllerEventFilterIntegration.java",
+          "content_hash": "393ed1d9ea8342e8b05d397c4bfc72c6d15759b7",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/filter/integration/ControllerEventFilterIntegration.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-28-e4dd4d7e",
+        "section_path": "$.sections[\"Filter Evaluation End-to-End\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Propagation: Observer Pattern on Agent I/O\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/propagation/integration/ActionRequestPropagationIntegration.java",
+          "content_hash": "e920cdb850f02f87f5fccebc70da29b4fd6bc326",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/propagation/integration/ActionRequestPropagationIntegration.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-28-e4dd4d7e",
+        "section_path": "$.sections[\"Propagation: Observer Pattern on Agent I/O\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Transformation: Response Body Rewriting\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/transformation/integration/ControllerEndpointTransformationIntegration.java",
+          "content_hash": "d44a65455adc24ed6bc12bb52be22a8f7a666a9b",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/transformation/integration/ControllerEndpointTransformationIntegration.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-28-e4dd4d7e",
+        "section_path": "$.sections[\"Transformation: Response Body Rewriting\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"The Layer Hierarchy\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/filter/service/FilterLayerCatalog.java",
+          "content_hash": "897d71158abdcb7b4b31f173e8f90bc4f04bcfc3",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/filter/service/FilterLayerCatalog.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-28-e4dd4d7e",
+        "section_path": "$.sections[\"The Layer Hierarchy\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"The AI Execution Pattern (Shared by All Three)\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/filter/config/ContextObjectMapperProvider.java",
+          "content_hash": "cdcdff6ccb62c0f48661f72d6750b4328919f2b0",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/filter/config/ContextObjectMapperProvider.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-38-28-e4dd4d7e",
+        "section_path": "$.sections[\"The AI Execution Pattern (Shared by All Three)\"]"
+      }
+    }
+  ],
+  "snapshot_dir": "2026-04-13T19-38-28-e4dd4d7e.snapshots"
+}

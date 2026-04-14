@@ -1,0 +1,55 @@
+{
+  "view_name": "artifact-key",
+  "sections": {
+    "ArtifactKey Record": {
+      "package": "acp-cdc-ai/events",
+      "content": "ArtifactKey is a ULID-based hierarchical identifier (ak:<ulid>/<ulid>/...) that uniquely identifies execution contexts. Parent/child relationships are encoded in the key path — the root segment identifies the top-level workflow, and each appended segment represents a nested context (agent action, sub-session). ArtifactKey implements HasContextId to provide contextId derivation. The companion HasContextId interface extracts the contextId (first ULID segment) from any artifact-bearing object.",
+      "subsections": {}
+    },
+    "Key-to-Node Mapping": {
+      "package": "multi_agent_ide/model+agent",
+      "content": "GraphNode and ExecutionNode interfaces use ArtifactKey as their nodeId — every node in the execution graph is keyed by an ArtifactKey. GraphNodeFactory.createNode() mints a child ArtifactKey for each new graph node by appending a new ULID segment to the parent key. HasChatId provides chatId() derivation from the ArtifactKey, mapping execution-tree identity to the ACP chat-session layer. ArtifactKeyFormatter renders the key hierarchy for the TUI, showing parent-child nesting and key truncation.",
+      "subsections": {}
+    },
+    "Session Key Resolution": {
+      "package": "multi_agent_ide/service+filter",
+      "content": "SessionKeyResolutionService centralizes the logic for resolving which ArtifactKey maps to which ACP session. It consults the graph topology and node parentage to find the correct session key for a given execution context. AiFilterSessionResolver bridges the filter-chain layer to session resolution, ensuring that AI filters (propagators, transformers) operate within the correct session scope by resolving the ArtifactKey from the filter context.",
+      "subsections": {}
+    },
+    "ACP Session Routing": {
+      "package": "acp-cdc-ai/config+session",
+      "content": "AcpChatOptionsString encodes session identity (ArtifactKey + model parameters) into a string for ACP transport routing. AcpSessionRoutingKey is the resolved routing key mapping an ArtifactKey to a specific ACP session endpoint. AcpResolvedCall wraps the resolved call parameters. AcpSessionManager (Kotlin) manages ACP session lifecycle, creating AcpSessionContext objects that bind a chatModelKey (derived from ArtifactKey) to a live chat model instance. AcpChatModel (Kotlin) is the LangChain4j ChatModel implementation that routes prompts through ACP using the session routing key.",
+      "subsections": {}
+    },
+    "Chat ID Derivation": {
+      "package": "multi_agent_ide/prompt+agent",
+      "content": "PromptContext.chatId() derives the chat identifier from the current request context, mapping between the execution-tree ArtifactKey and the ACP chat session. This is the bridge between the graph execution layer (which thinks in ArtifactKeys) and the prompt/LLM layer (which thinks in chat sessions). AgentModels provides the model configuration context that PromptContext uses to resolve the correct chat model for a given ArtifactKey scope.",
+      "subsections": {}
+    },
+    "Session Lifecycle Events": {
+      "package": "acp-cdc-ai-events",
+      "content": "Events.java defines ChatSessionCreatedEvent, ChatSessionClosedEvent, and other lifecycle events that fire when ACP sessions are created, used, and destroyed. EventArtifactMapper maps these events to artifact nodes in the execution graph, recording which ArtifactKey was active when each event occurred. ArtifactEmissionService coordinates the emission of artifact-bearing events, ensuring session lifecycle transitions are captured as observable artifacts tied to their ArtifactKey context.",
+      "subsections": {}
+    },
+    "Session Cleanup": {
+      "package": "multi_agent_ide/agent",
+      "content": "AcpSessionCleanupService performs cleanup when ArtifactKey-scoped sessions end. It garbage-collects session state (AcpSessionContext, routing keys) and ensures that stale sessions do not leak resources. Cleanup is triggered by session lifecycle events and graph-node completion.",
+      "subsections": {}
+    },
+    "Controller Scope-Based Lookup": {
+      "package": "multi_agent_ide/controller+service",
+      "content": "PermissionController, InterruptController, and LlmOrchestrationController all accept ArtifactKey as an alternative to direct request/interrupt IDs. When an ArtifactKey is provided, the controller searches for matching events within that node scope (including all descendants) via PermissionGateService. The fallback pattern: (1) try direct ID lookup, (2) if not found and isArtifactKey(id), call resolvePermissionFromScope or findInterruptIdsInScope to search descendant nodes. LlmOrchestrationController.matchesNodeScope uses ArtifactKey.isDescendantOf to filter events, nodes, and SSE streams by scope. The workflow-graph endpoint resolves any nodeId to its root via parent traversal (toRootNodeId) before building the full tree.",
+      "subsections": {}
+    },
+    "Output Channel Message Targeting": {
+      "package": "multi_agent_ide/config+service",
+      "content": "MultiAgentEmbabelConfig.llmOutputChannel (L204-262) uses ArtifactKey to route agent output messages to the correct ACP chat session. When a MessageOutputChannelEvent fires, the output channel: (1) validates the processId is a valid ArtifactKey (catches IllegalArgumentException), (2) calls SessionKeyResolutionService.resolveSessionForMessage to find the correct ArtifactKey scope for the message, (3) sets EventBus.Process to the resolved ArtifactKey, (4) calls chatModel with ToolCallingChatOptions.model set to the ArtifactKey value. This ensures agent output messages are routed to the correct ACP session even when the processId is a child key that needs resolution to its session-owning parent.",
+      "subsections": {}
+    },
+    "Agent Conversation Routing": {
+      "package": "multi_agent_ide/controller+agent",
+      "content": "AgentConversationController uses ArtifactKey for both conversation scoping and interrupt resolution. The /respond endpoint resolves a pending HUMAN_REVIEW interrupt by its interruptId, then delegates to AgentExecutor.controllerResponseExecution which resolves the originNodeId (an ArtifactKey) to deliver the controller response to the correct agent. The /list endpoint uses ArtifactKey.isDescendantOf to find all pending agent conversations within a node scope. AgentTopologyTools.call_agent uses the MCP session header (itself an ArtifactKey) to resolve the calling agent node, validates topology rules, creates a child ArtifactKey (callingKey.createChild) for the conversation context, and builds an AgentToAgentRequest with sourceAgentKey and targetAgentKey. The call chain is derived from the graph hierarchy via SessionKeyResolutionService.buildCallChainFromGraph.",
+      "subsections": {}
+    }
+  }
+}

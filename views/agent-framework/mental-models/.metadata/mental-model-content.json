@@ -1,0 +1,50 @@
+{
+  "view_name": "agent-framework",
+  "sections": {
+    "Overview": {
+      "package": "overview",
+      "content": "The agent framework bridges the Embabel agent platform to the Multi-Agent IDE's domain. It defines the agent type system, integrates the LLM runner, manages tool registration, and provides the skill system. While the execution pipeline itself is covered in the **agent-execution** view, this view covers the structural components that the pipeline consumes: how agents are typed, how tools are registered, how prompts reach the LLM, and how skills are loaded.",
+      "subsections": {}
+    },
+    "Embabel Integration": {
+      "package": "embabel-integration",
+      "content": "The single active Embabel agent class is `WorkflowAgent` (inner class of `AgentInterfaces`), annotated with `@EmbabelComponent(scan = false)`. All workflow phases route through its `@Action` methods:\n\n```java\n@Action(canRerun = true)\npublic OrchestratorRouting coordinateWorkflow(OrchestratorRequest input, OperationContext context) { ... }\n\n@Action(canRerun = true)\npublic DiscoveryOrchestratorRouting runDiscoveryOrchestrator(DiscoveryOrchestratorRequest input, ...) { ... }\n\n// ... 20+ more @Action methods\n```\n\nEmbabel's `@Action(canRerun = true, cost = N)` drives the execution graph. Actions take typed blackboard objects as input and produce typed routing objects. Embabel automatically advances based on which objects exist on the `Blackboard`. The `OperationContext` bridges the Embabel `AgentProcess` to the application's LLM and tool infrastructure.\n\n`WorkflowAgent` also implements `StuckHandler`: when the agent process gets stuck, it inspects `BlackboardHistory` for repeated `ContextManagerRequest` entries and delegates to the context manager with a `REPLAN` code.\n\n**EmbabelUtil**: provides `resolveOperationContext(AgentPlatform, ArtifactKey, agentName)` — walks the `ArtifactKey` parent chain through `AgentPlatform.getAgentProcess()` to find the live process. This is how topology tools and interrupts locate a live agent from just a session ID.\n\n**ACP Chat Model Registration**: `AcpChatModel` (Kotlin, `@Component`) implements both Spring AI `ChatModel` and `StreamingChatModel`. It is injected into Embabel as the `acp-chat-model` LLM via `OperationContext.ai().withFirstAvailableLlmOf(\"acp-chat-model\", encodedOptions)`. The model delegates to the Agent Client Protocol (ACP) SDK: it resolves runtime options via `AcpChatOptionsString`, looks up the provider definition from `AcpModelProperties`, creates or reuses an `AcpSessionManager.AcpSessionContext` (keyed by session routing key = sessionId + provider + options fingerprint), launches a stdio transport process, and sends the formatted prompt via `session.prompt(content)`. `AcpSessionManager` holds a `ConcurrentHashMap<Any, AcpSessionContext>` of live sessions; each `AcpSessionContext` carries the coroutine scope, transport, protocol, client, session, permission gate, and sandbox translation. Session identity flows through the `ArtifactKey` hierarchy: the chat model key is the root, and each message creates a child key.",
+      "subsections": {}
+    },
+    "Agent Type System": {
+      "package": "agent-type-system",
+      "content": "`AgentType` is an enum with 27+ roles:\n\n```\nORCHESTRATOR, ORCHESTRATOR_COLLECTOR,\nDISCOVERY_ORCHESTRATOR, DISCOVERY_AGENT, DISCOVERY_AGENT_DISPATCH, DISCOVERY_COLLECTOR,\nPLANNING_ORCHESTRATOR, PLANNING_AGENT, PLANNING_AGENT_DISPATCH, PLANNING_COLLECTOR,\nTICKET_ORCHESTRATOR, TICKET_AGENT, TICKET_AGENT_DISPATCH, TICKET_COLLECTOR,\nCOMMIT_AGENT, MERGE_CONFLICT_AGENT,\nAI_FILTER, AI_PROPAGATOR, AI_TRANSFORMER,\nREVIEW_AGENT, REVIEW_RESOLUTION_AGENT, MERGER_AGENT,\nCONTEXT_MANAGER, AGENT_CALL, CONTROLLER_CALL, CONTROLLER_RESPONSE, ALL\n```\n\nEach `AgentType` maps to an `AgentActionMetadata<T, U, V>` record:\n\n```java\nrecord AgentActionMetadata<T extends AgentRequest, U extends AgentRouting, V extends AgentResult>(\n    AgentType agentType, String agentName, String actionName, String methodName,\n    String template, Class<T> requestType, Class<U> routingType, Class<V> resultType,\n    ErrorTemplates errorTemplates)\n```\n\nThe full registry (`AgentMetadata.ALL`) enumerates every action. Lookups via `findByAction(agentName, actionName, methodName)` drive the entire execution pipeline. The `AgentType` also governs tool and prompt contributor filtering.",
+      "subsections": {}
+    },
+    "Tool System": {
+      "package": "tool-system",
+      "content": "",
+      "subsections": {}
+    },
+    "ToolAbstraction: The Unified Wrapper": {
+      "package": "toolabstraction-the-unified-wrapper",
+      "content": "`ToolAbstraction` is a sealed interface bridging Spring AI and Embabel tool models:\n\n```\nToolAbstraction (sealed)\n ├─ SpringToolCallback          (Spring AI ToolCallback)\n ├─ SpringToolCallbackProvider  (Spring AI provider)\n ├─ EmbabelTool / EmbabelToolObject / EmbabelToolGroup  (Embabel variants)\n ├─ ToolGroupStrings            (string-keyed tool groups)\n └─ SkillReference              (prompt contributor, NOT callable — see Skills below)\n```\n\n`ToolContext` is an immutable record holding `List<ToolAbstraction>`. It passes through the decorator chain and is applied in `DefaultLlmRunner.applyToolContext()` via exhaustive switch.",
+      "subsections": {}
+    },
+    "Three Tool Carrier Beans": {
+      "package": "three-tool-carrier-beans",
+      "content": "**AgentTopologyTools** (always active):\n- `list_agents` — discovers callable vs. topology-prohibited agents\n- `call_agent` — routes P2P message through full decorator pipeline to another agent's LLM session\n- `call_controller` — suspends agent and blocks on human interrupt\n\n**ContextManagerTools** (always active, exposed to context manager action):\n- `traceBlackboardHistory`, `listBlackboardHistory`, `searchBlackboardHistory` — history exploration\n- `addNoteToBlackboardHistory` — annotate entries with tags and notes\n\n**AgentTools** (UI tools — currently disabled/commented out):\n- `emitGuiEvent`, `retrieveGui`, `submitGuiFeedback`, `performUiDiff`\n\nAll use `@SetFromHeader(MCP_SESSION_HEADER)` for automatic session ID injection.",
+      "subsections": {}
+    },
+    "EmbabelToolObjectRegistry": {
+      "package": "embabeltoolobjectregistry",
+      "content": "Handles lazy-loaded `ToolObject` lists (typically from MCP servers). Uses `computeIfPresent` for lock-striping and a 5-attempt retry with 3-second backoff to tolerate MCP server startup delays.",
+      "subsections": {}
+    },
+    "LLM Runner: Template to ACP Call": {
+      "package": "llm-runner",
+      "content": "`DefaultLlmRunner` (implements `LlmRunner`) is the bridge between the Embabel execution pipeline and the ACP transport layer. The full call chain:\n\n```\nDefaultLlmRunner.runWithTemplate(templateName, promptContext, model, toolContext, responseClass, context)\n |\n ├─ 1. resolveEncodedAcpOptions(promptContext)\n |    ├─ If promptContext.modelName() is already encoded (AcpChatOptionsString.looksLikeEncodedModel) → use as-is\n |    └─ Else resolve via LlmModelSelectionProperties.resolve(agentType, templateName):\n |         Priority: byTemplate[templateName] > byAgentType[agentType] > defaultModel\n |         Returns LlmSelection(model, providerWireValue)\n |    └─ AcpChatOptionsString.create(chatId, model, provider, runtimeOptions).encodeModel(objectMapper)\n |         → Base64-encoded JSON: {sessionArtifactKey, requestedModel, requestedProvider, options}\n |\n ├─ 2. context.ai().withFirstAvailableLlmOf(\"acp-chat-model\", encodedOptions)\n |    → Embabel resolves the registered ChatModel bean with the encoded options as the model identifier\n |    → AcpChatModel.call(Prompt) receives the encoded options via prompt.options.model\n |\n ├─ 3. promptContributorService.getContributors(promptContext) → ContextualPromptElement[]\n |    .withPromptElements(contributors) — inject all prompt contributors\n |\n ├─ 4. applyToolContext() — exhaustive switch over ToolAbstraction variants:\n |    SpringToolCallback      → .withToolObject(new ToolObject(cb))\n |    SpringToolCallbackProvider → iterates callbacks, each → .withToolObject()\n |    EmbabelTool             → .withTool(tool)\n |    EmbabelToolObject       → .withToolObject(to)\n |    EmbabelToolGroup        → .withToolGroup(tg)\n |    EmbabelToolGroupRequirement → .withToolGroup(requirement)\n |    ToolGroupStrings        → .withToolGroups(groups)\n |    SkillReference          → no-op (skills go through prompt contributors)\n |    Also always merges AskUserQuestionToolAdapter as a baseline tool.\n |\n ├─ 5. LlmCallDecorator chain (PromptHealthCheckLlmCallDecorator, ArtifactEmissionLlmCallDecorator)\n |\n └─ 6. .creating(responseClass).fromTemplate(templateName, model)\n      → Embabel renders Jinja template with model variables\n      → Sends assembled prompt to AcpChatModel\n      → AcpChatModel decodes options via AcpChatOptionsString.fromEncodedModel()\n      → Resolves provider from AcpModelProperties (defaultProvider + providers map)\n      → Creates/reuses AcpSessionContext via AcpSessionManager\n      → Formats prompt, sends via ACP session.prompt(), collects generations\n      → Returns structured response parsed from LLM output\n```",
+      "subsections": {}
+    },
+    "Skill System": {
+      "package": "skill-system",
+      "content": "Skills are **prompt-side injections**, not callable tools. The loading process:\n\n```\nSkillProperties (application.yml: skills.localSkills map)\n → SkillFinder.findSkillDecorator(name)\n   → SkillLoader.loadSkill(name, description) → Embabel Skills object\n   → .withLocalSkill(skillPath) for each configured path\n   → SkillDecorator wrapper\n\nSkillDecorator → ToolAbstraction.SkillReference\n → DefaultLlmRunner sees SkillReference → no-op (not a tool call)\n → Instead, skill content flows as ContextualPromptElement prompt contributors\n   → injected into the prompt text as skill documentation/instructions\n```",
+      "subsections": {}
+    }
+  }
+}

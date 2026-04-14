@@ -1,0 +1,45 @@
+{
+  "view_name": "ui-tui",
+  "sections": {
+    "Overview": {
+      "package": "overview",
+      "content": "The UI system uses an immutable state tree (`UiState` / `UiSessionState`) managed by a pure reducer (`UiStateReducer`). Agent events flow through the EventBus into two independent consumers: `TuiSession` (the live terminal UI) and `UiStateStore` (the server-side state store for REST API snapshots). Both apply the same reducer but maintain separate state copies — the TUI renders immediately while the store serves API queries.",
+      "subsections": {}
+    },
+    "The State Tree": {
+      "package": "state-tree",
+      "content": "```\nUiState (top-level, per-scope)\n ├─ sessionId            (UUID for the shell run)\n ├─ activeSessionId      (which session is focused)\n ├─ sessionOrder         (ordered list of session IDs for the menu)\n ├─ sessions             (Map<String, UiSessionState>)\n ├─ focus                (enum: SESSION_LIST | EVENT_STREAM | CHAT_INPUT | CHAT_SEARCH)\n └─ repo                 (default Path)\n\nUiSessionState (per-session sub-tree)\n ├─ events               (List<GraphEvent> — immutable event log)\n ├─ selectedIndex        (which event row is selected)\n ├─ scrollOffset         (top-of-viewport row index)\n ├─ autoFollow           (when true, pin to last event — tail mode)\n ├─ detailOpen           (is the detail modal showing?)\n ├─ detailEventId        (which event ID the modal shows)\n ├─ chatInput            (current text in the chat input box)\n └─ chatSearch           (UiChatSearch: active, query, resultIndices, selectedResultIndex)\n```\n\nBoth records expose `toBuilder()` — state mutations always produce a new immutable copy.",
+      "subsections": {}
+    },
+    "The Pure Reducer": {
+      "package": "pure-reducer",
+      "content": "`UiStateReducer.reduce(UiState, GraphEvent, UiViewport, sessionId)` dispatches on event type:\n\n- **TuiInteractionGraphEvent** → `applyInteraction()`: exhaustive switch over `UiInteractionEvent` subtypes (EventStreamMoveSelection, Scroll, OpenDetail, CloseDetail, FocusChatInput, FocusEventStream, FocusSessionList, ChatInputChanged, ChatInputSubmitted, ChatSearch*, SessionSelected, SessionCreated)\n- **TuiSystemGraphEvent** → no-op (returns state unchanged)\n- **Any other GraphEvent** → `appendGraphEvent()`: appends to session's event list. If `autoFollow` is true, advances `selectedIndex` to tail and recalculates `scrollOffset` for viewport.\n\nScroll arithmetic: `adjustScrollForSelection(selected, scrollOffset, height)` keeps the selected row within the visible viewport window.",
+      "subsections": {}
+    },
+    "Two Independent Consumers": {
+      "package": "two-consumers",
+      "content": "",
+      "subsections": {}
+    },
+    "TuiSession (live terminal)": {
+      "package": "tuisession-live-terminal",
+      "content": "`TuiSession` is a Spring `@Component @Profile(\"cli\")` implementing `EventListener`. On `onEvent(GraphEvent)`:\n\n1. Acquires `stateLock`\n2. Calls `sharedUiInteractionService.reduce(state, event, viewport, nodeId)` → new immutable state\n3. Calls `terminalUi.redraw()` to trigger re-render\n\nFor `ChatInputSubmitted`: if first message ever → starts a new agent goal via `goalStarter.startGoal(repo, goal)`. Otherwise routes to pending permissions/interrupts handlers or publishes `AddMessageEvent` to the agent pipeline.",
+      "subsections": {}
+    },
+    "UiStateStore (server-side)": {
+      "package": "uistatestore-server-side",
+      "content": "`UiStateStore` is a Spring `@Component` implementing `EventListener`. Maintains `ConcurrentHashMap<String, UiState>` keyed by scope node ID.\n\n**Key design**: a single event fans out to **all ancestor scope IDs**. Given `ArtifactKey` `ak:root/child/leaf`, the event updates state for `leaf`, `child`, and `root` simultaneously. Parent-level views always see all events from their entire subtree.\n\n`snapshot(nodeId)` retrieves current state and converts to `UiStateSnapshot` DTO for REST API consumers.",
+      "subsections": {}
+    },
+    "Event Flow: Agent → UI": {
+      "package": "event-flow",
+      "content": "```\nAgent code → EventBus.publish(GraphEvent)\n │\n ▼\nDefaultEventBus (synchronous fan-out)\n │\n ├─ TuiSession.onEvent()          [live terminal]\n │    synchronized(stateLock):\n │      state = reduce(state, event, viewport, nodeId)\n │    terminalUi.redraw()\n │\n └─ UiStateStore.onEvent()        [server-side store]\n      for each scopeNodeId in ancestor chain:\n        statesByScopeNodeId.compute(scopeNodeId, (k, existing) ->\n          reduce(current, event, viewport, nodeId))\n```",
+      "subsections": {}
+    },
+    "TUI View Hierarchy": {
+      "package": "tui-view-hierarchy",
+      "content": "Built on Spring Shell's `TerminalUI` / `GridView` (Lanterna/JLine). All views are passive renderers — they hold no state and re-render from `UiState` on each `drawInternal()`.\n\n```\nTuiTerminalView (root GridView)\n ├─ TuiSessionMenuView    (row 0 — session tab list)\n └─ TuiSessionView        (row 1 — active session content)\n      ├─ TuiHeaderView         (row 0, height=4 — status bar)\n      ├─ TuiMessageStreamView  (row 1, dynamic — scrolling event list)\n      │    └─ ListView<EventLine>\n      └─ TuiChatView           (row 2, dynamic, min=3 — input box)\n```\n\nDynamic layout: chat height is calculated by `TuiChatView.requiredHeight()` (wraps input text, clamped 3–10 lines). Stream height fills the remainder.\n\n`TuiMessageStreamView` uses reflection to set `ListView`'s private `start` and `pos` fields, overriding Spring Shell's built-in scroll to implement the event-driven scroll model from `UiStateReducer`.",
+      "subsections": {}
+    }
+  }
+}

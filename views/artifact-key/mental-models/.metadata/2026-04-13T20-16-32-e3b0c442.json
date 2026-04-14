@@ -1,0 +1,185 @@
+{
+  "id": "2026-04-13T20-16-32-e3b0c442",
+  "created_at": "2026-04-13T20:16:32.747576Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "artifact-key",
+  "view_script_hash": "0ee97fbe6b9467336092a2905c8d0a9f77b7f0f3",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"ArtifactKey Record\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/ArtifactKey.java",
+          "content_hash": "eb9de2dc9653cbd6c62192c47029c8ecb8284d81",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/ArtifactKey.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/HasContextId.java",
+          "content_hash": "e1796f2512b050625633bd5e6aa00d6e5d9d0adb",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/HasContextId.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T20-16-32-e3b0c442",
+        "section_path": "$.sections[\"ArtifactKey Record\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Key-to-Node Mapping\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/GraphNode.java",
+          "content_hash": "5dd443f61d327b8f0fe34e82db341ddcf624d510",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/GraphNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/ExecutionNode.java",
+          "content_hash": "d30bb8d7b6aad4d13d885ed8050321feb246c959",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/ExecutionNode.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/HasChatId.java",
+          "content_hash": "2c2a0e940edc64c3827a91f65db87fee052fb454",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/model/nodes/HasChatId.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/GraphNodeFactory.java",
+          "content_hash": "824785badc64c86c1ebf18d7d6d1c92b7dd7f359",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/GraphNodeFactory.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/cli/ArtifactKeyFormatter.java",
+          "content_hash": "319b0a0458de3777cedcf5e6afe20521677dc46c",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/cli/ArtifactKeyFormatter.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T20-16-32-e3b0c442",
+        "section_path": "$.sections[\"Key-to-Node Mapping\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Session Key Resolution\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/SessionKeyResolutionService.java",
+          "content_hash": "6e7c708e9d77e44fa0c6bf2b6facbd29d2203df3",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/service/SessionKeyResolutionService.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/filter/service/AiFilterSessionResolver.java",
+          "content_hash": "d0511e68d4ef0e7fea762eb73858ceff1a0e9c33",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/filter/service/AiFilterSessionResolver.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T20-16-32-e3b0c442",
+        "section_path": "$.sections[\"Session Key Resolution\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"ACP Session Routing\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/config/AcpChatOptionsString.java",
+          "content_hash": "ae052fa5923b0f84d7328dc9db25287d8d9d09c6",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/config/AcpChatOptionsString.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/config/AcpSessionRoutingKey.java",
+          "content_hash": "fb00efdce3f840d8713f4915e4b9deb0336e3a24",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/config/AcpSessionRoutingKey.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/config/AcpResolvedCall.java",
+          "content_hash": "a7870969f083734d6aa1f510d922c32e1a83e985",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/config/AcpResolvedCall.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/kotlin/com/hayden/acp_cdc_ai/acp/AcpSessionManager.kt",
+          "content_hash": "04fc5676bca64dc1354155a7b9c662fadd741d6a",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/kotlin/com/hayden/acp_cdc_ai/acp/AcpSessionManager.kt",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/kotlin/com/hayden/acp_cdc_ai/acp/AcpChatModel.kt",
+          "content_hash": "ccb648e8c3433959bc4eeebf758c02247301ff0c",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/kotlin/com/hayden/acp_cdc_ai/acp/AcpChatModel.kt",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T20-16-32-e3b0c442",
+        "section_path": "$.sections[\"ACP Session Routing\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Chat ID Derivation\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContext.java",
+          "content_hash": "7f3bc05b7171ba8ecbda324ad03944db7f53a704",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/prompt/PromptContext.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentModels.java",
+          "content_hash": "21f8b9539ca6e13377b74b532387e852f3770716",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/agent/AgentModels.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T20-16-32-e3b0c442",
+        "section_path": "$.sections[\"Chat ID Derivation\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Session Lifecycle Events\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/Events.java",
+          "content_hash": "19590fe7f0507f4d7fc3e097336d8b2eae0790f6",
+          "snapshot_path": "multi_agent_ide_java_parent/acp-cdc-ai/src/main/java/com/hayden/acp_cdc_ai/acp/events/Events.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/EventArtifactMapper.java",
+          "content_hash": "f65a48a8f43ddc70f56177bf646db0d629576c59",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/EventArtifactMapper.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactEmissionService.java",
+          "content_hash": "88fc5d495cfe2230e8c6735267a305c2accceba2",
+          "snapshot_path": "multi_agent_ide_java_parent/multi_agent_ide/src/main/java/com/hayden/multiagentide/artifacts/ArtifactEmissionService.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T20-16-32-e3b0c442",
+        "section_path": "$.sections[\"Session Lifecycle Events\"]"
+      }
+    }
+  ],
+  "snapshot_dir": "2026-04-13T20-16-32-e3b0c442.snapshots"
+}

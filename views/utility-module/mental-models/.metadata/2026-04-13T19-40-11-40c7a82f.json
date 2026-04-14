@@ -1,0 +1,696 @@
+{
+  "id": "2026-04-13T19-40-11-40c7a82f",
+  "created_at": "2026-04-13T19:40:12.063744Z",
+  "mental_model": "mental-models.md",
+  "scope": "view",
+  "owner_name": "utility-module",
+  "view_script_hash": "9fd8f360d47a5c14bdf95797dd3202e34b25fbea",
+  "diff_entries": [
+    {
+      "section_path": "$.sections[\"Overview\"]",
+      "offset": 0,
+      "source_files": [],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-40-11-40c7a82f",
+        "section_path": "$.sections[\"Overview\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"The Result Type Hierarchy\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/Result.java",
+          "content_hash": "446a92ac9312c016108c56d915c954d4a04252c6",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/Result.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/AsyncResult.java",
+          "content_hash": "9aa6dda33016684c9ab894bdda755f83a9645992",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/AsyncResult.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/ClosableResult.java",
+          "content_hash": "ebcb4d6aefb7f8d32296ab12f7d9a4ef7da373db",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/ClosableResult.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/ManyResult.java",
+          "content_hash": "9166446cb685ed81cd28da86549deee4913136c7",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/ManyResult.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/MutableResult.java",
+          "content_hash": "01eb324f4882c20173af81081e9da2778e585c97",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/MutableResult.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/OneResult.java",
+          "content_hash": "9b804b6652dbb8d2abb18ec185f106b0581d01c4",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/OneResult.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/agg/Agg.java",
+          "content_hash": "c182df9131536cf7def9f859628e2b19a6c2273e",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/agg/Agg.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/agg/AggregateError.java",
+          "content_hash": "1755d1f90a7774e426e9c6a62a681c801dcea660",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/agg/AggregateError.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/agg/AggregateParamError.java",
+          "content_hash": "680a9c440570d06c15dce611e97353c4b45c02c0",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/agg/AggregateParamError.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/agg/Responses.java",
+          "content_hash": "3e849924120a0a532cafa1ecd43f88105959db74",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/agg/Responses.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/async/CompletableFutureResult.java",
+          "content_hash": "f673c2875527ce208aa7575083255ad28b66cad6",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/async/CompletableFutureResult.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/async/FluxResult.java",
+          "content_hash": "34bf6bc4bb495a750454a19065d481e897e35b14",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/async/FluxResult.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/async/IAsyncManyResultItem.java",
+          "content_hash": "390221e38f35d9a7c8b10cd77eb0dd7cb6622bc8",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/async/IAsyncManyResultItem.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/async/IAsyncResultItem.java",
+          "content_hash": "8fe7ab0883f5208fd75a5ffc2ca475819be44c75",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/async/IAsyncResultItem.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/async/MonoResult.java",
+          "content_hash": "5ee7e0c37a9285e6133f9be67621140d04c04d3c",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/async/MonoResult.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/closable/ClosableMonitor.java",
+          "content_hash": "7eeb2f0e3bdba77a8565ee7e941d269cf1f7022b",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/closable/ClosableMonitor.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/error/BindingResultErr.java",
+          "content_hash": "b3fa2606be24f40320428cf54249f2b99e7e10c7",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/error/BindingResultErr.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/error/Err.java",
+          "content_hash": "de501c3ef4bb80d7f37b46375a6cd77566ed140c",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/error/Err.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/error/SingleError.java",
+          "content_hash": "0faef81f40303ba5758099f434783a50ed0855df",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/error/SingleError.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/error/StdErr.java",
+          "content_hash": "f26d7389493c0d3f9bb44c0ff24d17164608998f",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/error/StdErr.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/map/AggregateResultCollectors.java",
+          "content_hash": "4c9381e0d69a50c1a542845af9e4e58e023ee39c",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/map/AggregateResultCollectors.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/map/ParameterizedResultCollectors.java",
+          "content_hash": "52412e3e3ece1a1dc06e4c135a791a45c76c7229",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/map/ParameterizedResultCollectors.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/map/ResultCollectors.java",
+          "content_hash": "430ab1d8c65acc86f061894dd492fc5b4bde8c38",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/map/ResultCollectors.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/map/StreamResultCollector.java",
+          "content_hash": "cf4f7685190047357095915b68f715e39176077e",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/map/StreamResultCollector.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/ok/ClosableOk.java",
+          "content_hash": "e7c558cacfd3806c51d9537976cd8fa923ee3ca9",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/ok/ClosableOk.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/ok/MutableOk.java",
+          "content_hash": "6d036416bd5156b163b07f788f6c1a142efc0915",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/ok/MutableOk.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/ok/Ok.java",
+          "content_hash": "4d4e7080c5f529a9d5c2e318759ce81a5d6079ca",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/ok/Ok.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/ok/ResponseEntityOk.java",
+          "content_hash": "74062ab57839f16ec2691f7dc265177be6e48cfe",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/ok/ResponseEntityOk.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/ok/StdOk.java",
+          "content_hash": "00ec0b8c0cbc639dc7293330c7c27fd48b83139c",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/ok/StdOk.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_many/IManyResultItem.java",
+          "content_hash": "1bc77151dfc411683a16a9c12736a3331243afeb",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_many/IManyResultItem.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_many/IStreamResultItem.java",
+          "content_hash": "c55613cedcfcbc080910c79e42710b19dd5e4867",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_many/IStreamResultItem.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_many/ListResultItem.java",
+          "content_hash": "b9450bdfc85a992a0ba0e76d3648072049bb2a43",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_many/ListResultItem.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_many/StreamResultItem.java",
+          "content_hash": "350a7b28cee1cd307e20fca73d5672764566d030",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_many/StreamResultItem.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_single/ISingleResultItem.java",
+          "content_hash": "396b4d1d80364c004e9c911e15a24de43b12550a",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_single/ISingleResultItem.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/many/stream/ResultStreamWrapper.java",
+          "content_hash": "a0488877c2fbae992c9e4c558d53fcb2c393db75",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/many/stream/ResultStreamWrapper.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/many/stream/StreamCache.java",
+          "content_hash": "a2d4aaa8a7a26c8d36e992cd2159ecfbb9aa91dd",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/many/stream/StreamCache.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/many/stream/StreamResult.java",
+          "content_hash": "b0fbab2c6347a9e952a4e3ac31a192239453bff0",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/many/stream/StreamResult.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/many/stream/StreamResultOptions.java",
+          "content_hash": "e86b448b61cfe6e718a483b6079010fcba832d4b",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/many/stream/StreamResultOptions.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/many/stream/StreamWrapper.java",
+          "content_hash": "b114a9e0ce63295f092ae97dbc48dc5e0d676736",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/many/stream/StreamWrapper.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/many/stream/stream_cache/CachableStream.java",
+          "content_hash": "75d325403f07030c520a3a81da756cb00ae9ab1e",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/many/stream/stream_cache/CachableStream.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/many/stream/stream_cache/CachingOperations.java",
+          "content_hash": "8548c0b414512f8ae0b3c52b68b716386289dc8e",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/many/stream/stream_cache/CachingOperations.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/one/ClosableOne.java",
+          "content_hash": "1e45d9166e4cb158818c8d468049370f506b8287",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/one/ClosableOne.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/one/MutableOne.java",
+          "content_hash": "687658d1a1f59c78b9903f05f0588d3b8422f416",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/one/MutableOne.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/one/One.java",
+          "content_hash": "cdce88a4977344bf80cbc88c97992238d74ba79c",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/one/One.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/one/ResponseEntityOne.java",
+          "content_hash": "2906679519a373638ad2e819ffb9111458d3feee",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/one/ResponseEntityOne.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/one/ResultTy.java",
+          "content_hash": "ea4fb906b28d0e2d11184449be2bfa498ce96d9c",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_support/one/ResultTy.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_ty/CachedCollectedResult.java",
+          "content_hash": "a9d5c9ded34a9442bf8947476e2537f878c97933",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_ty/CachedCollectedResult.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_ty/ClosableResult.java",
+          "content_hash": "be71a670beaa83ab5c7d862bb94cdb9cb94ce0b5",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_ty/ClosableResult.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_ty/IResultItem.java",
+          "content_hash": "c11cece434c9b3552b8b160f854b2667061c90e4",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_ty/IResultItem.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_ty/ResultTyResult.java",
+          "content_hash": "a4adcf0a239d63a7646613f5e7ae625c3cfe377b",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/result/res_ty/ResultTyResult.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/Either.java",
+          "content_hash": "bef02bb6ab46da06e7dbf89f89da375a89f04825",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/Either.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-40-11-40c7a82f",
+        "section_path": "$.sections[\"The Result Type Hierarchy\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"EventBus Contract\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/Cdc.java",
+          "content_hash": "e3e1e57bdba72ad9f151eb461b652cbea6498f4b",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/Cdc.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-40-11-40c7a82f",
+        "section_path": "$.sections[\"EventBus Contract\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Concurrency Primitives\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/concurrent/OnceCell.java",
+          "content_hash": "1654393d6a239ec4b598aa25fb91d2571f477d0f",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/concurrent/OnceCell.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/concurrent/striped/StripedLock.java",
+          "content_hash": "d3c0cc3cfc382bc4e48a1fe89c7c3f5c7863c725",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/concurrent/striped/StripedLock.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/concurrent/striped/StripedLockAspect.java",
+          "content_hash": "1147c65d17b6b2779be44012875cfba85533a00a",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/concurrent/striped/StripedLockAspect.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-40-11-40c7a82f",
+        "section_path": "$.sections[\"Concurrency Primitives\"]"
+      }
+    },
+    {
+      "section_path": "$.sections[\"Other Notable Abstractions\"]",
+      "offset": 0,
+      "source_files": [
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/ArrayUtilUtilities.java",
+          "content_hash": "e8322ad9a4d63c3f015bdce612ce04e3c85f1e8d",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/ArrayUtilUtilities.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/ByteUtility.java",
+          "content_hash": "4c1bec73a1d9b8ea746cd3cf8b4a9905581813ef",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/ByteUtility.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/CollectionFunctions.java",
+          "content_hash": "d89a2d2b1b1d143f98811d8faebb55e8c08425d2",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/CollectionFunctions.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/CombinationUtilities.java",
+          "content_hash": "b911a54b4c7e030580a2dff923f1cc6800c17c5e",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/CombinationUtilities.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/DateUtilities.java",
+          "content_hash": "c03b189325f1f5ec44aafcaaf58b33cd3022d735",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/DateUtilities.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/MapFunctions.java",
+          "content_hash": "de88ef48674c57c31f91b8ab2d0a0283a6f52d63",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/MapFunctions.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/NdUtilities.java",
+          "content_hash": "0a5867a648557627de2ec47d7caf01e1f79e2c81",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/NdUtilities.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/RandomUtils.java",
+          "content_hash": "a1a459e8831f352dc988550ae67b97a5faf6f7ca",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/RandomUtils.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/TestAnnotation.java",
+          "content_hash": "56474300fbedfd1e24ceda5be659fb55a0fa0586",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/TestAnnotation.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/TimeUnitEnum.java",
+          "content_hash": "e57b464257897b686664ab38012c394a320d49a9",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/TimeUnitEnum.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/TriFunction.java",
+          "content_hash": "35af5dc2256521bd4a75d29ff8b3f60f20da0b6a",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/TriFunction.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/WritableUtils.java",
+          "content_hash": "57d68e874b237f8840bc40f80e0a914df18f79ae",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/WritableUtils.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/assert_util/AssertUtil.java",
+          "content_hash": "e5eb8d4d6270ea37a2b43febc0f6309709eb1347",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/assert_util/AssertUtil.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/cast/UtilityClassUtils.java",
+          "content_hash": "1c217c0ceb77525bd2018d1de6fceec16448fa6f",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/cast/UtilityClassUtils.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/config/EnvConfigProps.java",
+          "content_hash": "e44d9dee0bfa6ed27200c0e43c8f8cb674e21074",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/config/EnvConfigProps.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/ctx/PreSetConfigurationProperties.java",
+          "content_hash": "a54d079b557604779702d3dd549e1e1d863caff7",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/ctx/PreSetConfigurationProperties.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/ctx/PresetProperties.java",
+          "content_hash": "91a52f510436c3754e2f8f22ee3f7622a8b69c32",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/ctx/PresetProperties.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/ctx/PrototypeBean.java",
+          "content_hash": "a17f86c448186bc51ece4e7ad6565387ec61e3aa",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/ctx/PrototypeBean.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/ctx/PrototypeScope.java",
+          "content_hash": "174c11a458bb1552bc834ced831328fd353583a4",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/ctx/PrototypeScope.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/db/DbDataSourceTrigger.java",
+          "content_hash": "a5c8ab03be602a3e7e585ed530caf7a71d03f4bb",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/db/DbDataSourceTrigger.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/db/WithDb.java",
+          "content_hash": "21ad08e2879b7dcf84e5821601db7212be33eacb",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/db/WithDb.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/db/WithDbAspect.java",
+          "content_hash": "c62d5f5e570809c8ac72da973512a3c719a6e937",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/db/WithDbAspect.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/fn/Reducer.java",
+          "content_hash": "6ac572d1b31d7b4bdb22e9a4f4dfff068aaf4133",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/fn/Reducer.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/free/Effect.java",
+          "content_hash": "67e279e0865996f92c770642eb95b7f0297cac7b",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/free/Effect.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/free/Free.java",
+          "content_hash": "159b19efe5fce922a8663d2983d5bd944f994b02",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/free/Free.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/free/Interpreter.java",
+          "content_hash": "0612e65d658c78b7f887fdc9e2c478e24d8926bd",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/free/Interpreter.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/gather/DistinctBy.java",
+          "content_hash": "d2893cb62db2e146549b5fe13c6ad2662a07c185",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/gather/DistinctBy.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/git/RepoUtil.java",
+          "content_hash": "bf277694aa4c3b8a2252e9a1fb2a3c503ba84d34",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/git/RepoUtil.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/git/WildcardPathFilter.java",
+          "content_hash": "4843acae8204424320f14535110fa31c4e25826c",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/git/WildcardPathFilter.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/io/ArchiveUtils.java",
+          "content_hash": "5fd7bfdaa518a49c499356296fd47404f99ca496",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/io/ArchiveUtils.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/io/FileUtils.java",
+          "content_hash": "f78bf0d81dcc89ec7c8272eccebc4c9f5e6613e7",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/io/FileUtils.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/iter/BreadthFirstLazyDelegatingIterator.java",
+          "content_hash": "a7b72c135755a672e88e7cda462f75621b4e11d1",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/iter/BreadthFirstLazyDelegatingIterator.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/iter/DepthFirstLazyDelegatingIterator.java",
+          "content_hash": "74fdab51e87c47fb7199b7002df2ab3a02a9b651",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/iter/DepthFirstLazyDelegatingIterator.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/iter/LazyIterator.java",
+          "content_hash": "1fd18ac55f342305577f8ffe3f44347433959540",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/iter/LazyIterator.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/iter/ZigZagIterator.java",
+          "content_hash": "bcfb4c66ef10a1b88cfe5fee0853ed1d9f584f82",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/iter/ZigZagIterator.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/kafka/KafkaProperties.java",
+          "content_hash": "065b6e7a697d8a3d6a3c74a1e1496dde6ebfd82a",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/kafka/KafkaProperties.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/matchers/JwtMatcher.java",
+          "content_hash": "1ad5d5fcbebc5e9a8b587267146d821df48ca04d",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/matchers/JwtMatcher.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/mcp/ctx/McpRequestContext.java",
+          "content_hash": "5b50d371fdb408d404e84dd984a3a9f5e1e7dd7d",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/mcp/ctx/McpRequestContext.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/otel/DisableOtelConfiguration.java",
+          "content_hash": "0ebe9c46849f2ddc05aec2d494833230c05917c1",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/otel/DisableOtelConfiguration.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/proxies/ProxyUtil.java",
+          "content_hash": "f7ea555762f62ab4d6a281ecc756110871f90d99",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/proxies/ProxyUtil.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/reflection/Defaults.java",
+          "content_hash": "688358f9514b8686723616efb6c3f7fb734dc38d",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/reflection/Defaults.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/reflection/NullHasMeaning.java",
+          "content_hash": "4e5d6218e2b5e2e5b91aa87c6f9cc7ef5a26cb07",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/reflection/NullHasMeaning.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/reflection/ParameterAnnotationUtils.java",
+          "content_hash": "c9ada122b814ebeeef122e9e0e4a4dec3b4a8fdc",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/reflection/ParameterAnnotationUtils.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/reflection/PathUtil.java",
+          "content_hash": "5820da01e34eb8722a0d6e35a7bf3e67325dbdd7",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/reflection/PathUtil.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/reflection/TypeReferenceDelegate.java",
+          "content_hash": "0dccfab13dab74d82aa0b40172e56b10cb7d0052",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/reflection/TypeReferenceDelegate.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/schema/DelegatingSchemaReplacer.java",
+          "content_hash": "9ab1c00ba9b8619d130aeeab0e9fe4e239878d8e",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/schema/DelegatingSchemaReplacer.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/schema/SchemaReplacer.java",
+          "content_hash": "0e1b2220c0f65e7ca816bf29d803e0af20bf6de9",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/schema/SchemaReplacer.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/schema/SpecialJsonSchemaGenerator.java",
+          "content_hash": "fb280d31bdc59b32083a520bc4adfa339da8afd2",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/schema/SpecialJsonSchemaGenerator.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/schema/SpecialMethodToolCallbackProvider.java",
+          "content_hash": "4d8f7badba0964b89ebf7f4c9a032427880b1888",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/schema/SpecialMethodToolCallbackProvider.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/schema/SpecialMethodToolCallbackProviderFactory.java",
+          "content_hash": "c3b83b5cc9e1856c4bd26a766e9c91be9c4ed155",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/schema/SpecialMethodToolCallbackProviderFactory.java",
+          "line_span": null
+        },
+        {
+          "repo_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/security/KeyConfigProperties.java",
+          "content_hash": "0b6f484ded96fb5b148e32bdc67c350ee11b5b5a",
+          "snapshot_path": "multi_agent_ide_java_parent/utilitymodule/src/main/java/com/hayden/utilitymodule/security/KeyConfigProperties.java",
+          "line_span": null
+        }
+      ],
+      "supersedes": {
+        "metadata_file_id": "2026-04-13T19-40-11-40c7a82f",
+        "section_path": "$.sections[\"Other Notable Abstractions\"]"
+      }
+    }
+  ],
+  "snapshot_dir": "2026-04-13T19-40-11-40c7a82f.snapshots"
+}
