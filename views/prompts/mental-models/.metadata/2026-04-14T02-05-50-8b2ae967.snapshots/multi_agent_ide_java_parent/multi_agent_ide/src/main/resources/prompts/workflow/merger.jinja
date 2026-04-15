@@ -1,0 +1,19 @@
+Review the merge outcome and validate it is correct.
+
+Merge context:
+{{ mergeContext }}
+
+Merge summary:
+{{ mergeSummary }}
+
+Conflicting files:
+{{ conflictFiles }}
+
+Return route: {{ returnRoute }}
+
+Confirm whether the merge is acceptable. If conflicts exist, outline resolution guidance.
+
+{% include "workflow/_review_justification.jinja" %}
+{% include "justification/merger.jinja" %}
+
+{% include "workflow/_interrupt_guidance.jinja" %}

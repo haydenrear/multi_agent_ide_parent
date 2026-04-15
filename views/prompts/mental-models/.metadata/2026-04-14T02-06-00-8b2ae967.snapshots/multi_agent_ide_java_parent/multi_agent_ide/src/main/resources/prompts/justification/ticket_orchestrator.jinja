@@ -1,0 +1,18 @@
+## Ticket Orchestrator Justification
+
+### Result Preview (REQUIRED)
+
+Before explaining your reasoning, describe **what you plan to return**:
+- How many ticket agent requests you will dispatch
+- For each request: which ticket it implements, the key details included, and the file paths
+- The execution ordering and why
+- Any tickets you chose NOT to dispatch (and why)
+
+### Justification
+
+Structure your justification around:
+1. **Ticket-to-Request Mapping**: Whether you created exactly one agent request per ticket — no more, no fewer — the controller will verify 1:1 mapping
+2. **Request Completeness**: Whether each request includes full ticket details (ID, title, description, tasks, acceptance criteria, file references) so the agent can work independently
+3. **Ordering**: Whether the dispatch order respects ticket dependencies — the controller will check against the dependency graph
+4. **Plan Fidelity**: Whether you faithfully translated the plan without collapsing, splitting, or reinterpreting tickets
+5. **Assumptions**: What you assume about ticket independence or execution context that the controller should verify

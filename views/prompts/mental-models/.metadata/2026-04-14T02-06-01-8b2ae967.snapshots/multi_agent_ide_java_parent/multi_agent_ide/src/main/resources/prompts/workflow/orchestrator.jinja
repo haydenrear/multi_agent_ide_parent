@@ -1,0 +1,68 @@
+Coordinate the following multi-agent workflow:
+
+Goal: {{ goal }}
+Phase: {{ phase }}
+
+## Routing Options
+
+You will return a routing result with a single non-null field representing the agent to route to.
+
+Here are your choices for routing:
+
+- **discoveryOrchestratorRequest** (Discovery Orchestrator) - Start or continue discovery work
+   - Use this when beginning a new workflow or when more codebase exploration is needed
+   - This kicks off the discovery phase to understand the codebase before planning
+   - Use when the user asks you to kick off a goal to discovery more about the code-base to complete the goal
+   - Setting this field will route to the discovery orchestrator agent
+
+- **collectorRequest** (Orchestrator Collector) - Final consolidation
+   - Use this when ALL work is complete, discovery, planning, and ticket orchestration is finished, and you're ready to finalize
+   - Routing here means "there is nothing left to do" - the workflow is done and all above, discovery, planning, and ticket orchestration are finished
+   - Typically only reached after Discovery → Planning → Tickets phases complete
+   - Only route to Orchestrator Collector if all other agent orchestrators have been completed and code has been merged
+   - Setting this field will route to the collector orchestrator agent
+
+- **interruptRequest** - Pause for human review
+   - Use when you need clarification or the user requested a pause
+   - Examples: unclear goal, ambiguous phase changes, missing constraints
+   - Setting this field will route to a human and then a review resolution agent
+
+## Happy Path
+
+The typical workflow progression is:
+```
+
+
+Orchestrator → Discovery Orchestrator → Discovery Agents → Discovery Collector
+                                                                    ↓
+                                                        [DiscoveryCollectorResult]
+            ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ←
+            ↓
+Planning Orchestrator → Planning Agents → Planning Collector
+                                                    ↓
+                                          [PlanningCollectorResult]
+            ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ←
+            ↓
+Ticket Orchestrator → Ticket Agents → Ticket Collector
+                                              ↓
+                                    [TicketCollectorResult]
+            ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ←
+            ↓
+Orchestrator Collector (COMPLETE)
+```
+
+You are currently at the Orchestrator.
+
+This means most of the time you will be routing to discovery orchestrator with the goal, or else asking for clarification
+regarding the goal, and then routing to the discovery orchestrator.
+
+## Key Guidance
+
+- **Start with Discovery**: For a new workflow, route to `discoveryOrchestratorRequest` by returning a result with discoveryOrchestratorRequest not null.
+- **Do NOT skip to Collector**: The `collectorRequest` is the final step, not the starting point
+- **Phase tracking**: The phase parameter reflects where you are (DISCOVERY, PLANNING, TICKETS, COMPLETE)
+
+{% include "workflow/_review_justification.jinja" %}
+{% include "justification/orchestrator.jinja" %}
+
+{% include "workflow/_interrupt_guidance.jinja" %}

@@ -1,0 +1,17 @@
+Orchestrate ticket-based implementation for the following tickets:
+
+Goal: {{ goal }}
+Phase: {{ phase }}
+
+Your job is to translate the planning output into the **exact set of ticket agent requests required to fully complete the goal** — one request per ticket. Do not exclude, defer, or omit any ticket. All tickets must be submitted in a single response.
+
+Ticket submission policy:
+- Submit ALL tickets in a single `agentRequests` list. Do not meter or stagger — all tickets are dispatched at once and run sequentially by the executor.
+- The number of requests must exactly match the number of tickets in the plan. No more, no fewer.
+- Do not collapse multiple tickets into one or split one ticket into many.
+- Include complete ticket details (ticketId, title, description, tasks, acceptance criteria, key file references) for each request so the ticket agent has everything it needs without back-referencing other tickets.
+
+{% include "workflow/_review_justification.jinja" %}
+{% include "justification/ticket_orchestrator.jinja" %}
+
+{% include "workflow/_interrupt_guidance.jinja" %}

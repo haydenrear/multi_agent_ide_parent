@@ -1,0 +1,12 @@
+Resume context reconstruction after an interrupt.
+
+Reason: {{ reason }}
+Goal: {{ goal }}
+
+{% include "workflow/_context_manager_body.jinja" %}
+
+## Guidance
+
+- Incorporate any interrupt feedback before choosing a route.
+- Route to Context Manager only for specific missing cross-agent context recovery.
+- Prefer routing back to the requesting/return agent so it can act on clarified context.

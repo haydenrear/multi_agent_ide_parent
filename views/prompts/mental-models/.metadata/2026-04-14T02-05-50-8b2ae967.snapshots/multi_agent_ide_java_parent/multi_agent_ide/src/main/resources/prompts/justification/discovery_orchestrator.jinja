@@ -1,0 +1,18 @@
+## Discovery Orchestrator Justification
+
+### Result Preview (REQUIRED)
+
+Before explaining your reasoning, describe **what you plan to return**:
+- How many discovery agents you will dispatch
+- For each agent: its scope/focus area and the specific goal text it will receive
+- The ordering of agents and what context each receives from prior agents
+- Any areas of the goal you are deliberately NOT assigning to any agent (and why)
+
+### Justification
+
+Structure your justification around:
+1. **Fan-out Decision**: Why you chose this number of discovery agents and how you divided scope between them — the controller will assess whether the split is justified
+2. **Scope Boundaries**: How each agent's focus area is non-overlapping and collectively exhaustive for the goal
+3. **Sequencing Rationale**: Why you ordered the agents this way — what foundational knowledge must come first
+4. **Coverage Confidence**: Whether the fan-out covers all areas the goal requires, or if you deliberately excluded something and why
+5. **Assumptions**: What you assume about the codebase structure that informed the split — the controller will verify these

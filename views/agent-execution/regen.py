@@ -20,6 +20,7 @@ BASE = f"{JAVA}/multi_agent_ide/src/main/java/com/hayden/multiagentide"
 ACP = f"{JAVA}/acp-cdc-ai/src/main"
 ACP_KT = f"{ACP}/kotlin/com/hayden/acp_cdc_ai/acp"
 ACP_JAVA = f"{ACP}/java/com/hayden/acp_cdc_ai/acp"
+PY_ACP = "multi_agent_ide_python_parent/packages/acp-cdc-ai-python/acp_process"
 SKILLS = "skills/multi_agent_ide_skills"
 
 # ── Files grouped by mental-model section ────────────────────────────────
@@ -35,6 +36,8 @@ SECTION_FILES = [
     ("execution-pipeline", f"{BASE}/agent/AgentLifecycleHandler.java"),
     ("execution-pipeline", f"{ACP_KT}/AcpChatModel.kt"),
     ("execution-pipeline", f"{ACP_JAVA}/config/AcpChatOptionsString.java"),
+    ("execution-pipeline", f"{PY_ACP}/provider.py"),
+    ("execution-pipeline", f"{PY_ACP}/artifact_key.py"),
 
     # ── Request/Result Decorator Symmetry ─────────────────────────────
     ("request-result-decorator-symmetry", f"{BASE}/agent/decorator/request/RequestDecorator.java"),
@@ -110,6 +113,10 @@ SECTION_FILES = [
     ("controller-conversation-pipeline", f"{BASE}/agent/UpstreamContext.java"),
     ("controller-conversation-pipeline", f"{BASE}/agent/AgentTopologyTools.java"),
     ("controller-conversation-pipeline", f"{BASE}/service/AgentExecutor.java"),
+    ("controller-conversation-pipeline", f"{JAVA}/multi_agent_ide/src/main/resources/prompts/workflow/_review_justification.jinja"),
+    ("controller-conversation-pipeline", f"{JAVA}/multi_agent_ide/src/main/resources/prompts/communication/controller_response.jinja"),
+    ("controller-conversation-pipeline", f"{SKILLS}/multi_agent_ide_controller/conversational-topology/checklist.md"),
+    ("controller-conversation-pipeline", f"{SKILLS}/multi_agent_ide_controller/conversational-topology/reference.md"),
 
     # ── Communication Topology ────────────────────────────────────────
     ("communication-topology", f"{BASE}/topology/CommunicationTopologyConfig.java"),

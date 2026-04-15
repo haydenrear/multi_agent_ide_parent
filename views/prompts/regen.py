@@ -142,6 +142,16 @@ SECTION_FILES = [
 
     # ── Skill References ──────────────────────────────────────────────
     ("prompt-assembly-process", f"{SKILLS}/multi_agent_ide_controller/references/prompt_architecture.md"),
+
+    # ── Conversational Topology & Checklists ──────────────────────────
+    ("conversational-topology-checklists", f"{SKILLS}/multi_agent_ide_controller/conversational-topology/checklist.md"),
+    ("conversational-topology-checklists", f"{SKILLS}/multi_agent_ide_controller/conversational-topology/reference.md"),
+    ("conversational-topology-checklists", f"{SKILLS}/multi_agent_ide_controller/conversational-topology/checklist-discovery-agent.md"),
+    ("conversational-topology-checklists", f"{SKILLS}/multi_agent_ide_controller/conversational-topology/checklist-planning-agent.md"),
+    ("conversational-topology-checklists", f"{SKILLS}/multi_agent_ide_controller/conversational-topology/checklist-ticket-agent.md"),
+    ("conversational-topology-checklists", f"{SKILLS}/multi_agent_ide_controller/conversational-topology/checklist-discovery-orchestrator.md"),
+    ("conversational-topology-checklists", f"{SKILLS}/multi_agent_ide_controller/conversational-topology/checklist-planning-orchestrator.md"),
+    ("conversational-topology-checklists", f"{SKILLS}/multi_agent_ide_controller/conversational-topology/checklist-ticket-orchestrator.md"),
 ]
 
 

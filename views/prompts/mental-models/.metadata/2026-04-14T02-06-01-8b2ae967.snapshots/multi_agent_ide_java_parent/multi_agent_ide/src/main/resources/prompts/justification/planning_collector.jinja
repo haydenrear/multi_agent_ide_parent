@@ -1,0 +1,18 @@
+## Planning Collector Justification
+
+### Result Preview (REQUIRED)
+
+Before explaining your reasoning, describe **what you plan to return**:
+- Your phase decision: ADVANCE_PHASE to TICKETS or ROUTE_BACK for more planning
+- The finalized ticket list: ID, title, and description for each
+- The dependency graph: which tickets depend on which
+- Any tickets you merged, split, or dropped from the planning agent outputs (and why)
+
+### Justification
+
+Structure your justification around:
+1. **Ticket Consolidation**: How you merged tickets from multiple planning agents, resolving overlaps or conflicts — the controller will compare against the raw planning outputs
+2. **Dependency Graph Validity**: Whether ticket dependencies are correct and the ordering is achievable — the controller will verify against the codebase architecture
+3. **Requirement Coverage**: Whether every goal requirement traces to at least one finalized ticket — list the mapping
+4. **Phase Decision**: Why you chose ADVANCE_PHASE vs ROUTE_BACK — what concrete evidence makes the plan ready (or not ready) for implementation
+5. **Assumptions**: What you assume is complete or correct that the controller should verify

@@ -16,6 +16,7 @@ VIEW_DIR = Path(__file__).resolve().parent
 
 JAVA = "multi_agent_ide_java_parent"
 ACP = f"{JAVA}/acp-cdc-ai/src/main"
+PY_ACP = "multi_agent_ide_python_parent/packages/acp-cdc-ai-python/acp_process"
 
 # ── Files grouped by mental-model section ────────────────────────────────
 SECTION_FILES = [
@@ -54,6 +55,7 @@ SECTION_FILES = [
     ("sandbox-translation", f"{ACP}/java/com/hayden/acp_cdc_ai/sandbox/SandboxArgUtils.java"),
     ("sandbox-translation", f"{ACP}/java/com/hayden/acp_cdc_ai/sandbox/ClaudeCodeSandboxStrategy.java"),
     ("sandbox-translation", f"{ACP}/java/com/hayden/acp_cdc_ai/sandbox/CodexSandboxStrategy.java"),
+    ("sandbox-translation", f"{JAVA}/multi_agent_ide/src/main/resources/application.yml"),
 
     # ── MCP Integration ───────────────────────────────────────────────
     ("mcp-integration", f"{ACP}/java/com/hayden/acp_cdc_ai/mcp/DynamicMcpToolCallbackProvider.java"),
@@ -87,6 +89,15 @@ SECTION_FILES = [
     # ── Request Context ───────────────────────────────────────────────
     ("request-context", f"{ACP}/java/com/hayden/acp_cdc_ai/repository/RequestContext.java"),
     ("request-context", f"{ACP}/java/com/hayden/acp_cdc_ai/repository/RequestContextRepository.java"),
+
+    # ── Python ACP Runtime ─────────────────────────────────────────────
+    ("acp-python-runtime", f"{PY_ACP}/provider.py"),
+    ("acp-python-runtime", f"{PY_ACP}/artifact_key.py"),
+    ("acp-python-runtime", f"{PY_ACP}/session.py"),
+    ("acp-python-runtime", f"{PY_ACP}/events.py"),
+    ("acp-python-runtime", f"{PY_ACP}/event_bus.py"),
+    ("acp-python-runtime", f"{PY_ACP}/jsonl.py"),
+    ("acp-python-runtime", f"{PY_ACP}/stream_buffer.py"),
 ]
 
 

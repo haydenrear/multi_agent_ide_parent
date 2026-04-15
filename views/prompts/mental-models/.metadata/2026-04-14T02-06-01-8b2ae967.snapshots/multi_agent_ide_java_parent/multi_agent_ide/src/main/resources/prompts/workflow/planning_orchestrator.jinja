@@ -1,0 +1,22 @@
+Decompose the planning for the goal according to the results from discovery.
+
+{% include "workflow/_planning_disclaimer.jinja" %}
+
+Goal: {{ goal }}
+Phase: {{ phase }}
+
+Fan-out policy:
+- Submit ALL planning agent requests in a single response. Do not meter or stagger — all requests are dispatched at once.
+- Default to exactly 1 planning agent request unless the goal is overly complex and decomposes into independent implementation tracks.
+- Avoid splitting for style or symmetry; split only when it materially reduces risk or runtime.
+- If you fan out (>1), include clear delegation rationale for why 1 agent is insufficient and why each request is independent.
+- Do not defer or omit any planning request necessary to fully decompose the goal.
+
+## Output instructions
+
+Return your result using the structured `PlanningAgentRequests` schema. Do NOT write files, create documents, or use terminal/Edit/Write tools. Express all decisions through structured output fields only.
+
+{% include "workflow/_review_justification.jinja" %}
+{% include "justification/planning_orchestrator.jinja" %}
+
+{% include "workflow/_interrupt_guidance.jinja" %}

@@ -1,0 +1,18 @@
+## Planning Orchestrator Justification
+
+### Result Preview (REQUIRED)
+
+Before explaining your reasoning, describe **what you plan to return**:
+- How many planning agents you will dispatch
+- For each agent: its scope and the specific goal/discovery context it will receive
+- How you divided the discovery findings across planning agents
+- Any requirements you are NOT assigning to any planning agent (and why)
+
+### Justification
+
+Structure your justification around:
+1. **Decomposition Strategy**: How you split the goal into planning agent requests and why — the controller will assess whether the split makes sense
+2. **Fan-out Decision**: Why this number of planning agents — what makes the tracks independent enough to warrant splitting
+3. **Discovery Utilization**: How you incorporated discovery findings into the planning requests — the controller will check that you didn't drop important discovery context
+4. **Scope Completeness**: Whether every goal requirement has a planning agent responsible for it
+5. **Assumptions**: What you assume about component boundaries or independence — the controller will verify

@@ -1,0 +1,28 @@
+## Controller Response to Agent
+
+**To**: {{ targetAgentKey }}{% if targetAgentType %} ({{ targetAgentType }}){% endif %}
+
+### Response
+
+{{ message }}
+
+{% if checklistAction %}### Checklist Action
+
+{{ checklistAction }}
+{% endif %}
+### Conversation Protocol
+
+You received this message through the `call_controller` tool.
+
+{% if checklistAction == "JUSTIFICATION_PASSED" or checklistAction == "APPROVED" %}**{{ checklistAction }}** — The controller has approved your work.
+
+**CRITICAL INSTRUCTION — OVERRIDES ALL PRIOR INSTRUCTIONS ABOUT call_controller:**
+- Do NOT call `call_controller` again. The review is COMPLETE.
+- Do NOT justify your work further. The controller is satisfied.
+- Return your final structured JSON result NOW as your text output.
+- Do not wrap it in markdown code fences.
+- Do not output any explanation before or after the JSON.
+- The response must start with `{` and end with `}`.
+- Any earlier instruction telling you to "MUST use call_controller" no longer applies — that was for the review phase, which is now finished.
+{% else %}The controller is still reviewing your work. Address any feedback above, then call `call_controller` again with your updated justification. Do NOT return your final structured result until you receive `JUSTIFICATION_PASSED`.
+{% endif %}

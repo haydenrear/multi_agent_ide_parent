@@ -1,0 +1,22 @@
+Consolidate the workflow results and provide a routing decision.
+
+Happy path guidance:
+- This is the final consolidation step.
+- Validate whether the ticket implementation is complete against the stated goal and acceptance context.
+- If complete, return collectorResult and set collectorDecision.decisionType = ADVANCE_PHASE with requestedPhase = "COMPLETE".
+- If you need review/validation, set reviewRequest. If you need merge/conflict handling, set mergerRequest or handle the conflicts yourself and commit them.
+- If you believe the implementation is incomplete or has gaps, follow the Route-Back Review Protocol:
+  in your structured JSON response, return a result with only `interruptRequest` populated (leave collectorResult null) with the gaps and let the reviewer decide.
+- After review, if approved for route-back: set collectorResult with ROUTE_BACK. Widen the goal in
+  consolidatedOutput to cover both the original goal and unresolved gaps. Populate discoveryCollectorResult,
+  planningCollectorResult, and ticketCollectorResult so context is preserved.
+- After review, if rejected: set collectorResult with ADVANCE_PHASE and requestedPhase = "COMPLETE",
+  summarizing accomplishments and noting limitations in consolidatedOutput.
+- Only set contextManagerRequest when you need specific missing context from another agent chat/history.
+
+{% include "workflow/_review_justification.jinja" %}
+{% include "justification/orchestrator_collector.jinja" %}
+
+{% include "workflow/_interrupt_guidance.jinja" %}
+
+{% include "workflow/_collector_base.jinja" %}

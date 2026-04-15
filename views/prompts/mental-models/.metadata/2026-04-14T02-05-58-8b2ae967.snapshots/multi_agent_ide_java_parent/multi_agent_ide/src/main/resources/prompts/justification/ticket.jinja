@@ -1,0 +1,24 @@
+## Ticket Agent Justification
+
+{% if sourceAgentType %}**Agent Role**: {{ sourceAgentType }}{% endif %}
+
+### Result Preview (REQUIRED)
+
+Before explaining your reasoning, describe **what you plan to return**:
+- The ticket ID and what it required
+- List of files you modified and a 1-line summary of each change
+- Test changes: what tests you added/updated and what they verify
+- Commits you made and their messages
+- Your verification status and how you validated correctness
+
+### Justification
+
+Structure your justification around:
+1. **Change Justification**: For each file changed, why that specific change is necessary and correct — the controller will read the actual diff
+2. **Verification Summary**: How you verified the changes work — what you ran, what passed, what you checked
+3. **Impact Analysis**: What other code or systems are affected by your changes — the controller will research this independently
+4. **Completeness**: Whether all aspects of the ticket are addressed, including edge cases — list any acceptance criteria you couldn't fully meet
+5. **Assumptions**: What you assume about the surrounding code or behavior that the controller should verify
+6. **Risks**: Any changes that could have unintended side effects — the controller will investigate these
+
+Reference specific code changes and their rationale. The controller will read the diff independently.

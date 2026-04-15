@@ -75,6 +75,7 @@ SECTION_FILES = [
     ("communication-topology", f"{BASE}/topology/CommunicationTopologyConfig.java"),
     ("communication-topology", f"{BASE}/topology/CommunicationTopologyProvider.java"),
     ("communication-topology", f"{BASE}/service/AgentCommunicationService.java"),
+    ("communication-topology", f"{SKILLS}/multi_agent_ide_controller/conversational-topology/reference.md"),
 
     # ── Session & Control ─────────────────────────────────────────────
     # ACP session resolution and agent control (pause/stop/resume).

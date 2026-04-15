@@ -1,0 +1,22 @@
+## Discovery Agent Justification
+
+{% if sourceAgentType %}**Agent Role**: {{ sourceAgentType }}{% endif %}
+
+### Result Preview (REQUIRED)
+
+Before explaining your reasoning, describe **what you plan to return**:
+- List the key files and modules you discovered
+- Describe the architectural patterns and dependencies you identified
+- State your discovery report structure: what sections, what findings per section
+- List any areas you explored that yielded no relevant findings (negative results matter)
+
+### Justification
+
+Structure your justification around:
+1. **Interpretation**: How you interpreted the codebase findings — what patterns emerged and what they mean for the goal
+2. **Findings Mapping**: For each goal requirement, which specific files/classes/interfaces address it
+3. **Confidence & Gaps**: Your confidence level for each finding, and any areas where you lack certainty — the controller will research these independently
+4. **Architectural Context**: How the discovered components interconnect — call chains, interfaces, abstractions, not just concrete classes
+5. **Assumptions**: Any assumptions you made about the codebase that could be wrong — the controller will verify these
+
+Be specific — reference concrete files, patterns, or code structures. The controller will independently check your claims against the actual codebase.

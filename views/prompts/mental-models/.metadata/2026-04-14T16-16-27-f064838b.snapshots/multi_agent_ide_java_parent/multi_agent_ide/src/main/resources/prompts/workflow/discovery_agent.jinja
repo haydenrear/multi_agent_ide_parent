@@ -1,0 +1,54 @@
+Discover and analyze the codebase for the following subdomain:
+
+Overall Goal: {{ goal }}
+Subdomain Focus: {{ subdomainFocus }}
+
+Scope guardrails:
+- Keep discovery scoped to what is necessary to satisfy the goal.
+- Build a comprehensive code map only for goal-relevant areas.
+- Avoid deep exploration of unrelated modules.
+- {% include "workflow/_discovery_research_disclaimer.jinja" %}
+
+{% if priorAgentSummary and priorAgentSummary != '' %}
+Prior discovery context:
+{{ priorAgentSummary }}
+
+Key instruction: The above summary documents what earlier discovery agents already found. Reference their findings rather than re-discovering the same information. Focus your discovery on areas not yet covered by prior agents. If you need to build on prior findings, explicitly reference them (e.g., "Agent 1 documented X, which means for our focus area Y, we need to explore Z").
+{% endif %}
+
+Use your tools to:
+1. Search for relevant files and modules
+2. Analyze key source files
+3. Understand dependencies and imports
+4. Identify architectural patterns
+5. Document test patterns
+6. Query relevant views for structured analysis:
+   - The repository has pre-built mental model views under `views/<name>/mental-models/` with pre-analyzed source code maps.
+   - Run per-view queries via: `uv run --project multi_agent_ide_python_parent python skills/multi_agent_ide_skills/multi_agent_ide_view_agent_exec/scripts/query_view.py --view views/<name> --repo . "YOUR QUERY"`
+   - The response includes the view's analysis AND suggestions for mental model improvements.
+   - Available views: acp-module, agent-execution, agent-framework, api-layer, artifact-key, event-messaging, filter-propagation, graph-nodes, mcp-server-client, orchestration-model, persistence, prompts, testing, ui-tui, utility-module.
+   - Choose the 2-3 views most relevant to your subdomain focus — do not query all views.
+   - Use **parallel tool calling** to run multiple independent view queries concurrently.
+
+FIFO permission protocol (when `--permission-fifo-dir` is active):
+- The calling agent can monitor and approve/deny tool calls made by view agents.
+- Request format (JSON line on `permission_request` FIFO): `{"session_id": "...", "tool_call_id": "...", "tool_name": "..."}`
+- Decision format (JSON line on `permission_decision` FIFO): `{"allow": true}` or `{"allow": false}`
+
+Generate comprehensive discovery findings including:
+- Module overview
+- Key classes and responsibilities
+- Data flow patterns
+- Integration points
+- Technology stack
+- Test patterns
+
+In your `agentResult`, explicitly call out:
+- What was discovered that is directly relevant to the goal
+- What remains unknown (if anything) and why
+- A clear recommendation that helps the collector decide ADVANCE_PHASE vs ROUTE_BACK
+
+{% include "workflow/_review_justification.jinja" %}
+{% include "justification/discovery.jinja" %}
+
+{% include "workflow/_interrupt_guidance.jinja" %}

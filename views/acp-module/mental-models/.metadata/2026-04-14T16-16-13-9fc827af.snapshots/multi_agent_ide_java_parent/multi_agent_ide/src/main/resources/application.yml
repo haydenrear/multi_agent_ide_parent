@@ -1,0 +1,375 @@
+env-props:
+  project-dir: {{PROJ_DIR}}
+  home-dir: {{HOME_DIR}}
+ctx:
+  jupyter: /Users/hayde/jupyter/sessions/db
+spring:
+  session:
+    enabled: false
+    schema-provided: false
+  autoconfigure:
+    exclude:
+      [org.springframework.boot.autoconfigure.session.SessionAutoConfiguration]
+  web:
+    resources:
+      static-locations: "file:{{PROJ_DIR}}/fe/out"
+      chain:
+        cache: false
+      cache:
+        period: 0
+        cachecontrol:
+          no-store: true
+          must-revalidate: true
+  ai.vectorstore.type: none
+  dgs.graphql.enabled: false
+  application:
+    name: multi-agent-ide
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5105}/${POSTGRES_DATABASE:postgres}
+    hikari:
+      username: postgres
+      password: postgres
+      #jdbc-url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5105}/${POSTGRES_DATABASE:postgres}
+      driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    user: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  ai:
+    mcp:
+      server:
+        enabled: false
+        type: sync
+        stdio: false
+        request-timeout: 90m
+  docker:
+    compose:
+      file: file:{{PROJ_DIR}}/src/main/resources/docker/docker-compose.yml
+      enabled: true
+      skip:
+        in-tests: false
+      lifecycle-management: start_only
+      start:
+        skip: if_running
+      readiness:
+        wait: only_if_started
+
+server.port: 8080
+
+# CLI mode (see application-cli.yml): configure via multi-agent-ide.cli.* properties
+
+# Logging
+logging:
+  level:
+    root: INFO
+    #    org.springframework.web: DEBUG
+    com.hayden.multiagentide: INFO
+    com.embabel.agent.api.channel: INFO
+#    com.embabel.agent: DEBUG
+#    dev.langchain4j: DEBUG
+otel:
+  instrumentation:
+    spring-web:
+      enabled: false
+    spring-webmvc:
+      enabled: false
+    spring-webflux:
+      enabled: false
+    jdbc:
+      enabled: false
+    kafka:
+      enabled: false
+    mongo:
+      enabled: false
+  sdk:
+    disabled: true
+management:
+  tracing:
+    enabled: false
+  logging:
+    export:
+      enabled: false
+  otlp:
+    metrics:
+      export:
+        enabled: false
+    logging:
+      export:
+        enabled: false
+embabel:
+  agent:
+    platform:
+      direct-executions:
+        max-attempts: 10
+      llm-operations:
+        data-binding:
+          max-attempts: 1
+        prompts:
+          default-timeout: 900m
+      scanning:
+        bean: false
+        annotation: false
+      migration:
+        scanning:
+          enabled: false
+  models:
+    default-llm: acp-chat-model
+
+# Artifact persistence configuration
+artifacts:
+  persistence:
+    enabled: ${ARTIFACTS_PERSISTENCE_ENABLED:true}
+    batch-size: ${ARTIFACTS_BATCH_SIZE:100}
+  templates:
+    load-on-startup: ${ARTIFACTS_TEMPLATES_LOAD:true}
+    source-paths:
+      - classpath:prompts/workflow/
+multi-agent-embabel:
+  chat-model:
+    provider: acp
+  acp:
+    default-provider: claude
+    providers:
+      claude:
+        transport: stdio
+        command: ${ACP_COMMAND:claude-agent-acp}
+        args: ${ACP_ARGS:}
+        working-directory: ${ACP_WORKING_DIR:}
+        env:
+          MCP_TOOL_TIMEOUT: 900_000
+          MCP_TIMEOUT: 900_000
+          MCP_TOOL_CALL_MCP_REQUEST_TIMEOUT_MSEC: 900_000
+      codex:
+        transport: stdio
+        command: ${ACP_COMMAND:codex-acp}
+        args: ${ACP_ARGS:--sandbox danger-full-access --ask-for-approval never --yolo true}
+        working-directory: ${ACP_WORKING_DIR:}
+        auth-method: chatgpt
+      claude_openrouter:
+        transport: stdio
+        command: ${ACP_COMMAND:claude-agent-acp}
+        args: ${ACP_ARGS:--model openai/gpt-oss-120b}
+        working-directory: ${ACP_WORKING_DIR:}
+        default-model: openai/gpt-oss-120b
+        env:
+          MCP_TOOL_TIMEOUT: 900000
+          MCP_TIMEOUT: 900000
+          MCP_TOOL_CALL_MCP_REQUEST_TIMEOUT_MSEC: 900_000
+          ANTHROPIC_BASE_URL: https://openrouter.ai/api
+          ANTHROPIC_AUTH_TOKEN: ${X_OPENROUTER_API_KEY}
+          ANTHROPIC_API_KEY: ""
+          OPENROUTER_API_KEY: ${X_OPENROUTER_API_KEY}
+          ANTHROPIC_MODEL: openai/gpt-oss-120b
+          CLAUDE_CODE_EXECUTABLE: /Users/hayde/.local/bin/claude
+      claude_llama:
+        transport: stdio
+        command: ${ACP_COMMAND:claude-agent-acp}
+        args: ${ACP_ARGS:--model qwen3.5:9b}
+        working-directory: ${ACP_WORKING_DIR:}
+        default-model: qwen3.5:9b
+        env:
+          MCP_TOOL_TIMEOUT: 900000
+          MCP_TIMEOUT: 900000
+          MCP_TOOL_CALL_MCP_REQUEST_TIMEOUT_MSEC: 900_000
+          ANTHROPIC_AUTH_TOKEN: ollama
+          ANTHROPIC_BASE_URL: http://localhost:11434
+          ANTHROPIC_API_KEY: ""
+
+llm:
+  model-selection:
+    default-model:
+      model: sonnet
+      provider: claude
+    by-agent-type:
+      commit-agent:
+        model: qwen3.5:9b
+        provider: claude_llama
+      merge-conflict-agent:
+        model: qwen3.5:9b
+        provider: claude_llama
+      ai-filter:
+        model: qwen3.5:9b
+        provider: claude_llama
+    by-template: {}
+
+acp.mcp:
+  http:
+  #    - name: deepwiki
+  #      url: https://mcp.deepwiki.com/mcp
+  #      headers:
+  #    - name: hindsight
+  #      url: http://localhost:8777/mcp/${HINDSIGHT_MEM_BANK:agentic-coding}
+  #      headers:
+  #stdio-values:
+  #  - name: intellij
+  #    command: "/Users/hayde/Applications/IntelliJ IDEA.app/Contents/jbr/Contents/Home/bin/java"
+  #    args:
+  #      - "-classpath"
+  #      - "/Users/hayde/Applications/IntelliJ IDEA.app/Contents/plugins/mcpserver/lib/mcpserver-frontend.jar:/Users/hayde/Applications/IntelliJ IDEA.app/Contents/lib/util-8.jar:/Users/hayde/Applications/IntelliJ IDEA.app/Contents/lib/module-intellij.libraries.ktor.client.cio.jar:/Users/hayde/Applications/IntelliJ IDEA.app/Contents/lib/module-intellij.libraries.ktor.client.jar:/Users/hayde/Applications/IntelliJ IDEA.app/Contents/lib/module-intellij.libraries.ktor.network.tls.jar:/Users/hayde/Applications/IntelliJ IDEA.app/Contents/lib/module-intellij.libraries.ktor.io.jar:/Users/hayde/Applications/IntelliJ IDEA.app/Contents/lib/module-intellij.libraries.ktor.utils.jar:/Users/hayde/Applications/IntelliJ IDEA.app/Contents/lib/module-intellij.libraries.kotlinx.io.jar:/Users/hayde/Applications/IntelliJ IDEA.app/Contents/lib/module-intellij.libraries.kotlinx.serialization.core.jar:/Users/hayde/Applications/IntelliJ IDEA.app/Contents/lib/module-intellij.libraries.kotlinx.serialization.json.jar"
+  #      - "com.intellij.mcpserver.stdio.McpStdioRunnerKt"
+  #    env:
+  #      - IJ_MCP_SERVER_PORT: 64342
+
+mcp:
+  protocols:
+    required:
+      hindsight: 2025-03-26
+
+
+
+
+skills:
+  local-skills:
+    ContextManagerRequest:
+    #      - skill-path: {{PARENT_DIR}}/skills/java_gradle
+    #      - skill-path: {{PARENT_DIR}}/skills/docker
+    #      - skill-path: {{PARENT_DIR}}/skills/test_graph
+    #      - skill-path: {{PARENT_DIR}}/skills/cli_os_env
+    OrchestratorRequest:
+#      - skill-path: {{PARENT_DIR}}/skills/java_gradle
+#      - skill-path: {{PARENT_DIR}}/skills/spec_driven_development
+#      - skill-path: {{PARENT_DIR}}/skills/cli_os_env
+
+logging.level.com.hayden.acp_cdc_ai.acp: INFO
+logging.level.com.hayden.multiagentide.artifacts: INFO
+
+multi-agent-ide:
+  topology:
+    max-call-chain-depth: 5
+    message-budget: -1
+    allowed-communications:
+      DISCOVERY_AGENT:
+        - DISCOVERY_ORCHESTRATOR
+        - DISCOVERY_COLLECTOR
+      PLANNING_AGENT:
+        - PLANNING_ORCHESTRATOR
+        - PLANNING_COLLECTOR
+      TICKET_AGENT:
+        - TICKET_ORCHESTRATOR
+        - TICKET_COLLECTOR
+      ORCHESTRATOR:
+        - DISCOVERY_ORCHESTRATOR
+        - PLANNING_ORCHESTRATOR
+        - TICKET_ORCHESTRATOR
+        - ORCHESTRATOR_COLLECTOR
+      DISCOVERY_ORCHESTRATOR:
+        - ORCHESTRATOR
+        - DISCOVERY_COLLECTOR
+        - DISCOVERY_AGENT
+      PLANNING_ORCHESTRATOR:
+        - ORCHESTRATOR
+        - PLANNING_COLLECTOR
+        - PLANNING_AGENT
+      TICKET_ORCHESTRATOR:
+        - ORCHESTRATOR
+        - TICKET_COLLECTOR
+        - TICKET_AGENT
+      DISCOVERY_COLLECTOR:
+        - DISCOVERY_ORCHESTRATOR
+      PLANNING_COLLECTOR:
+        - PLANNING_ORCHESTRATOR
+      TICKET_COLLECTOR:
+        - TICKET_ORCHESTRATOR
+      ORCHESTRATOR_COLLECTOR:
+        - ORCHESTRATOR
+      COMMIT_AGENT:
+        - DISCOVERY_AGENT
+        - PLANNING_AGENT
+        - TICKET_AGENT
+        - DISCOVERY_ORCHESTRATOR
+        - PLANNING_ORCHESTRATOR
+        - TICKET_ORCHESTRATOR
+        - DISCOVERY_COLLECTOR
+        - PLANNING_COLLECTOR
+        - TICKET_COLLECTOR
+        - ORCHESTRATOR
+        - ORCHESTRATOR_COLLECTOR
+      MERGE_CONFLICT_AGENT:
+        - DISCOVERY_AGENT
+        - PLANNING_AGENT
+        - TICKET_AGENT
+        - DISCOVERY_ORCHESTRATOR
+        - PLANNING_ORCHESTRATOR
+        - TICKET_ORCHESTRATOR
+        - DISCOVERY_COLLECTOR
+        - PLANNING_COLLECTOR
+        - TICKET_COLLECTOR
+        - ORCHESTRATOR
+        - ORCHESTRATOR_COLLECTOR
+      AI_FILTER:
+        - DISCOVERY_AGENT
+        - PLANNING_AGENT
+        - TICKET_AGENT
+        - DISCOVERY_ORCHESTRATOR
+        - PLANNING_ORCHESTRATOR
+        - TICKET_ORCHESTRATOR
+        - DISCOVERY_COLLECTOR
+        - PLANNING_COLLECTOR
+        - TICKET_COLLECTOR
+        - ORCHESTRATOR
+        - ORCHESTRATOR_COLLECTOR
+      AI_PROPAGATOR:
+        - DISCOVERY_AGENT
+        - PLANNING_AGENT
+        - TICKET_AGENT
+        - DISCOVERY_ORCHESTRATOR
+        - PLANNING_ORCHESTRATOR
+        - TICKET_ORCHESTRATOR
+        - DISCOVERY_COLLECTOR
+        - PLANNING_COLLECTOR
+        - TICKET_COLLECTOR
+        - ORCHESTRATOR
+        - ORCHESTRATOR_COLLECTOR
+      AI_TRANSFORMER:
+        - DISCOVERY_AGENT
+        - PLANNING_AGENT
+        - TICKET_AGENT
+        - DISCOVERY_ORCHESTRATOR
+        - PLANNING_ORCHESTRATOR
+        - TICKET_ORCHESTRATOR
+        - DISCOVERY_COLLECTOR
+        - PLANNING_COLLECTOR
+        - TICKET_COLLECTOR
+        - ORCHESTRATOR
+        - ORCHESTRATOR_COLLECTOR
+      REVIEW_AGENT:
+        - DISCOVERY_AGENT
+        - PLANNING_AGENT
+        - TICKET_AGENT
+        - DISCOVERY_ORCHESTRATOR
+        - PLANNING_ORCHESTRATOR
+        - TICKET_ORCHESTRATOR
+        - DISCOVERY_COLLECTOR
+        - PLANNING_COLLECTOR
+        - TICKET_COLLECTOR
+        - ORCHESTRATOR
+        - ORCHESTRATOR_COLLECTOR
+      REVIEW_RESOLUTION_AGENT:
+        - DISCOVERY_AGENT
+        - PLANNING_AGENT
+        - TICKET_AGENT
+        - DISCOVERY_ORCHESTRATOR
+        - PLANNING_ORCHESTRATOR
+        - TICKET_ORCHESTRATOR
+        - DISCOVERY_COLLECTOR
+        - PLANNING_COLLECTOR
+        - TICKET_COLLECTOR
+        - ORCHESTRATOR
+        - ORCHESTRATOR_COLLECTOR
+
+filter:
+  uv: uv
+  bins: {{PROJ_DIR}}/bin
+server:
+  tomcat:
+    max-keep-alive-requests: -1
+    keep-alive-timeout: -1
